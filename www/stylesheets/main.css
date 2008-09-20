@@ -1,0 +1,29 @@
+body {
+    background-color:#cae5d0;
+    margin:0;
+}
+
+#main_content {
+    float:left;
+
+    background-color:#fff;
+    width:502px;
+    padding:0 10px 0 20px;
+}
+
+#cart_content {
+    float:left;
+    width:268px;
+}
+
+h1 {
+    text-indent:-9999px;
+    background: transparent url(/furniture/fruitynutters_logo.gif) no-repeat top left;
+    width:317px;
+    height:36px;
+    margin-top:0;
+}
+
+h2 {
+    margin-top:0;
+}
