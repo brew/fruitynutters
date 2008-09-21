@@ -1,6 +1,18 @@
 body {
-    background-color:#cae5d0;
+    background: #cae5d0 url(/furniture/background_tile.gif) repeat-y top left;
     margin:0;
+    
+    font-size:12px;
+    line-height:18px;
+    font-family: Verdana, Helvetica, sans-serif;
+}
+
+#wrapper {
+    width:800px;
+}
+
+input.quantity {
+    width:25px;
 }
 
 #main_content {
@@ -8,22 +20,133 @@ body {
 
     background-color:#fff;
     width:502px;
-    padding:0 10px 0 20px;
+    padding:17px 10px 10px 20px;
+}
+#main_content h1 {
+    text-indent:-9999px;
+    background: transparent url(/furniture/fruitynutters_logo.gif) no-repeat top left;
+    width:327px;
+    height:36px;
+        
+    margin:0 auto 29px;
+}
+#main_content .notice {
+    padding:10px 20px;
+    
+    background-color:#e7f3ea;
+    color:#666;
+}
+#main_content ul#product_list {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+#main_content ul#product_list li {
+    overflow:hidden;
+    padding:5px 4px;
+}
+#main_content ul#product_list li:hover {
+    background-color:#e7f3ea;
+}
+
+#main_content ul#product_list li .product {
+    float:left;
+    width:325px;
+    margin:0;
+}
+#main_content ul#product_list li .product .product_details {
+    display:block;
+    text-indent:10px;
+    color:#666;
+}
+#main_content ul#product_list li .product_add {
+    float:right;
+    width:151px;
+}
+
+#main_content #footer {
+    margin-top:30px;
+    padding-top:5px;
+    
+    border-top:1px solid #d2d2d2;
+}
+#main_content #footer .key_item {
+    margin-right:15px;
+    
+    font-family: Palatino, Georgia, Times New Roman, Times, serif;
+    font-style:italic;
+    font-size:11px;
+    color:#666;
+}
+#main_content #footer .key_item img {
+    vertical-align:middle;
+    
+    margin-right:2px;
+    margin-bottom:2px;
 }
 
 #cart_content {
     float:left;
-    width:268px;
+    width:238px;
+    padding:82px 20px 10px 10px;
+}
+#cart_content h2 {
+    margin-top:0;
+    font-family: Palatino, Georgia, Times New Roman, Times, serif;
+    font-weight:normal;
+    font-style:italic;
+    color:#666;
+}
+#cart_content a {
+    color:#006633;
+}
+#cart_content ul#shopping_list {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+#cart_content ul#shopping_list li {
+    overflow:hidden;
+}
+#cart_content ul#shopping_list li .product {
+    margin-top:0;
+    float:left;
+}
+#cart_content ul#shopping_list li .product_price {
+    float:right;
+/*    width:100px;*/
+    display:block;
+}
+#cart_content #shopping_list_total {
+    margin-top:10px;
+    padding-top:5px;
+    
+    text-align:right;
+    border-top:1px solid #a9beae;
+}
+#cart_content #update_list_button {
+    margin-top:30px;
+}
+#cart_content #empty_list {
+    float:left;
+}
+#cart_content #continue_button {
+    float:right;
 }
 
-h1 {
-    text-indent:-9999px;
-    background: transparent url(/furniture/fruitynutters_logo.gif) no-repeat top left;
-    width:317px;
-    height:36px;
-    margin-top:0;
+#crumb {
+    font-family: Palatino, Georgia, Times New Roman, Times, serif;
+    font-size:16px;
+    color: #666;
 }
-
-h2 {
-    margin-top:0;
+#crumb a {
+    color: #666;
+    text-decoration:none;
+}
+#crumb a:hover {
+    text-decoration:underline;
+}
+#crumb a.active {
+    color:#50a863;
 }
