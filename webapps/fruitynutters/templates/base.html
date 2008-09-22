@@ -4,7 +4,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>Fruity Nutters - Grain Produce</title>
+	<title>Fruity Nutters{% block title %}{% endblock %}</title>
 	
 	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="screen" title="Main styles" charset="utf-8" />
 	
@@ -21,7 +21,7 @@
 		<h1>Fruity Nutters</h1>
 		
 		<div id="crumb">
-			<a href='#'>Aisle</a>: <a href='#' class="active">Grain Produce</a>
+			{% block crumb %}{% endblock %}
 		</div>
 
 		{% block content %}{% endblock %}

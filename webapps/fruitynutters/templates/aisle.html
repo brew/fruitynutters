@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 
+{% block title %}: Aisles: {{ aisle.name }}{% endblock %}
+
+{% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>: <span class="active">{{ aisle.name }}</span>{% endblock %}
+
 {% block content %}
-		<p class="notice">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam commodo, elit a ornare fermentum, magna nunc venenatis odio, at ornare velit est.</p>
+		{% if aisle.description %}
+			<p class="notice">{{ aisle.description }}</p>			
+		{% endif %}
+
 		
 		<ul id="product_list">
 			<li>

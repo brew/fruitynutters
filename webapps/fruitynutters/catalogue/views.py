@@ -4,6 +4,7 @@ from fruitynutters.catalogue.models import Aisle
 
 def aisle(request, aisle_id):
     """Aisle view"""
+    aisle = Aisle.objects.get(id__exact=aisle_id)
     return render_to_response('aisle.html', locals())
     
 def aisle_index(request):
