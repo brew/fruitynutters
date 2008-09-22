@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<title>Fruity Nutters - Grain Produce</title>
+	
+	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="screen" title="Main styles" charset="utf-8" />
+	
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	
+	
+</head>
+
+<body>
+
+<div id="wrapper">
+	
+	<div id="main_content">
+		<h1>Fruity Nutters</h1>
+		
+		<div id="crumb">
+			<a href='#'>Aisle</a>: <a href='#' class="active">Grain Produce</a>
+		</div>
+
+		{% block content %}{% endblock %}
+		
+	</div>
+	
+	<div id="cart_content">
+		<h2>Your list thus far ...</h2>
+		<form action="#" method="post" accept-charset="utf-8">
+			<ul id="shopping_list">
+				<li>
+					<p class="product">Apricots 1kg</p>
+					<span class="product_price">&times; <input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £3.10</span>
+				</li>
+				<li>
+					<p class="product">Apricots 1kg</p>
+					<span class="product_price">&times; <input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £3.10</span>
+				</li>
+				<li>
+					<p class="product">Apricots 1kg</p>
+					<span class="product_price">&times; <input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £3.10</span>
+				</li>
+				<li>
+					<p class="product">Apricots 1kg</p>
+					<span class="product_price">&times; <input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £3.10</span>
+				</li>
+			</ul>
+			<p><input type="button" name="some_name" value="Update" id="update_list_button" disabled="disabled" /></p>
+			<p id="shopping_list_total">Total: <strong>£120.10</strong></p>
+			<p><a href="#" id="empty_list">Empty list</a> <input type="submit" name="some_name" value="Continue..." id="continue_button" /></p>
+		</form>
+	</div>
+	
+</div>
+
+
+</body>
+</html>

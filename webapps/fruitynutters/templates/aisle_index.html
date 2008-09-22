@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+	{% if aisle_list %}
+	    <ul>
+	    {% for aisle in aisle_list %}
+	        <li><a href="{{ aisle.id }}">{{ aisle.name }}</a></li>
+	    {% endfor %}
+	    </ul>
+	{% else %}
+	    <p>No aisles are available.</p>
+	{% endif %}
+		
+{% endblock %}
