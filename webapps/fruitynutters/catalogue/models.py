@@ -13,28 +13,6 @@ class Brand(models.Model):
     def __unicode__(self):
         return self.name
 
-class Quantity(models.Model):
-    """
-    An model to collate quantity/price information.
-    An Item can be made up of several units. Each unit has a measure of a measure type.
-    eg. 1 item of Flour can be 6 units of 1.5 kg each.
-
-    """
-
-    unit_number = models.PositiveIntegerField()
-    measure_per_unit = models.FloatField()
-    measure_type = models.CharField(max_length=10)
-    price = models.DecimalField(max_digits=4,decimal_places=2)
-
-    price_increase = models.BooleanField()
-    price_decrease = models.BooleanField()
-
-    class Meta:
-        verbose_name_plural = 'Quantities'
-
-    def __unicode__(self):
-        return u'%s for %sx%s%s' % (self.price, self.unit_number, self.measure_per_unit, self.measure_type)
-
 class Item(models.Model):
     name = models.CharField(max_length=60)
     aisle = models.ForeignKey(Aisle)
@@ -47,7 +25,18 @@ class Item(models.Model):
     new_changed = models.BooleanField(verbose_name='New/Changed')
     
     bundle = models.ForeignKey('Bundle', null=True, blank=True)
-    quantities = models.ForeignKey('Quantity', null=True, blank=True)
+    
+    unit_number = models.PositiveIntegerField()
+    measure_per_unit = models.FloatField(null=True, blank=True)
+    measure_type = models.CharField(max_length=10, null=True, blank=True)
+    price = models.DecimalField(max_digits=4,decimal_places=2)
+    
+    price_change_choices = (
+        ('increase','Increase'),
+        ('no_change','No change'),
+        ('decrease','Decrease')
+    )
+    price_change = models.CharField(max_length=30, null=True, default='no_change', choices=price_change_choices)
 
     def __unicode__(self):
         return self.name

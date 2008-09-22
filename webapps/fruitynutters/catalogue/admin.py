@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Aisle, Item, Brand, Quantity, Bundle
+from models import Aisle, Item, Brand, Bundle
 
 class AisleAdmin(admin.ModelAdmin):
     pass
@@ -14,15 +14,21 @@ admin.site.register(Brand, BrandAdmin)
 
 
 class ItemAdmin(admin.ModelAdmin):
-    pass
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'aisle', 'brand', 'description', 'active', 'organic', 'new_changed', 'bundle')
+        }),
+        ('Price options', {
+            'fields': ('unit_number', ('measure_per_unit', 'measure_type'), 'price', 'price_change')
+        }),
+    )
+    radio_fields = {"price_change": admin.HORIZONTAL}
+    list_display = ('name', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'active')
+    search_fields = ['name']
+
 
 admin.site.register(Item, ItemAdmin)
 
-
-class QuantityAdmin(admin.ModelAdmin):
-    pass
-    
-admin.site.register(Quantity, QuantityAdmin)
 
 class BundleAdmin(admin.ModelAdmin):
     pass

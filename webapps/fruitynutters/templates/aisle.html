@@ -8,9 +8,29 @@
 		{% if aisle.description %}
 			<p class="notice">{{ aisle.description }}</p>			
 		{% endif %}
-
 		
+		{% if aisle_items %}
 		<ul id="product_list">
+			{% for item in aisle_items %}
+				<li>
+					<p class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
+						<span class="product_details">{{ item.unit_number }} &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}, £{{ item.price }} 
+						{% ifequal item.price_change 'increase' %}
+							<img src="/furniture/price_increase_arrow.gif" width="10" height="12" alt="Price increase" />
+						{% endifequal %}
+						{% ifequal item.price_change 'decrease'  %}
+							<img src="/furniture/price_decrease_arrow.gif" width="10" height="12" alt="Price decrease" />
+						{% endifequal %}
+						{% if item.new_changed  %}
+							<img src="/furniture/new_product_star.gif" width="11" height="12" alt="New product" />
+						{% endif %}</span></p>
+					<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
+				</li>
+			{% endfor %}
+		</ul>			
+		{% endif %}
+		
+<!--		<ul id="product_list">
 			<li>
 				<p class="product">Strong Wholemeal Bread Flour &#8212; Marriages
 			  <span class="product_details price_increase">5 &times; 1.5kg, £7.00</span></p>
@@ -31,7 +51,7 @@
 			  <span class="product_details">5 &times; 1.5kg, £7.00</span></p>
 				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £7.00 <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
 			</li>
-		</ul>
+		</ul> -->
 		
 		<div id="footer">
 			<span class="key_item"><img src="/furniture/price_increase_arrow.gif" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="/furniture/price_decrease_arrow.gif" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="/furniture/new_product_star.gif" width="11" height="12" alt="New product" /> New product / brand</span>
