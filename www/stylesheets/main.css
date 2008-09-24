@@ -84,7 +84,6 @@ body {
     text-align:right;
 }
 
-
 #main_content #footer {
     margin-top:30px;
     padding-top:5px;
@@ -112,6 +111,8 @@ body {
     padding:82px 20px 10px 10px;
 }
 #cart_content h2 {
+    float:left;
+    
     margin-top:0;
     font-family: Palatino, Georgia, Times New Roman, Times, serif;
     font-weight:normal;
@@ -119,8 +120,16 @@ body {
     font-size:16px;
     color:#666;
 }
+#cart_content img#cart_load_indicator {
+    float:right;
+}
 #cart_content a {
     color:#006633;
+}
+
+#cart_content form {
+    float:left;
+    width:238px;
 }
 #cart_content ul#shopping_list {
     list-style:none;

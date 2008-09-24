@@ -19,7 +19,9 @@ var FNCart = Class.create({
     ev.stop();
   },
   
-  
+  /**
+   *  Handler for the click event on the empty list link.
+   */
   onEmptyList: function(ev) {
     this.updateCart("/cart/empty/");
     ev.stop();
@@ -30,28 +32,35 @@ var FNCart = Class.create({
    */
   updateCart: function(url) {
     
-    this._prepareForUpdate();
+    this._prepareCartForUpdate();
+    
+    $('cart_load_indicator').show();
     
     new Ajax.Updater({success:'cart_content'}, url, {
       method:'post',
       onComplete: function() {
-        console.info('completed update');
         this._prepareCart();
       }.bind(this)
     });    
   },
   
-  /**
-   *  Prepares cart for update by removing listeners.
-   */
-  _prepareForUpdate: function() {
-    this.boundEmptyList =this.onEmptyList.bind(this);
-    $('empty_list').stopObserving('click', this.boundEmptyList);
-  },
   
+  
+  /**
+   *  Prepares the cart at initialize and each time it's been updated.
+   */
   _prepareCart: function() {
     this.boundEmptyList =this.onEmptyList.bind(this);
     $('empty_list').observe('click', this.boundEmptyList);
+  },
+  
+  /**
+   *  Prepares cart for update by removing listeners.
+   */
+  _prepareCartForUpdate: function() {
+    this.boundEmptyList =this.onEmptyList.bind(this);
+    $('empty_list').stopObserving('click', this.boundEmptyList);
   }
+  
   
 });
