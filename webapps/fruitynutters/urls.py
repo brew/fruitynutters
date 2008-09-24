@@ -24,4 +24,5 @@ urlpatterns += patterns('fruitynutters.catalogue.views',
 
 urlpatterns += patterns('fruitynutters.cart.views',
     (r'^cart/(?P<item_id>\d+)/add/$', 'add_to_cart'),
+    (r'^cart/empty/$', 'empty_cart'),
 )
