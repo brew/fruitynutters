@@ -1,0 +1,18 @@
+<h2>Your list thus far ...</h2>
+<form action="#" method="post" accept-charset="utf-8">
+	{% if cart.numItems %}
+		<ul id="shopping_list">
+			{% for item in cart_items  %}
+				<li>
+					<p class="product">{{ item.product.name }} {{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</p>
+					<span class="product_price"><span>&times;</span> <input type="text" name="some_name" value="{{ item.quantity }}" class="quantity" id="some_name" /> <span class="total_product_price">£{{ item.line_total }}</span></span>
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>Your list is currently empty</p>
+	{% endif %}
+	<p><input type="button" name="some_name" value="Update" id="update_list_button" disabled="disabled" /></p>
+	<p id="shopping_list_total">Total: <strong>£{{ cart.total }}</strong></p>
+	<p><a href="#" id="empty_list">Empty list</a> <input type="submit" name="some_name" value="Continue..." id="continue_button" /></p>
+</form>

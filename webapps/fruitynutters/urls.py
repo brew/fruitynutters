@@ -21,3 +21,7 @@ urlpatterns += patterns('fruitynutters.catalogue.views',
     (r'^catalogue/aisle/$', 'aisle_index'),
     (r'^catalogue/aisle/(?P<aisle_id>\d+)/$', 'aisle'),
 )
+
+urlpatterns += patterns('fruitynutters.cart.views',
+    (r'^cart/(?P<item_id>\d+)/add/$', 'add_to_cart'),
+)

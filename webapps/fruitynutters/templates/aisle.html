@@ -24,34 +24,11 @@
 						{% if item.new_changed  %}
 							<img src="/furniture/new_product_star.gif" width="11" height="12" alt="New product" />
 						{% endif %}</span></p>
-					<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
+					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" /></form>
 				</li>
 			{% endfor %}
 		</ul>			
 		{% endif %}
-		
-<!--		<ul id="product_list">
-			<li>
-				<p class="product">Strong Wholemeal Bread Flour &#8212; Marriages
-			  <span class="product_details price_increase">5 &times; 1.5kg, £7.00</span></p>
-				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £7.00 <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
-			</li>
-			<li>
-				<p class="product">Strong Wholemeal Bread Flour &#8212; Marriages
-			  <span class="product_details price_decrease">5 &times; 1.5kg, £7.00</span></p>
-				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £7.00 <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
-			</li>
-			<li>
-				<p class="product">Strong Wholemeal Bread Flour &#8212; Marriages
-			  <span class="product_details new_product">5 &times; 1.5kg, £7.00</span></p>
-				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £7.00 <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
-			</li>
-			<li>
-				<p class="product">Strong Wholemeal Bread Flour &#8212; Marriages
-			  <span class="product_details">5 &times; 1.5kg, £7.00</span></p>
-				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> £7.00 <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
-			</li>
-		</ul> -->
 		
 		<div id="footer">
 			<span class="key_item"><img src="/furniture/price_increase_arrow.gif" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="/furniture/price_decrease_arrow.gif" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="/furniture/new_product_star.gif" width="11" height="12" alt="New product" /> New product / brand</span>

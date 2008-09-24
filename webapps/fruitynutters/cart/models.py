@@ -1,8 +1,16 @@
 from django.db import models
+from decimal import Decimal
+import datetime
+
+
 import fruitynutters
 
+"""
+These models are loosely based on models in the Shop app used by http://www.satchmoproject.com/ [BSD]
+I've not done much, other than simplify them.
 
-# (These models are loosely based on models in the Shop app used by http://www.satchmoproject.com/ [BSD])
+"""
+
 
 class Cart(models.Model):
     """
@@ -38,11 +46,9 @@ class Cart(models.Model):
 
         item_to_modify = CartItem(cart=self, product=chosen_item, quantity=0)
         for similarItem in self.cartitem_set.filter(product__id = chosen_item.id):
-            looksTheSame = len(details) == similarItem.details.count()
-            if looksTheSame:
-                item_to_modify = similarItem
-                alreadyInCart = True
-                break
+            item_to_modify = similarItem
+            alreadyInCart = True
+            break
             
         if not alreadyInCart:
             self.cartitem_set.add(item_to_modify)
