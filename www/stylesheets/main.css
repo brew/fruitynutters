@@ -1,3 +1,7 @@
+/*
+    Best viewed with 4 soft tabs.
+*/
+
 @import "ie6win.css";
 
 body {
@@ -13,7 +17,7 @@ body {
     width:800px;
 }
 
-input.quantity {
+#main_content ul#product_list li .product_add input.quantity, #cart_content ul#shopping_list li .product_price input.quantity  {
     width:25px;
 }
 
@@ -38,12 +42,12 @@ input.quantity {
     background-color:#e7f3ea;
     color:#666;
 }
+
 #main_content ul#product_list {
     list-style:none;
     margin:0;
     padding:0;
 }
-
 #main_content ul#product_list li {
     overflow:hidden;
     padding:5px 4px;
@@ -51,7 +55,6 @@ input.quantity {
 #main_content ul#product_list li:hover {
     background-color:#e7f3ea;
 }
-
 #main_content ul#product_list li .product {
     float:left;
     width:325px;
@@ -62,10 +65,25 @@ input.quantity {
     text-indent:10px;
     color:#666;
 }
+#main_content ul#product_list li .product .product_details img {
+    vertical-align:middle;
+    margin-bottom:2px;
+}
 #main_content ul#product_list li .product_add {
     float:right;
-    width:151px;
 }
+#main_content ul#product_list li .product_add input {
+    width:75px;
+    float:left;
+}
+#main_content ul#product_list li .product_add .total_product_price{
+    display: block;
+    float:left;
+    width:42px;
+    margin:0 3px;
+    text-align:right;
+}
+
 
 #main_content #footer {
     margin-top:30px;
@@ -98,6 +116,7 @@ input.quantity {
     font-family: Palatino, Georgia, Times New Roman, Times, serif;
     font-weight:normal;
     font-style:italic;
+    font-size:16px;
     color:#666;
 }
 #cart_content a {
@@ -117,9 +136,23 @@ input.quantity {
 }
 #cart_content ul#shopping_list li .product_price {
     float:right;
-/*    width:100px;*/
+/*    display:block;*/
+}
+#cart_content ul#shopping_list li .product_price * {
+    float:left;
     display:block;
 }
+#cart_content ul#shopping_list li .product_price input {
+    margin-left:5px;
+}
+#cart_content ul#shopping_list li .product_price .total_product_price {
+    display: block;
+    float:left;
+    width:42px;
+    margin:0 3px;
+    text-align:right;
+}
+
 #cart_content #shopping_list_total {
     margin-top:10px;
     padding-top:5px;
@@ -138,6 +171,8 @@ input.quantity {
 }
 
 #crumb {
+    margin-bottom:8px;
+    
     font-family: Palatino, Georgia, Times New Roman, Times, serif;
     font-size:16px;
     color: #666;
@@ -149,6 +184,6 @@ input.quantity {
 #crumb a:hover {
     text-decoration:underline;
 }
-#crumb a.active {
+#crumb .active {
     color:#50a863;
 }
