@@ -15,8 +15,15 @@ var FNCart = Class.create({
    *  Handler for the Submit event on the product add forms.
    */
   onAddFormSubmit: function(ev){
-    this.updateCart(ev.target.action);
     ev.stop();
+    
+    // Get the quantity to add.
+    quantity = $(ev.target).down('.quantity').value;
+    // Bail out if the quantity isn't a number.
+    if(/^\d+$/.test(quantity) == false) return false;
+    
+    url = ev.target.action+quantity+"/";
+    this.updateCart(url);
   },
   
   /**
@@ -36,15 +43,13 @@ var FNCart = Class.create({
     
     $('cart_load_indicator').show();
     
-    new Ajax.Updater({success:'cart_content'}, url, {
+    new Ajax.Updater({success:'cart_content', failure:'cart_notice'}, url, {
       method:'post',
       onComplete: function() {
         this._prepareCart();
       }.bind(this)
     });    
   },
-  
-  
   
   /**
    *  Prepares the cart at initialize and each time it's been updated.
