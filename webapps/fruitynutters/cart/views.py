@@ -5,12 +5,13 @@ from django.http import HttpResponseForbidden
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem
 
-def add_to_cart(request, item_id):
+def add_to_cart(request, item_id, quantity=1):
     if request.method == 'POST':
+        quantity = int(quantity)
         cart = _get_cart_by_id(request.session.get('cart_id'))
         
         item_to_add = Item.objects.get(id__exact=item_id)
-        cart.add_item(chosen_item=item_to_add, number_added=1)
+        cart.add_item(chosen_item=item_to_add, number_added=quantity)
         
         return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
     
