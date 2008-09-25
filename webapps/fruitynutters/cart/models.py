@@ -58,8 +58,17 @@ class Cart(models.Model):
 
         return item_to_modify
 
+    def update_item(self, update_item_id, quantity):
+        item_to_modify = self.cartitem_set.get(product__id = update_item_id)
+        item_to_modify.quantity = quantity
+        if item_to_modify.quantity <= 0:
+            item_to_modify.delete()
+            self.save()
+        else:
+            item_to_modify.save()
+
     def remove_item(self, chosen_item_id, number_removed):
-        item_to_modify = self.cartitem_set.get(id = chosen_item_id)
+        item_to_modify = self.cartitem_set.get(product__id = chosen_item_id)
         item_to_modify.quantity -= number_removed
         if item_to_modify.quantity <= 0:
             item_to_modify.delete()

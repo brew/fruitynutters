@@ -13,8 +13,19 @@ def add_to_cart(request, item_id, quantity=1):
         item_to_add = Item.objects.get(id__exact=item_id)
         cart.add_item(chosen_item=item_to_add, number_added=quantity)
         
+        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})        
+            
+    return HttpResponseForbidden()
+        
+def update_cart(request):
+    if request.method == "POST":
+        cart = _get_cart_by_id(request.session.get('cart_id'))
+        for item_id, new_quantity in request.POST.items():
+            new_quantity = int(new_quantity)
+            cart.update_item(item_id, new_quantity)
+        
         return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
-    
+        
     return HttpResponseForbidden()
         
 def empty_cart(request):

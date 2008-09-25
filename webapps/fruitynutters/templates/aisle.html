@@ -16,13 +16,13 @@
 					<p class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
 						<span class="product_details">{{ item.unit_number }} &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}, £{{ item.price }} 
 						{% ifequal item.price_change 'increase' %}
-							<img src="/furniture/price_increase_arrow.gif" width="10" height="12" alt="Price increase" />
+							<img src="/furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" />
 						{% endifequal %}
 						{% ifequal item.price_change 'decrease'  %}
-							<img src="/furniture/price_decrease_arrow.gif" width="10" height="12" alt="Price decrease" />
+							<img src="/furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" />
 						{% endifequal %}
 						{% if item.new_changed  %}
-							<img src="/furniture/new_product_star.gif" width="11" height="12" alt="New product" />
+							<img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" />
 						{% endif %}</span></p>
 					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" /></form>
 				</li>
@@ -31,7 +31,7 @@
 		{% endif %}
 		
 		<div id="footer">
-			<span class="key_item"><img src="/furniture/price_increase_arrow.gif" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="/furniture/price_decrease_arrow.gif" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="/furniture/new_product_star.gif" width="11" height="12" alt="New product" /> New product / brand</span>
+			<span class="key_item"><img src="/furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="/furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" /> New product / brand</span> <span class="key_item"><img src="/furniture/organic.png" width="11" height="12" alt="Organic product" /> Organic product</span>
 		</div>
 		
 {% endblock %}

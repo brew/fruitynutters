@@ -1,22 +1,22 @@
 <h2>Your list thus far ...</h2>
 <img src="/furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
 <div id="cart_notice">
-	
+	{{ post_parameters }}
 </div>
-<form action="#" method="post" accept-charset="utf-8">
+<form action="/cart/update/" method="post" accept-charset="utf-8" id="cart_form">
 	{% if cart.numItems %}
 		<ul id="shopping_list">
 			{% for item in cart_items  %}
 				<li>
 					<p class="product">{{ item.product.name }} {{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</p>
-					<span class="product_price"><span>&times;</span> <input type="text" name="some_name" value="{{ item.quantity }}" class="quantity" id="some_name" /> <span class="total_product_price">£{{ item.line_total }}</span></span>
+					<span class="product_price"><span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" /> <span class="total_product_price">£{{ item.line_total }}</span></span>
 				</li>
 			{% endfor %}
 		</ul>
 	{% else %}
 		<p>Your list is currently empty</p>
 	{% endif %}
-	<p><input type="button" name="some_name" value="Update" id="update_list_button" disabled="disabled" /></p>
+	<p><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
 	<p id="shopping_list_total">Total: <strong>£{{ cart.total }}</strong></p>
-	<p><a href="#" id="empty_list">Empty list</a> <input type="submit" name="some_name" value="Continue..." id="continue_button" /></p>
+	<p><a href="#" id="empty_list">Empty list</a> <input type="button" value="Continue..." id="continue_button" /></p>
 </form>
