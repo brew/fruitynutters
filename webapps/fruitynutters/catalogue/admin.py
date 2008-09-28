@@ -25,6 +25,7 @@ class ItemAdmin(admin.ModelAdmin):
     radio_fields = {"price_change": admin.HORIZONTAL}
     list_display = ('name', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'active')
     search_fields = ['name']
+    list_filter = ['aisle']
 
 
 admin.site.register(Item, ItemAdmin)

@@ -8,7 +8,7 @@
 		<ul id="shopping_list">
 			{% for item in cart_items  %}
 				<li>
-					<p class="product">{{ item.product.name }} {{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</p>
+					<p class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1  %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</span></p>
 					<span class="product_price"><span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" /> <span class="total_product_price">£{{ item.line_total }}</span></span>
 				</li>
 			{% endfor %}
