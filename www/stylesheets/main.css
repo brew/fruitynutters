@@ -142,6 +142,10 @@ body {
 #cart_content ul#shopping_list li .product {
     margin-top:0;
     float:left;
+    width:140px;
+}
+#cart_content ul#shopping_list li .product .quantity {
+    color:#666;
 }
 #cart_content ul#shopping_list li .product_price {
     float:right;
