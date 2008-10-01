@@ -13,7 +13,7 @@
 		<ul id="product_list">
 			{% for item in aisle_items %}
 				<li>
-					<p class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
+					<div class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
 						<span class="product_details">{{ item.unit_number }} &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}{#,  £{{ item.price }} #} 
 						{% if not item.organic %}
 							<img src="/furniture/non_organic.png" width="17" height="12" alt="Not Organic" />
@@ -26,7 +26,7 @@
 						{% endifequal %}
 						{% if item.new_changed  %}
 							<img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" />
-						{% endif %}</span></p>
+						{% endif %}</span></div>
 					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" /></form>
 				</li>
 			{% endfor %}

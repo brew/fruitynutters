@@ -8,7 +8,7 @@
 {% block content %}
 
 	{% if aisle_list %}
-	    <ul>
+	    <ul id="aisle_list">
 	    {% for aisle in aisle_list %}
 	        <li><a href="{{ aisle.id }}">{{ aisle.name }}</a></li>
 	    {% endfor %}
