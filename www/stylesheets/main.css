@@ -6,6 +6,7 @@
 
 body {
     background: #cae5d0 url(/furniture/background_tile.gif) repeat-y top left;
+    color:#222;
     margin:0;
     
     font-size:12px;
@@ -91,7 +92,6 @@ body {
     margin-left:2px;
 }
 
-
 #main_content #footer {
     margin-top:30px;
     padding-top:5px;
@@ -113,6 +113,24 @@ body {
     margin-bottom:2px;
 }
 
+#main_content ul#aisle_list {
+    list-style:none;
+    padding:0;
+    margin:0;
+}
+#main_content ul#aisle_list li {
+    padding:5px 4px;
+}
+#main_content ul#aisle_list li a {
+    text-decoration:none;
+    color:#222;
+}
+#main_content ul#aisle_list li a:hover {
+    text-decoration:underline;
+    color:#50a863;
+}
+
+/* CART */
 #cart_content {
     float:left;
     width:238px;
