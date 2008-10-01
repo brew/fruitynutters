@@ -17,7 +17,10 @@ body {
     width:800px;
 }
 
-#main_content ul#product_list li .product_add input.quantity, #cart_content ul#shopping_list li .product_price input.quantity  {
+#main_content ul#product_list li .product_add input.quantity, 
+#main_content ul#product_list li .product .bundle input.quantity,
+#cart_content ul#shopping_list li .product_price input.quantity
+{
     width:25px;
 }
 
@@ -83,6 +86,11 @@ body {
     margin:0 3px;
     text-align:right;
 }
+#main_content ul#product_list li .product ul.bundle {
+    padding:0;
+    margin-left:2px;
+}
+
 
 #main_content #footer {
     margin-top:30px;
