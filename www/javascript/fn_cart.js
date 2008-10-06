@@ -19,7 +19,7 @@ var FNCart = Class.create({
     // Get the quantity to add.
     quantity = $(ev.target).down('.quantity').value;
     // Bail out if the quantity isn't a number.
-    if(/^\d+$/.test(quantity) == false) return false;
+    if(!_isStringANumber(quantity)) return false;
     
     url = ev.target.action+quantity+"/";
     this.updateCart(url);
@@ -102,6 +102,13 @@ var FNCart = Class.create({
     $('cart_form').getInputs().each(function(input, index){
       input.stopObserving('keyup', this.boundCartKeydown);
     }.bind(this));
+  },
+  
+  /**
+   *  Returns boolean determining if the passed string contains only digits.
+   */
+  _isStringANumber: function(str) {
+    return (/^\d+$/.test(str));
   }
   
   

@@ -8,6 +8,10 @@
 	<title>Fruity Nutters - Grain Produce</title>
 	
 	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="screen" title="Main styles" charset="utf-8" />	
+	
+	<script src="/javascript/prototype.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
+	
 </head>
 
 <body>
@@ -39,20 +43,20 @@
 			  <span class="product_details new_product">5 &times; 1.5kg, £7.00</span></div>
 				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£7.00 </span><input type="button" name="some_name" value="Add to list" id="some_name" /></form>
 			</li>
-			<li>
+			<li class="has_bundle">
 				<div class="product">Pasta Pick 'n' Mix &#8212; Various brands
-			  <span class="product_details new_product">6 &times; 500g. Pick any <strong>6</strong> from the list:</span>
+			  <span class="product_details new_product"><span class="single_unit">6</span> &times; 500g. Pick any <strong class="total_units">6</strong> from the list:</span>
 					<ul class="bundle">
-						<li><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> Conchiglie (shells) wholewheat</li>
-						<li><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> Conchiglie (shells) white</li>
-						<li><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> Penne (tubes) white</li>
-						<li><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> Penne (tubes) white</li>
-						<li><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> Fusilli (twists) white</li>
-						<li><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> Fusilli (twists) white</li>
+						<li><input type="text" value="0" class="quantity" /> Conchiglie (shells) wholewheat</li>
+						<li><input type="text" value="0" class="quantity" /> Conchiglie (shells) white</li>
+						<li><input type="text" value="0" class="quantity" /> Penne (tubes) white</li>
+						<li><input type="text" value="0" class="quantity" /> Penne (tubes) white</li>
+						<li><input type="text" value="0" class="quantity" /> Fusilli (twists) white</li>
+						<li><input type="text" value="0" class="quantity" /> Fusilli (twists) white</li>
 					</ul>
 				</div>
 			
-				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£6.00 </span><input type="button" name="some_name" value="Add to list" id="some_name" /></form>
+				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£6.00 </span><input type="button" class="add_button" value="Add to list" /></form>
 			</li>
 			<li>
 				<div class="product">Strong Wholemeal Bread Flour &#8212; Marriages
@@ -69,7 +73,7 @@
 	
 	<div id="cart_content">
 		<h2>Your list thus far ...</h2>
-		<img src="/furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:block" id="cart_load_indicator" />
+		<img src="/furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
 		<form action="#" method="post" accept-charset="utf-8">
 			<ul id="shopping_list">
 				<li>
