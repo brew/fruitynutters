@@ -2,6 +2,12 @@
 
 {% block title %}: {{ aisle.name }}{% endblock %}
 
+{% block scripts %}
+	<script src="/javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="/javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
 {% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>: <span class="active">{{ aisle.name }}</span>{% endblock %}
 
 {% block content %}
@@ -12,9 +18,23 @@
 		{% if aisle_items %}
 		<ul id="product_list">
 			{% for item in aisle_items %}
-				<li>
+
+				{% if item.bundle %}
+					<li class="has_bundle">
+				{% else %}
+					<li>
+				{% endif %}
+				
 					<div class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
-						<span class="product_details">{{ item.unit_number }} &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}{#,  £{{ item.price }} #} 
+						<span class="product_details"><span class="single_unit">{{ item.unit_number }}</span> &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}{% if item.bundle %}. Pick any <strong class="total_units">{{ item.unit_number }}</strong> from the list:</span>
+						
+						<ul class="bundle">
+							{% for bundle_item in item.bundle.items.all|dictsort:"name" %}
+								<li><input type="text" value="0" class="quantity" /> {{ bundle_item.name }}</li>
+							{% endfor %}
+						</ul>						
+						
+						{% endif %} 
 						{% if not item.organic %}
 							<img src="/furniture/non_organic.png" width="17" height="12" alt="Not Organic" />
 						{% endif %}
@@ -27,7 +47,7 @@
 						{% if item.new_changed  %}
 							<img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" />
 						{% endif %}</span></div>
-					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" /></form>
+					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" /></form>
 				</li>
 			{% endfor %}
 		</ul>			

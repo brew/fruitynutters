@@ -37,13 +37,17 @@ class Item(models.Model):
         ('decrease','Decrease')
     )
     price_change = models.CharField(max_length=30, null=True, default='no_change', choices=price_change_choices)
+    
+    def _has_bundle(self):
+        return self.bundle is not None
+    has_bundle = property(_has_bundle)
 
     def __unicode__(self):
         return self.name
         
 class Bundle(models.Model):
     name = models.CharField(max_length=30, verbose_name='Internal name')
-    items = models.ManyToManyField('Item', related_name='item_bundle')
-    
+    items = models.ManyToManyField('Item', related_name='bundle_item')
+        
     def __unicode__(self):
         return self.name
