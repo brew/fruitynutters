@@ -35,6 +35,15 @@ def empty_cart(request):
         return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
         
     return HttpResponseForbidden()
-        
+    
+def review(request):
+    """Review the current cart and collect user info."""
+
+    # Get the cart from the session (if one exists)
+    cart = _get_cart_by_id(request.session.get('cart_id'))
+
+    return render_to_response('review.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})    
+
+# Util 
 def _get_cart_by_id(id):
     return Cart.objects.get(id__exact=id)

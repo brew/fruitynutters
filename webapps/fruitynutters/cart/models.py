@@ -98,15 +98,20 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, verbose_name='Cart')
     product = models.ForeignKey(fruitynutters.catalogue.models.Item, verbose_name='Catalogue Item')
     quantity = models.IntegerField("Quantity", )
-
+    
     def _get_line_total(self):
         """Get the total price based on the product unit price and quantity"""
         return self.product.price * self.quantity
     line_total = property(_get_line_total)
 
+    def _product_has_bundle(self):
+        return product.has_bundle
+
+
     def __unicode__(self):
         return u"%s - %s %s" % (self.quantity, self.product.name, self.line_total)
-
+        
+        
     class Meta:
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"

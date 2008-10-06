@@ -25,7 +25,7 @@ def aisle(request, aisle_id):
     
     return render_to_response('aisle.html', {'aisle':aisle, 'aisle_items':aisle_items, 'cart':cart, 'cart_items':cart.cartitem_set.all()})
     
-    
+# Util
 def get_session_cart(session):
     # If there is no cart, create one and save its id to the session.
     if not session.get('cart_id'):

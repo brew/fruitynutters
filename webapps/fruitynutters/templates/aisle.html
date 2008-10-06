@@ -30,7 +30,7 @@
 						
 						<ul class="bundle">
 							{% for bundle_item in item.bundle.items.all|dictsort:"name" %}
-								<li><input type="text" value="0" class="quantity" /> {{ bundle_item.name }}</li>
+								<li><input type="text" value="0" class="quantity" id="item_{{ bundle_item.id }}" /> {{ bundle_item.name }}</li>
 							{% endfor %}
 						</ul>						
 						

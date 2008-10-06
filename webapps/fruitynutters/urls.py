@@ -24,4 +24,6 @@ urlpatterns += patterns('fruitynutters.cart.views',
     (r'^cart/(?P<item_id>\d+)/add/(?P<quantity>\d+)/$', 'add_to_cart'),
     (r'^cart/update/$', 'update_cart'),
     (r'^cart/empty/$', 'empty_cart'),
+    (r'^cart/review/$', 'review'),
+    (r'^cart/submit/$', 'submit'),
 )
