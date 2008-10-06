@@ -37,7 +37,6 @@ var FNBundle = Class.create({
    *  Handler for the keyup event on the product_add form's quantity input field.
    */
   onQuantityKeyUp: function(ev) {
-    console.info(ev);
     // First check that the field contains a number. If it doesn't abort.
     if(!this._isStringANumber(ev.target.getValue())) {
       ev.target.focus();
@@ -46,8 +45,11 @@ var FNBundle = Class.create({
 
     // Set the new totalUnit quantity.
     var totalUnits = Number(ev.target.getValue()) * Number($(this.bundle_container).down('.single_unit').innerHTML);
-    $(this.bundle_container).down('.total_units').update(totalUnits);
-    this.setAddButton();
+    if( totalUnits != Number($(this.bundle_container).down('.total_units').innerHTML)) {
+      $(this.bundle_container).down('.total_units').update(totalUnits);
+      new Effect.Highlight($(this.bundle_container).down('.total_units'), { startcolor: '#ffff99', endcolor: '#E7F3EA', restorecolor: 'transparent'});
+      this.setAddButton();      
+    }
     
     ev.target.focus();
   },
