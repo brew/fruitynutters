@@ -14,6 +14,8 @@ var FNBundle = Class.create({
     // Set up the keyup event for the bundle_container's quantity input field.
     this.boundQuantityInputKeyUp = this.onQuantityKeyUp.bind(this);
     $(bundle_container).down('.product_add input.quantity').observe('keyup', this.boundQuantityInputKeyUp);
+    
+    // this.setTotalUnitsElement();
   },
   
   /**
@@ -44,18 +46,27 @@ var FNBundle = Class.create({
     }  
 
     // Set the new totalUnit quantity.
-    var totalUnits = Number(ev.target.getValue()) * Number($(this.bundle_container).down('.single_unit').innerHTML);
-    if( totalUnits != Number($(this.bundle_container).down('.total_units').innerHTML)) {
-      $(this.bundle_container).down('.total_units').update(totalUnits);
-      new Effect.Highlight($(this.bundle_container).down('.total_units'), { startcolor: '#ffff99', endcolor: '#E7F3EA', restorecolor: 'transparent'});
-      this.setAddButton();      
-    }
+    this.setTotalUnitsElement();
     
     ev.target.focus();
   },
   
   /**
+   *  Sets the total units element's innerhtml with the current quantity * the number of units in the item.
+   */
+  setTotalUnitsElement: function() {
+    var currentQuantity = Number($(this.bundle_container).down('.product_add input.quantity').getValue());
+    var totalUnits = currentQuantity * Number($(this.bundle_container).down('.single_unit').innerHTML);
+    if( totalUnits != Number($(this.bundle_container).down('.total_units').innerHTML)) {
+      $(this.bundle_container).down('.total_units').update(totalUnits);
+      new Effect.Highlight($(this.bundle_container).down('.total_units'), { startcolor: '#ffff99', endcolor: '#E7F3EA', restorecolor: 'transparent'});
+      this.setAddButton();      
+    }
+  },
+  
+  /**
    *  Determines if the bundle is valid or not.
+   *  Does it have enough bundle items choosen?
    */
   isBundleValid: function() {
     var allBundleInputs = $(this.bundle_container).select('.bundle input.quantity');

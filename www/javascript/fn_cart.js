@@ -19,7 +19,7 @@ var FNCart = Class.create({
     // Get the quantity to add.
     quantity = $(ev.target).down('.quantity').value;
     // Bail out if the quantity isn't a number.
-    if(!_isStringANumber(quantity)) return false;
+    if(!this._isStringANumber(quantity)) return false;
     
     url = ev.target.action+quantity+"/";
     this.updateCart(url);
