@@ -1,14 +1,14 @@
 from django.db import models
 
 class Aisle(models.Model):
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=60, unique=True)
     description = models.TextField(null=True,blank=True)
 
     def __unicode__(self):
         return self.name
 
 class Brand(models.Model):
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=60, unique=True)
 
     def __unicode__(self):
         return self.name

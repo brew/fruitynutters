@@ -42,7 +42,10 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = _get_cart_by_id(request.session.get('cart_id'))
 
-    return render_to_response('review.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})    
+    return render_to_response('review.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
+    
+def submit(request):
+    pass
 
 # Util 
 def _get_cart_by_id(id):

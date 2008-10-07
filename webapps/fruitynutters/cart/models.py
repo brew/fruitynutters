@@ -98,6 +98,7 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, verbose_name='Cart')
     product = models.ForeignKey(fruitynutters.catalogue.models.Item, verbose_name='Catalogue Item')
     quantity = models.IntegerField("Quantity", )
+    cart_bundle = models.ForeignKey('CartBundle', null=True, blank=True)
     
     def _get_line_total(self):
         """Get the total price based on the product unit price and quantity"""
@@ -115,3 +116,11 @@ class CartItem(models.Model):
     class Meta:
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"
+        
+class CartBundle(models.Model):
+    """A Bundle of CartItems."""
+    cart_items = models.ManyToManyField('CartItem')
+    
+
+
+
