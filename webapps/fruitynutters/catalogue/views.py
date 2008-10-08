@@ -3,6 +3,7 @@ from django.contrib.sessions.models import Session
 
 from fruitynutters.catalogue.models import Aisle, Item
 from fruitynutters.cart.models import Cart
+from fruitynutters.util import get_session_cart
 
 def aisle_index(request):
     
@@ -24,21 +25,3 @@ def aisle(request, aisle_id):
     cart = get_session_cart(request.session)
     
     return render_to_response('aisle.html', {'aisle':aisle, 'aisle_items':aisle_items, 'cart':cart, 'cart_items':cart.cartitem_set.all()})
-    
-# Util
-def get_session_cart(session):
-    # If there is no cart id in the session, create a cart and save its id to the session.
-    if not session.get('cart_id'):
-        cart = Cart()
-        cart.save()
-        session['cart_id'] = cart.id
-        return cart
-    # If there is a cart id in the session try to fetch the corresponding cart.
-    else:
-        # Try to retrieve the cart ...
-        try:
-            return Cart.objects.get(id__exact=session.get('cart_id'))
-        # If there's no cart matching the id, delete the id from the session and try again.
-        except Cart.DoesNotExist:
-            del session['cart_id']
-            return get_session_cart(session)

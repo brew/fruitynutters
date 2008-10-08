@@ -4,11 +4,12 @@ from django.http import HttpResponseForbidden
 
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem, CartBundle
+from fruitynutters.util import get_session_cart
 
 def add_to_cart(request, item_id, quantity=1):
     if request.method == 'POST':
         quantity = int(quantity)
-        cart = _get_cart_by_id(request.session.get('cart_id'))
+        cart = get_session_cart(request.session)
 
         # Code here for testing whether there are bundle items and adding them to the cart.
 
@@ -27,7 +28,7 @@ def add_to_cart(request, item_id, quantity=1):
         
 def update_cart(request):
     if request.method == "POST":
-        cart = _get_cart_by_id(request.session.get('cart_id'))
+        cart = get_session_cart(request.session)
         for item_id, new_quantity in request.POST.items():
             new_quantity = int(new_quantity)
             cart.update_item(item_id, new_quantity)
@@ -38,7 +39,7 @@ def update_cart(request):
         
 def empty_cart(request):
     if request.method == "POST":
-        cart = _get_cart_by_id(request.session.get('cart_id'))
+        cart = get_session_cart(request.session)
         cart.empty()
         return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
         
@@ -48,13 +49,9 @@ def review(request):
     """Review the current cart and collect user info."""
 
     # Get the cart from the session (if one exists)
-    cart = _get_cart_by_id(request.session.get('cart_id'))
+    cart = get_session_cart(request.session)
 
     return render_to_response('review.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
     
 def submit(request):
     pass
-
-# Util 
-def _get_cart_by_id(id):
-    return Cart.objects.get(id__exact=id)

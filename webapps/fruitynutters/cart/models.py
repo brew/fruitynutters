@@ -41,7 +41,10 @@ class Cart(models.Model):
 
     def add_item(self, chosen_item, number_added, bundle_items=None):
         """
-        bundle  a list of tuples containing the id and quantity of subitems
+        Adds items to the cart.
+        chosen_item     the product to add
+        number_added    number to add
+        bundle          a list of tuples containing the id and quantity of subitems
         """
         
         alreadyInCart = False
@@ -68,7 +71,6 @@ class Cart(models.Model):
                 # ...add bundle to item_to_modify
                 item_to_modify.cart_bundle = bundle
 
-            
             # ... add bundle items to it...
             for bundle_item, bundle_item_quantity in bundle_items:
                 item_to_modify.cart_bundle.add_item(bundle_item, bundle_item_quantity)
@@ -99,6 +101,8 @@ class Cart(models.Model):
 
     def empty(self):
         for item in self.cartitem_set.all():
+            if item.cart_bundle:
+                item.cart_bundle.empty()
             item.delete()
         self.save()
 
@@ -130,7 +134,18 @@ class CartItem(models.Model):
 
     def _product_has_bundle(self):
         return product.has_bundle
-
+        
+    def delete(self):
+        """Try deleting associated bundle carts before deleting this."""
+        try:
+            bundle_cart_id = self.cart_bundle.id
+            self.cart_bundle = None
+            self.save()
+            cart_to_delete = CartBundle.objects.get(id__exact=bundle_cart_id)
+            cart_to_delete.delete()
+        except AttributeError:
+            pass
+        super(CartItem, self).delete()
 
     def __unicode__(self):
         return u"%s - %s %s" % (self.quantity, self.product.name, self.line_total)
