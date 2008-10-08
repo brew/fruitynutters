@@ -3,7 +3,7 @@ from django.contrib.sessions.models import Session
 from django.http import HttpResponseForbidden
 
 from fruitynutters.catalogue.models import Item
-from fruitynutters.cart.models import Cart, CartItem
+from fruitynutters.cart.models import Cart, CartItem, CartBundle
 
 def add_to_cart(request, item_id, quantity=1):
     if request.method == 'POST':
@@ -11,11 +11,17 @@ def add_to_cart(request, item_id, quantity=1):
         cart = _get_cart_by_id(request.session.get('cart_id'))
 
         # Code here for testing whether there are bundle items and adding them to the cart.
+
+        bundle = None
+        # If there are items in the post request, then there are bundle items to deal with.
+        # Use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
+        if request.POST.items():
+            bundle = [(Item.objects.get(id__exact=bi[0]), int(bi[1])) for bi in request.POST.items() if int(bi[1]) > 0]
         
         item_to_add = Item.objects.get(id__exact=item_id)
-        cart.add_item(chosen_item=item_to_add, number_added=quantity)
+        cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
         
-        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})        
+        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all(), 'post_parameters':bundle})        
             
     return HttpResponseForbidden()
         

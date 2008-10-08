@@ -2,12 +2,10 @@ from django.db import models
 from decimal import Decimal
 import datetime
 
-
 import fruitynutters
 
 """
 These models are loosely based on models in the Shop app used by http://www.satchmoproject.com/ [BSD]
-I've not done much, other than simplify them.
 
 """
 
@@ -41,10 +39,16 @@ class Cart(models.Model):
     def __unicode__(self):
         return u"Shopping Cart (%s)" % self.date_created
 
-    def add_item(self, chosen_item, number_added):
+    def add_item(self, chosen_item, number_added, bundle_items=None):
+        """
+        bundle  a list of tuples containing the id and quantity of subitems
+        """
+        
         alreadyInCart = False
 
+        # Initially create a CartItem
         item_to_modify = CartItem(cart=self, product=chosen_item, quantity=0)
+        # If there's an item in the cart that already corresponds with the chosen_item, select it. 
         for similarItem in self.cartitem_set.filter(product__id = chosen_item.id):
             item_to_modify = similarItem
             alreadyInCart = True
@@ -52,6 +56,24 @@ class Cart(models.Model):
             
         if not alreadyInCart:
             self.cartitem_set.add(item_to_modify)
+            
+        # If we need to deal with a bundle...
+        if bundle_items:
+            # ... and our item doesn't yet have a bundle ...
+            if not item_to_modify.cart_bundle:
+                # ... create a bundle ...
+                bundle = CartBundle()
+                # ... save it...
+                bundle.save()
+                # ...add bundle to item_to_modify
+                item_to_modify.cart_bundle = bundle
+
+            
+            # ... add bundle items to it...
+            for bundle_item, bundle_item_quantity in bundle_items:
+                item_to_modify.cart_bundle.add_item(bundle_item, bundle_item_quantity)
+                
+                
 
         item_to_modify.quantity += number_added
         item_to_modify.save()
@@ -119,8 +141,7 @@ class CartItem(models.Model):
         verbose_name_plural = "Cart Items"
         
 class CartBundle(Cart):
-    """A Bundle of CartItems."""
-    cart_items = models.ManyToManyField('CartItem')
+    """A Bundle of CartItems (inherits from Cart)."""
     
     class Meta:
         verbose_name = "Cart Bundle"
