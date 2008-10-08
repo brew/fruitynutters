@@ -9,6 +9,8 @@ def add_to_cart(request, item_id, quantity=1):
     if request.method == 'POST':
         quantity = int(quantity)
         cart = _get_cart_by_id(request.session.get('cart_id'))
+
+        # Code here for testing whether there are bundle items and adding them to the cart.
         
         item_to_add = Item.objects.get(id__exact=item_id)
         cart.add_item(chosen_item=item_to_add, number_added=quantity)

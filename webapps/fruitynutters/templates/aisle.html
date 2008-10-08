@@ -28,11 +28,15 @@
 					<div class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
 						<span class="product_details"><span class="single_unit">{{ item.unit_number }}</span> &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}{% if item.bundle %}. Pick any <strong class="total_units">{{ item.unit_number }}</strong> from the list:</span>
 						
+						<form method="post" accept-charset="utf-8" class="bundle_product_add">
+						
 						<ul class="bundle">
 							{% for bundle_item in item.bundle.items.all|dictsort:"name" %}
-								<li><input type="text" value="0" class="quantity" id="item_{{ bundle_item.id }}" /> {{ bundle_item.name }}</li>
+								<li><input type="text" value="0" class="quantity" id="item_{{ bundle_item.id }}" name="{{ bundle_item.id }}" /> {{ bundle_item.name }}</li>
 							{% endfor %}
 						</ul>						
+						
+						</form>
 						
 						{% endif %} 
 						{% if not item.organic %}
@@ -47,7 +51,7 @@
 						{% if item.new_changed  %}
 							<img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" />
 						{% endif %}</span></div>
-					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" /></form>
+					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity_{{item.id}}" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" /></form>
 				</li>
 			{% endfor %}
 		</ul>			
