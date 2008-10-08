@@ -28,21 +28,7 @@ migration = m.Migration(sql_up=["""
     ALTER TABLE `cart_cartbundle` ADD CONSTRAINT cart_ptr_id_refs_id_5231f7f FOREIGN KEY (`cart_ptr_id`) REFERENCES `cart_cart` (`id`);
 """, """
     ALTER TABLE `cart_cartitem` ADD CONSTRAINT cart_bundle_id_refs_cart_ptr_id_7caeda34 FOREIGN KEY (`cart_bundle_id`) REFERENCES `cart_cartbundle` (`cart_ptr_id`);
-""", """
-    CREATE TABLE `cart_cartbundle_cart_items` (
-        `id` integer AUTO_INCREMENT NOT NULL PRIMARY KEY,
-        `cartbundle_id` integer NOT NULL,
-        `cartitem_id` integer NOT NULL,
-        UNIQUE (`cartbundle_id`, `cartitem_id`)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8
-    ;
-""", """
-    ALTER TABLE `cart_cartbundle_cart_items` ADD CONSTRAINT cartbundle_id_refs_cart_ptr_id_982f798 FOREIGN KEY (`cartbundle_id`) REFERENCES `cart_cartbundle` (`cart_ptr_id`);
-""", """
-    ALTER TABLE `cart_cartbundle_cart_items` ADD CONSTRAINT cartitem_id_refs_id_5bab7719 FOREIGN KEY (`cartitem_id`) REFERENCES `cart_cartitem` (`id`);
 """], sql_down=["""
-    DROP TABLE `cart_cartbundle_cart_items`;
-""", """
     ALTER TABLE `cart_cartitem` DROP FOREIGN KEY cart_bundle_id_refs_cart_ptr_id_7caeda34;
 """, """
     DROP TABLE `cart_cartbundle`;
