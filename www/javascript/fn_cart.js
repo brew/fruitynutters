@@ -2,12 +2,8 @@ var FNCart = Class.create({
   initialize: function() {
     // Intercept the product add form submit event.
     
-    this.boundAddSubmit = this.onAddFormSubmit.bind(this);
-    $$('.product_add').each(function(form, index) {
-      form.observe('submit', this.boundAddSubmit);
-    }, this);
-
-    this._prepareCart();
+    this.fetchCart();
+    
   },
   
   /**
@@ -60,6 +56,22 @@ var FNCart = Class.create({
       $('update_list_button').enable();
     else
       $('update_list_button').disable();
+  },
+  
+  /**
+   *  Fetches the cart.
+   */
+  fetchCart: function(url) {
+    new Ajax.Updater({success:'cart_content', failure:'cart_notice'}, "/cart/", {
+      method:'get',
+      onComplete: function() {
+        this.boundAddSubmit = this.onAddFormSubmit.bind(this);
+        $$('.product_add').each(function(form, index) {
+          form.observe('submit', this.boundAddSubmit);
+        }, this);
+        this._prepareCart();
+      }.bind(this)
+    });
   },
   
   /**
