@@ -20,6 +20,7 @@ urlpatterns += patterns('fruitynutters.catalogue.views',
 )
 
 urlpatterns += patterns('fruitynutters.cart.views',
+    (r'^cart/$', 'fetch_cart'),
     (r'^cart/(?P<item_id>\d+)/add/$', 'add_to_cart'),
     (r'^cart/(?P<item_id>\d+)/add/(?P<quantity>\d+)/$', 'add_to_cart'),
     (r'^cart/update/$', 'update_cart'),
