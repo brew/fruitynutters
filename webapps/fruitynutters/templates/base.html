@@ -15,6 +15,9 @@
 	
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	
+	<meta http-equiv="cache-control" content="max-age=0, must-revalidate, no-cache, no-store, private">
+	<meta http-equiv="expires" content="-1">
+	<meta http-equiv="pragma" content="no-cache">
 	
 </head>
 
@@ -34,7 +37,7 @@
 	</div>
 	
 	<div id="cart_content">
-		{# {% include "cart.html" %} #}
+		{% include "cart.html" %}
 		<script type="text/javascript" charset="utf-8">
 			Event.observe(window, 'load', function(event){var cart = new FNCart();});
 		</script>

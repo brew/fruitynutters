@@ -6,16 +6,6 @@ from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem
 from fruitynutters.util import get_session_cart
 
-def fetch_cart(request):
-    if request.method == "GET":
-        cart = get_session_cart(request.session)
-        
-        response = render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
-        response['Cache-Control'] = 'no-cache, must-revalidate'
-        return response
-        
-    return HttpResponseForbidden()
-
 def add_to_cart(request, item_id, quantity=1):
     if request.method == 'POST':
         quantity = int(quantity)
