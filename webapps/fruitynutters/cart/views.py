@@ -3,7 +3,7 @@ from django.contrib.sessions.models import Session
 from django.http import HttpResponseForbidden
 
 from fruitynutters.catalogue.models import Item
-from fruitynutters.cart.models import Cart, CartItem, CartBundle
+from fruitynutters.cart.models import Cart, CartItem
 from fruitynutters.util import get_session_cart
 
 def add_to_cart(request, item_id, quantity=1):
@@ -22,7 +22,7 @@ def add_to_cart(request, item_id, quantity=1):
         item_to_add = Item.objects.get(id__exact=item_id)
         cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
         
-        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all(), 'post_parameters':bundle})        
+        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})        
             
     return HttpResponseForbidden()
         

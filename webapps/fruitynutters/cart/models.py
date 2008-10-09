@@ -65,7 +65,7 @@ class Cart(models.Model):
             # ... and our item doesn't yet have a bundle ...
             if not item_to_modify.cart_bundle:
                 # ... create a bundle ...
-                bundle = CartBundle()
+                bundle = Cart()
                 # ... save it...
                 bundle.save()
                 # ...add bundle to item_to_modify
@@ -125,11 +125,15 @@ class CartItem(models.Model):
     cart = models.ForeignKey(Cart, verbose_name='Cart')
     product = models.ForeignKey(fruitynutters.catalogue.models.Item, verbose_name='Catalogue Item')
     quantity = models.IntegerField("Quantity", )
-    cart_bundle = models.ForeignKey('CartBundle', null=True, blank=True, related_name="bundle")
+    cart_bundle = models.ForeignKey('Cart', null=True, blank=True, related_name="bundle_owner")
     
     def _get_line_total(self):
         """Get the total price based on the product unit price and quantity"""
-        return self.product.price * self.quantity
+        try:
+            return self.product.price * self.quantity
+        except Exception, e:
+            return "Not for sale"
+
     line_total = property(_get_line_total)
 
     def _product_has_bundle(self):
@@ -141,26 +145,16 @@ class CartItem(models.Model):
             bundle_cart_id = self.cart_bundle.id
             self.cart_bundle = None
             self.save()
-            cart_to_delete = CartBundle.objects.get(id__exact=bundle_cart_id)
+            cart_to_delete = Cart.objects.get(id__exact=bundle_cart_id)
             cart_to_delete.delete()
         except AttributeError:
             pass
         super(CartItem, self).delete()
 
     def __unicode__(self):
-        return u"%s - %s %s" % (self.quantity, self.product.name, self.line_total)
+        return u"%s x %s, %s" % (self.quantity, self.product.name, self.line_total)
         
         
     class Meta:
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"
-        
-class CartBundle(Cart):
-    """A Bundle of CartItems (inherits from Cart)."""
-    
-    class Meta:
-        verbose_name = "Cart Bundle"
-        verbose_name_plural = "Cart Bundles"
-
-
-
