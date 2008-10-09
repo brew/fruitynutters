@@ -22,7 +22,15 @@ var FNCart = Class.create({
     if(!this._isStringANumber(quantity)) return false;
     
     url = ev.target.action+quantity+"/";
-    this.updateCart(url);
+    
+    // If the item is a bundle, submit its sub items and their quantities.
+    if($(ev.target).up('.has_bundle')) {
+      var serializedBundleData = $(ev.target).up('.has_bundle').down('.bundle_product_add').serialize();
+      this.updateCart(url, serializedBundleData);
+    } else {
+      this.updateCart(url);
+    }
+    
   },
   
   /**

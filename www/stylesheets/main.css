@@ -152,7 +152,6 @@ body {
 #cart_content a {
     color:#006633;
 }
-
 #cart_content form {
     float:left;
     width:238px;
@@ -164,6 +163,7 @@ body {
 }
 #cart_content ul#shopping_list li {
     overflow:hidden;
+    margin-bottom:6px;
 }
 #cart_content ul#shopping_list li .product {
     margin-top:0;
@@ -190,6 +190,17 @@ body {
     width:42px;
     margin:0 3px;
     text-align:right;
+}
+
+#cart_content ul#shopping_list li ul.bundle_items {
+    margin-left:0;
+    margin-top:2px;
+    padding-left:0;
+    float:left;
+    
+    font-size:11px;
+    line-height:13px;
+    color:#666;
 }
 
 #cart_content #shopping_list_total {
