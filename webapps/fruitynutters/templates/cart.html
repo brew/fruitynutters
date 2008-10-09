@@ -10,17 +10,18 @@
 		<ul id="shopping_list">
 			{% for item in cart_items  %}
 				<li>
-					<p class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1  %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</span>
-						
-						{% if item.cart_bundle %}
-							{% for bundle_item in item.cart_bundle.cartitem_set.all %}
-								{{ bundle_item }}
-							{% endfor %}
-						{% endif %}
-						
-						
-						</p>
+					<div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1  %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</span></div>
+
 					<span class="product_price"><span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" /> <span class="total_product_price">£{{ item.line_total }}</span></span>
+
+					{% if item.cart_bundle %}
+						<ul class="bundle_items">
+						{% for bundle_item in item.cart_bundle.cartitem_set.all %}
+							<li>{{ bundle_item.product.name }}&nbsp;&times;&nbsp;{{ bundle_item.quantity }}</li>
+						{% endfor %}
+						</ul>
+					{% endif %}
+
 										
 				</li>
 			{% endfor %}
