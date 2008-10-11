@@ -7,7 +7,8 @@ from fruitynutters.cart.models import Cart, CartItem
 from fruitynutters.util import get_session_cart
 
 def add_to_cart(request, item_id, quantity=1):
-    if request.method == 'POST':
+    if request.method == 'POST':        
+        
         quantity = int(quantity)
         cart = get_session_cart(request.session)
 
@@ -21,10 +22,8 @@ def add_to_cart(request, item_id, quantity=1):
         
         item_to_add = Item.objects.get(id__exact=item_id)
         cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
-        
-        response = render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
-        response['Cache-Control'] = 'no-cache, must-revalidate' 
-        
+                
+        response = render_to_response('cart.html', {'cart':cart})
         return response
             
     return HttpResponseForbidden()
@@ -36,7 +35,7 @@ def update_cart(request):
             new_quantity = int(new_quantity)
             cart.update_item(item_id, new_quantity)
         
-        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
+        return render_to_response('cart.html', {'cart':cart})
         
     return HttpResponseForbidden()
         
@@ -44,7 +43,7 @@ def empty_cart(request):
     if request.method == "POST":
         cart = get_session_cart(request.session)
         cart.empty()
-        return render_to_response('cart.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
+        return render_to_response('cart.html', {'cart':cart})
         
     return HttpResponseForbidden()
     
@@ -54,7 +53,7 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    return render_to_response('review.html', {'cart':cart, 'cart_items':cart.cartitem_set.all()})
+    return render_to_response('review.html', {'cart':cart})
     
 def submit(request):
     pass

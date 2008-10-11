@@ -17,6 +17,7 @@ class Cart(models.Model):
     date_created = models.DateField(auto_now_add=True)
 
     def _get_count(self):
+        """ Quantity of items in the cart. """
         itemCount = 0
         for item in self.cartitem_set.all():
             itemCount += item.quantity
@@ -78,7 +79,10 @@ class Cart(models.Model):
                 
 
         item_to_modify.quantity += number_added
-        item_to_modify.save()
+        
+        # Before we save the item, is it still valid?
+        if item_to_modify.is_valid():
+            item_to_modify.save()
 
         return item_to_modify
 
@@ -150,6 +154,15 @@ class CartItem(models.Model):
         except AttributeError:
             pass
         super(CartItem, self).delete()
+        
+    def is_valid(self):
+        """If the item is a bundle, does it contain the correct number of sub items."""
+        return True
+        if self.cart_bundle:
+            cart_bundle_quantity = self.cart_bundle.numItems
+            if cart_bundle_quantity is not self.product.unit_number * self.quantity:
+                return False
+        return True
 
     def __unicode__(self):
         return u"%s x %s, %s" % (self.quantity, self.product.name, self.line_total)

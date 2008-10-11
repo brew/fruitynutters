@@ -15,10 +15,6 @@
 	
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	
-	<meta http-equiv="cache-control" content="max-age=0, must-revalidate, no-cache, no-store, private">
-	<meta http-equiv="expires" content="-1">
-	<meta http-equiv="pragma" content="no-cache">
-	
 </head>
 
 <body>
@@ -27,10 +23,17 @@
 	
 	<div id="main_content">
 		<h1>Fruity Nutters</h1>
-		
+				
 		<div id="crumb">
 			{% block crumb %}{% endblock %}
 		</div>
+
+		{% if notifications %}
+		<ul id="notifications">
+		    {% for notification in notifications %}<li class="{{ notification.type }}">{{ notification.content }}</li>
+		    {% endfor %}
+		</ul>
+		{% endif %}
 
 		{% block content %}{% endblock %}
 		

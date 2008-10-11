@@ -1,18 +1,14 @@
 <h2>Your list thus far ...</h2>
 <img src="/furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
-<div id="cart_notice">
-	{# {% if post_parameters %} #}
-	{# 	<p>{{ post_parameters }}</p> #}
-	{# {% endif %} #}
-</div>
+
 <form action="/cart/update/" method="post" accept-charset="utf-8" id="cart_form">
 	{% if cart.numItems %}
 		<ul id="shopping_list">
-			{% for item in cart_items  %}
+			{% for item in cart.cartitem_set.all  %}
 				<li>
 					<div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1  %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat }}{{ item.product.measure_type }}</span></div>
 
-					<span class="product_price"><span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" /> <span class="total_product_price">£{{ item.line_total }}</span></span>
+					<span class="product_price"><span>&times;</span> {% if bum %}<input type="text" value="{{ item.quantity }}" class="quantity" disabled="disabled" />{% else %}<input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span></span>
 
 					{% if item.cart_bundle %}
 						<ul class="bundle_items">
