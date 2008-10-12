@@ -16,7 +16,7 @@ class Cart(models.Model):
     """
     date_created = models.DateField(auto_now_add=True)
     
-    CART_BUNDLE_ADDED_NOTICE = "Note that the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
+    CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
 
     def _get_count(self):

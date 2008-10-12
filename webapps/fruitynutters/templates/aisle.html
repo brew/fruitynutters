@@ -28,7 +28,7 @@
 					<div class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
 						<span class="product_details"><span class="single_unit">{{ item.unit_number }}</span> &times; {{ item.measure_per_unit|floatformat }}{{ item.measure_type }}{% if item.bundle %}. Pick any <strong class="total_units">{{ item.unit_number }}</strong> from the list:</span>
 						
-						<form method="post" accept-charset="utf-8" class="bundle_product_add">
+						<form method="post" accept-charset="utf-8" action="/cart/{{ item.id }}/add/" class="bundle_product_add">
 						
 						<ul class="bundle">
 							{% for bundle_item in item.bundle.items.all|dictsort:"name" %}

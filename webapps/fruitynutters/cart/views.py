@@ -65,7 +65,7 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    return render_to_response('review.html', {'cart':cart}, context_instance=RequestContext(request))
+    return render_to_response('review.html', {'cart':cart, 'cart_page_type':'review'}, context_instance=RequestContext(request))
     
 def submit(request):
     pass
