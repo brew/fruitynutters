@@ -196,7 +196,7 @@ img {
     text-align:right;
 }
 #cart_content ul#shopping_list li .product_price a.remove_item {
-    margin-top:1px;
+    margin-top:2px;
 }
 #cart_content ul#shopping_list li ul.bundle_items {
     margin-left:0;
@@ -219,13 +219,15 @@ img {
 #cart_content #update_list_button {
     margin-top:30px;
 }
-#cart_content #empty_list {
-    float:left;
-}
-#cart_content #continue_button {
+#continue_form  {
     float:right;
 }
-
+#continue_form #empty_list {
+    float:left;
+}
+#continue_form #continue_button {
+    float:right;
+}
 
 #cart_content ul#notifications {
     float:left;
@@ -233,7 +235,6 @@ img {
     margin-top:0;
     width:238px;
 }
-
 #notifications, #notifications li {
   list-style: none;
   list-style-type: none;
@@ -264,7 +265,6 @@ img {
   border-color: #ffd324;
   color:#eb830c;
 }
-
 
 #crumb {
     margin-bottom:8px;
