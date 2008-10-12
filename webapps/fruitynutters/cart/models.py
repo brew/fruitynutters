@@ -15,6 +15,9 @@ class Cart(models.Model):
     Store items currently in a cart
     """
     date_created = models.DateField(auto_now_add=True)
+    
+    CART_BUNDLE_ADDED_NOTICE = "Note that the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
+    CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
 
     def _get_count(self):
         """ Quantity of items in the cart. """
@@ -87,8 +90,8 @@ class Cart(models.Model):
         return item_to_modify
 
 
-    def update_item(self, update_item_id, quantity):
-        item_to_modify = self.cartitem_set.get(product__id = update_item_id)
+    def update_item(self, update_item, quantity):
+        item_to_modify = self.cartitem_set.get(product__id = update_item.id)
         item_to_modify.quantity = quantity
         if item_to_modify.quantity <= 0:
             item_to_modify.delete()
@@ -96,8 +99,11 @@ class Cart(models.Model):
         else:
             item_to_modify.save()
 
-    def remove_item(self, chosen_item_id, number_removed):
+    def remove_item(self, chosen_item_id, number_removed=None):
         item_to_modify = self.cartitem_set.get(product__id = chosen_item_id)
+        # If no number_removed was provided, remove them all.
+        if not number_removed:
+            number_removed = item_to_modify.quantity
         item_to_modify.quantity -= number_removed
         if item_to_modify.quantity <= 0:
             item_to_modify.delete()
@@ -137,11 +143,11 @@ class CartItem(models.Model):
             return self.product.price * self.quantity
         except Exception, e:
             return "Not for sale"
-
     line_total = property(_get_line_total)
 
     def _product_has_bundle(self):
         return product.has_bundle
+    has_bundle = property(_product_has_bundle)
         
     def delete(self):
         """Try deleting associated bundle carts before deleting this."""
