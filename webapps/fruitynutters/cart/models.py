@@ -18,6 +18,7 @@ class Cart(models.Model):
     
     CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
+    CART_BUNDLE_UPDATE_ERROR = "A problem. lol?"
 
     def _get_count(self):
         """ Quantity of items in the cart. """

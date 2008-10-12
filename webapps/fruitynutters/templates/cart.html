@@ -33,9 +33,9 @@
 	<p><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
 	<p id="shopping_list_total">Total: <strong>£{{ cart.total }}</strong></p>
 </form>
-	<p> 
+
 		{% ifequal cart_page_type "review" %}
 			<form id="continue_form" action="/cart/submit/" method="post"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Submit your order" id="continue_button" /></form>
 		{% else %}
 			<form id="continue_form" action="/cart/review/" method="get"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Review your order" id="continue_button" /></form>
-	{% endifequal %}</p>
+	{% endifequal %}
