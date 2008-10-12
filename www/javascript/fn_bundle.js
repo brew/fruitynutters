@@ -76,7 +76,7 @@ var FNBundle = Class.create({
     
     for (var i=0;i<allBundleInputs.length;i++) {
       // If the input doesn't contain a number, the bundle is invalid.
-      if(!this._isStringANumber(allBundleInputs[i].getValue())) return false;
+      if(!this._isStringANumber(allBundleInputs[i].getValue()) && allBundleInputs[i].getValue() != "") return false;
       
       // Add the value of the context input to the numberOfUnitsSelected.
       numberOfUnitsSelected += Number(allBundleInputs[i].getValue());      

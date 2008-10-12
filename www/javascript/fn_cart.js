@@ -2,8 +2,12 @@ var FNCart = Class.create({
   initialize: function() {
     // Intercept the product add form submit event.
     
-    this.fetchCart();
-    
+    this.boundAddSubmit = this.onAddFormSubmit.bind(this);
+    $$('.product_add').each(function(form, index) {
+      form.observe('submit', this.boundAddSubmit);
+    }, this);
+
+    this._prepareCart();
   },
   
   /**
@@ -29,6 +33,11 @@ var FNCart = Class.create({
     
   },
   
+  onRemoveItem: function(ev) {
+    ev.stop();
+    this.updateCart($(ev.target).up('a.remove_item').href);
+  },
+  
   /**
    *  Handler for the click event on the empty list link.
    */
@@ -42,10 +51,12 @@ var FNCart = Class.create({
    */
   onCartUpdateSubmit: function(ev) {
     ev.stop();
-    if(ev.target.serialize() != this.serializedCart)
+    if(ev.target.serialize() != this.serializedCart) {
+      // console.info(ev.target.serialize());
       this.updateCart(ev.target.action, ev.target.serialize());
-    else
+    } else {
       console.info('Cart has not changed.');
+    }
   },
   
   /**
@@ -56,22 +67,6 @@ var FNCart = Class.create({
       $('update_list_button').enable();
     else
       $('update_list_button').disable();
-  },
-  
-  /**
-   *  Fetches the cart.
-   */
-  fetchCart: function(url) {
-    new Ajax.Updater({success:'cart_content', failure:'cart_notice'}, "/cart/", {
-      method:'get',
-      onComplete: function() {
-        this.boundAddSubmit = this.onAddFormSubmit.bind(this);
-        $$('.product_add').each(function(form, index) {
-          form.observe('submit', this.boundAddSubmit);
-        }, this);
-        this._prepareCart();
-      }.bind(this)
-    });
   },
   
   /**
@@ -101,6 +96,11 @@ var FNCart = Class.create({
     this.boundEmptyList = this.onEmptyList.bind(this);
     $('empty_list').observe('click', this.boundEmptyList);
     
+    this.boundRemoveItem = this.onRemoveItem.bind(this);
+    $$('#cart_form .remove_item').each(function(alink, index){
+      alink.observe('click', this.boundRemoveItem);
+    }.bind(this));
+    
     this.boundCartSubmit = this.onCartUpdateSubmit.bind(this);
     $('cart_form').observe('submit', this.boundCartSubmit);
     
@@ -118,6 +118,10 @@ var FNCart = Class.create({
     $('empty_list').stopObserving('click', this.boundEmptyList);
     
     $('cart_form').stopObserving('submit', this.boundCartSubmit);
+
+    $$('#cart_form a.remove_item').each(function(alink, index){
+      alink.stopObserving('click', this.boundRemoveItem);
+    }.bind(this));
     
     $('cart_form').getInputs().each(function(input, index){
       input.stopObserving('keyup', this.boundCartKeydown);

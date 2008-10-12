@@ -14,6 +14,10 @@ body {
     font-family: Verdana, Helvetica, sans-serif;
 }
 
+img {
+    border:0;
+}
+
 #wrapper {
     width:800px;
 }
@@ -168,7 +172,7 @@ body {
 #cart_content ul#shopping_list li .product {
     margin-top:0;
     float:left;
-    width:140px;
+    width:128px;
 }
 #cart_content ul#shopping_list li .product .quantity {
     color:#666;
@@ -191,7 +195,9 @@ body {
     margin:0 3px;
     text-align:right;
 }
-
+#cart_content ul#shopping_list li .product_price a.remove_item {
+    margin-top:1px;
+}
 #cart_content ul#shopping_list li ul.bundle_items {
     margin-left:0;
     margin-top:2px;
@@ -219,6 +225,46 @@ body {
 #cart_content #continue_button {
     float:right;
 }
+
+
+#cart_content ul#notifications {
+    float:left;
+    padding:0;
+    margin-top:0;
+    width:238px;
+}
+
+#notifications, #notifications li {
+  list-style: none;
+  list-style-type: none;
+  margin-left: 0;
+  margin-top:0;
+}
+.information, .error, .success, .warning, .cart_information, .cart_error, .cart_success, .cart_warning {
+  margin-bottom: 0.4em;
+  border: 1px solid #9bb8d9;
+  padding: 6px 6px 6px 30px;
+}
+.information, .cart_information {
+  background: #dedfff url('/furniture/information.png') 6px 0.7em no-repeat;
+  color: #406299;
+}
+.error, .cart_error {
+  background: #ffe1da url('/furniture/exclamation.png') 6px 0.7em no-repeat;
+  border-color: #f34f4f;
+  color: #be0b0b;
+}
+.success, .cart_success {
+  background: #e2f9e3 url('/furniture/accept.png') 6px 0.7em no-repeat;
+  border-color: #9c9;
+  color: #080;
+}
+.warning, .cart_warning {
+  background:#fff8bf url('/furniture/error.png') 6px 0.7em no-repeat;
+  border-color: #ffd324;
+  color:#eb830c;
+}
+
 
 #crumb {
     margin-bottom:8px;
