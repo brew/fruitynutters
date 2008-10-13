@@ -34,8 +34,4 @@
 	<p id="shopping_list_total">Total: <strong>£{{ cart.total }}</strong></p>
 </form>
 
-		{% ifequal cart_page_type "review" %}
-			<form id="continue_form" action="/cart/submit/" method="post"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Submit your order" id="continue_button" /></form>
-		{% else %}
-			<form id="continue_form" action="/cart/review/" method="get"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Review your order" id="continue_button" /></form>
-	{% endifequal %}
+<a href="#" id="empty_list">Empty list</a>{% ifnotequal cart_page_type "review" %}<form id="continue_form" action="/cart/review/" method="get"><input type="submit" value="Review your order" id="continue_button" /></form>{% endifnotequal %}

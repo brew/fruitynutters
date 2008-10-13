@@ -10,5 +10,33 @@
 {% block crumb %}Review and confirm your order{% endblock %}
 
 {% block content %}
-Review		
+	<p class="notice">Fill in your details below and submit your order to the Fruity Nutters team. Or you can <a href="/catalogue/aisle/">continue shopping</a>.</p>
+	
+	<form action="/cart/submit/" method="post" accept-charset="utf-8" id="order_details">
+		
+		<p>
+			<label for="member_name">Your name</label>
+			<input type="text" name="member_name" value="" id="member_name" />
+		</p>
+		
+		<p>
+			<label for="member_email">Email</label>
+			<input type="text" name="member_email" value="" id="member_email" />
+			<span class="secondary"><input type="checkbox" name="email_member_order" value="" id="email_member_order" /><label for="email_member_order">Send a copy of your order to your email</label></span>
+		</p>
+		
+		<p>
+			<label for="member_phone">Phone number</label>
+			<input type="text" name="member_phone" value="" id="member_phone" />
+		</p>
+
+		<p>
+			<label for="order_comments">Comments / Wishlist</label>
+			<textarea name="order_comments" rows="8" cols="40"></textarea>
+		</p>
+		
+		<p><input type="submit" name="submit_order" value="Submit your order" id="submit_order" /></p>
+
+	</form>
+	
 {% endblock %}
