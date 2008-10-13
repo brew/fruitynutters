@@ -50,6 +50,13 @@ img {
     background-color:#e7f3ea;
     color:#666;
 }
+#main_content .notice a {
+    text-decoration:none;
+    color:#006633;
+}
+#main_content .notice a:hover {
+    text-decoration:underline;
+}
 
 #main_content ul#product_list {
     list-style:none;
@@ -134,6 +141,39 @@ img {
     color:#50a863;
 }
 
+/* REVIEW FORM */
+#main_content form#order_details {
+    margin:0 4px;
+    width:366px;
+}
+#main_content form#order_details label {
+    display:block;
+}
+#main_content form#order_details input {
+    display:block;
+    width:246px;
+}
+#main_content form#order_details textarea {
+    width:100%;
+}
+#main_content form#order_details input#submit_order {
+    width:auto;
+}
+#main_content form#order_details span.secondary {
+    width:246px;
+    display:block;
+}
+#main_content form#order_details span.secondary label {
+    font-size:10px;
+    color:#666;
+    display:inline;
+}
+#main_content form#order_details span.secondary input {
+    display:inline;
+    vertical-align:bottom;
+}
+
+
 /* CART */
 #cart_content {
     float:left;
@@ -156,7 +196,7 @@ img {
 #cart_content a {
     color:#006633;
 }
-#cart_content form {
+#cart_content form#cart_form {
     float:left;
     width:238px;
 }
@@ -208,7 +248,6 @@ img {
     line-height:13px;
     color:#666;
 }
-
 #cart_content #shopping_list_total {
     margin-top:10px;
     padding-top:5px;
@@ -219,11 +258,12 @@ img {
 #cart_content #update_list_button {
     margin-top:30px;
 }
+#empty_list {
+    float:left;
+}
 #continue_form  {
     float:right;
-}
-#continue_form #empty_list {
-    float:left;
+    width:100px;
 }
 #continue_form #continue_button {
     float:right;
