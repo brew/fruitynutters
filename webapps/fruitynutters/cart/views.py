@@ -31,8 +31,7 @@ def add_to_cart(request, item_id, quantity=1):
 def update_cart(request):
     if request.method == "POST":
         cart = get_session_cart(request.session)
-        # try:
-        # items_to_update = [(item[0], item[1]) for item in request.POST.items() if item[0].isdigit()]
+
         items_to_update = [(Item.objects.get(id__exact=item[0]), int(item[1])) for item in request.POST.items() if item[0].isdigit()]
         for item_to_update, new_quantity in items_to_update:
             # If not a bundle, update this item.
@@ -40,8 +39,6 @@ def update_cart(request):
                 cart.update_item(item_to_update, new_quantity)
             else:
                 request.notifications.create(Cart.CART_BUNDLE_UPDATE_WARNING, 'cart_warning')
-        # except Exception, e:
-        #     request.notifications.create(e, 'cart_error')
 
         return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         
@@ -71,7 +68,7 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    return render_to_response('review.html', {'cart':cart, 'cart_page_type':'review'}, context_instance=RequestContext(request))
+    return render_to_response('review.html', {'cart':cart}, context_instance=RequestContext(request))
     
 def submit(request):
     pass

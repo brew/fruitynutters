@@ -30,8 +30,6 @@
 	{% else %}
 		<p>Your list is currently empty</p>
 	{% endif %}
-	<p><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
+	<p id="list_controls"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
 	<p id="shopping_list_total">Total: <strong>£{{ cart.total }}</strong></p>
 </form>
-
-<a href="#" id="empty_list">Empty list</a>{% ifnotequal cart_page_type "review" %}<form id="continue_form" action="/cart/review/" method="get"><input type="submit" value="Review your order" id="continue_button" /></form>{% endifnotequal %}
