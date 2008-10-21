@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.sessions.models import Session
 from django.http import HttpResponseForbidden, HttpResponse
@@ -6,8 +8,6 @@ from django.template import RequestContext
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem
 from fruitynutters.util import get_session_cart
-
-from PyRTF import *
 
 def add_to_cart(request, item_id, quantity=1):
     """Adds the item with item_id to the cart associated with the session."""
@@ -80,35 +80,51 @@ def submit(request):
     """Validates and emails the cart and member details to FNs team."""
     
     cart = get_session_cart(request.session)
-    
-    response = render_to_response('order_form.rtf', {'cart':cart}, context_instance=RequestContext(request), mimetype = 'application/rtf')
+
+    response = HttpResponse(mimetype = 'application/rtf')
+    # response = render_to_response('order_form.rtf', {'cart':cart}, context_instance=RequestContext(request), mimetype = 'application/rtf')
     response['Content-Disposition'] = 'attachment;filename=order_form.rtf'
 
-    # document_renderer = Renderer()
-    # document_renderer.Write(createOrderForm(cart, request.POST), response)
-    
-<<<<<<< .mine
+    document_renderer = Renderer()
+    document_renderer.Write(createOrderForm(cart, request.POST), response)
+
     return response
+
+
+from rtfng.Renderer import Renderer
+from rtfng.Elements import StyleSheet, Document
+from rtfng.Styles import TextStyle, ParagraphStyle
+from rtfng.PropertySets import TextPropertySet, ParagraphPropertySet, TabPropertySet, BorderPropertySet, FramePropertySet
+from rtfng.document.section import Section
+from rtfng.document.paragraph import Paragraph, Table, Cell
     
 def createOrderForm(cart, member_details):
+    
+    member_name = member_details.get('member_name')
+    member_email = member_details.get('member_email')
+    member_phone = member_details.get('member_phone')
+    
     """Creates and returns an order form pdf."""
     ss = makeReportStylesheet()
     doc = Document(ss)
     section = Section()
     doc.Sections.append( section )
+    
+    footer_text = "Order for: " + member_name
+    section.Footer.append(str(footer_text))
 
-    table = Table(  TabPS.DEFAULT_WIDTH,
-                    TabPS.DEFAULT_WIDTH * 8,
-                    TabPS.DEFAULT_WIDTH * 2,
-                    TabPS.DEFAULT_WIDTH * 2 )
+    table = Table(  TabPropertySet.DEFAULT_WIDTH,
+                    TabPropertySet.DEFAULT_WIDTH * 8,
+                    TabPropertySet.DEFAULT_WIDTH * 2,
+                    TabPropertySet.DEFAULT_WIDTH * 2 )
 
-    thin_edge  = BorderPS( width=10, style=BorderPS.SINGLE )
-    thin_frame  = FramePS( thin_edge,  thin_edge,  thin_edge,  thin_edge )
+    thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
+    thin_frame  = FramePropertySet( thin_edge,  thin_edge,  thin_edge,  thin_edge )
 
     # header
-    header_props = ParagraphPS(alignment=3)
+    header_props = ParagraphPropertySet(alignment=3)
 
-    c1_para = Paragraph(ss.ParagraphStyles.Heading2Short, header_props)
+    c1_para = Paragraph(ss.ParagraphStyles.Heading2, header_props)
     c1_para.append('O')
     c1 = Cell(c1_para, thin_frame)
     
@@ -131,34 +147,36 @@ def createOrderForm(cart, member_details):
         if cart_item.product.organic:
             organic = "o"
         
-        centre_props = ParagraphPS(alignment=3)    
+        centre_props = ParagraphPropertySet(alignment=3)    
         
         c1_para = Paragraph(ss.ParagraphStyles.Normal, centre_props)
         c1_para.append(organic)
         c1 = Cell(c1_para, thin_frame)
+
+        measure_per_unit = "%g" % cart_item.product.measure_per_unit
         
         c2_para = Paragraph()
-        c2_para.append(str(cart_item.product.name) + " (" + str(cart_item.product.unit_number) + " x " + str(cart_item.product.measure_per_unit) + str(cart_item.product.measure_type) + ")")
+        c2_para.append(unicode(cart_item.product.name) + " (" + unicode(cart_item.product.unit_number) + " x " + str(measure_per_unit) + unicode(cart_item.product.measure_type) + ")")
         c2 = Cell(c2_para, thin_frame)
         
         c3_para = Paragraph(centre_props)
-        c3_para.append(str(cart_item.quantity))
+        c3_para.append(unicode(cart_item.quantity))
         c3 = Cell(c3_para, thin_frame)
         
-        cost_props = ParagraphPS(alignment=2)
+        cost_props = ParagraphPropertySet(alignment=2)
         
         c4_para = Paragraph(cost_props)
-        c4_para.append(str(cart_item.line_total))
+        c4_para.append(unicode(cart_item.line_total))
         c4 = Cell(c4_para, thin_frame)
         table.AddRow(c1, c2, c3, c4)
 
 
-    c1_para = Paragraph(ss.ParagraphStyles.Heading2Short, ParagraphPS(alignment=2))
+    c1_para = Paragraph(ss.ParagraphStyles.Heading2, ParagraphPropertySet(alignment=2))
     c1_para.append('Total cost')
     c1 = Cell(c1_para, thin_frame, span=3)
     
-    c2_para = Paragraph(ParagraphPS(alignment=2))
-    c2_para.append("\xa3"+str(cart.total))
+    c2_para = Paragraph(ParagraphPropertySet(alignment=2))
+    c2_para.append(u"£"+str(cart.total))
     c2 = Cell(c2_para,thin_frame)
     table.AddRow(c1,c2)
 
@@ -167,45 +185,33 @@ def createOrderForm(cart, member_details):
     return doc
     
 def makeReportStylesheet():
-	result = StyleSheet()
+    result = StyleSheet()
 
-	NormalText = TextStyle( TextPropertySet( result.Fonts.Arial, 20 ) )
+    NormalText = TextStyle( TextPropertySet( result.Fonts.Arial, 20 ) )
 
-	ps = ParagraphStyle( 'Normal',
-						 NormalText.Copy(),
-						 ParagraphPropertySet( space_before = 60,
-											   space_after  = 60 ) )
-	result.ParagraphStyles.append( ps )
+    ps = ParagraphStyle( 'Normal',
+                         NormalText.Copy(),
+                         ParagraphPropertySet( space_before = 60,
+                                               space_after  = 60 ) )
+    result.ParagraphStyles.append( ps )
 
-	ps = ParagraphStyle( 'Normal Short',
-						 NormalText.Copy() )
-	result.ParagraphStyles.append( ps )
+    ps = ParagraphStyle( 'Normal Short',
+                         NormalText.Copy() )
+    result.ParagraphStyles.append( ps )
 
-	NormalText.TextPropertySet.SetSize( 32 )
-	ps = ParagraphStyle( 'Heading 1',
-						 NormalText.Copy(),
-						 ParagraphPropertySet( space_before = 240,
-											   space_after  = 60 ) )
-	result.ParagraphStyles.append( ps )
-	
-	NormalText.TextPropertySet.SetSize( 24 ).SetBold( True )
-	ps = ParagraphStyle( 'Heading 2',
-						 NormalText.Copy(),
-						 ParagraphPropertySet( space_before = 240,
-											   space_after  = 60 ) )
-	result.ParagraphStyles.append( ps )
-	
-	NormalText.TextPropertySet.SetSize( 24 ).SetBold( True )
-	ps = ParagraphStyle( 'Heading 2 Short',
-						 NormalText.Copy() )
-	result.ParagraphStyles.append( ps )
+    NormalText.textProps.size = 32
+    ps = ParagraphStyle( 'Heading 1',
+                         NormalText.Copy(),
+                         ParagraphPropertySet( space_before = 240,
+                                               space_after  = 60 ) )
+    result.ParagraphStyles.append( ps )
 
-	return result
-    
-    
-    
-    
-    
-    
-=======
-    return response>>>>>>> .r66
+    NormalText.textProps.size = 24
+    NormalText.textProps.bold = True
+    ps = ParagraphStyle( 'Heading 2',
+                         NormalText.Copy(),
+                         ParagraphPropertySet( space_before = 240,
+                                               space_after  = 60 ) )
+    result.ParagraphStyles.append( ps )
+
+    return result
