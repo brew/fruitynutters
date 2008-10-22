@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.sessions.models import Session
 from django.http import HttpResponseForbidden, HttpResponse
 from django.template import RequestContext
+from django.core.mail import EmailMessage
 
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem
@@ -77,22 +78,23 @@ def review(request):
 
     return render_to_response('review.html', {'cart':cart}, context_instance=RequestContext(request))
     
-from rtfng.Renderer import Renderer    
+
 def submit(request):
     """Validates and emails the cart and member details to FNs team."""
     
     cart = get_session_cart(request.session)
-    isValid = True
 
     member_name = request.POST.get('member_name', '')
     member_phone = request.POST.get('member_phone', '')
     member_email = request.POST.get('member_email', '')
     order_comments = request.POST.get('order_comments', '')
+    email_to_user = request.POST.get('email_member_order', False)
     
+    # Validate the form and cart.
+    isValid = True
     if cart.numItems == 0:
         isValid = False
         request.notifications.create("There are no items your shopping list!", 'error')
-
     if len(member_name) == 0:
         isValid = False
         request.notifications.create("Please enter your name", 'error')
@@ -102,19 +104,36 @@ def submit(request):
     if len(member_email) > 0 and not isAddressValid(member_email):
         isValid = False
         request.notifications.create("Please check that your email address is valid", 'error')
+    if email_to_user and len(member_email) == 0:
+        isValid = False
+        request.notifications.create("If you want a copy of the order sent to you, you'll need to supply your email address", 'error')
 
-    # assert False
-        
+
+    # If it's valid, make the rtf, attach and send to the email, clear the cart and return success page.
     if isValid:
+        # store the result of createOrderForm (a StringIO object) in a buffer.
+        buffer = createOrderForm(cart, request.POST)
         
-        response = HttpResponse(mimetype = 'application/rtf')
-        # response = render_to_response('order_form.rtf', {'cart':cart}, context_instance=RequestContext(request), mimetype = 'application/rtf')
-        response['Content-Disposition'] = 'attachment;filename=order_form.rtf'
+        email_to = ['brook@brookelgie.com',]
+        if email_to_user:
+            email_to.append(member_email)
 
-        document_renderer = Renderer()
-        document_renderer.Write(createOrderForm(cart, request.POST), response)
+        # Try making and sending the email.
+        try:
+            mail = EmailMessage('[FruityNuttersOrder] '+member_name, 'Order attached.\n', 'specialbrew@gmail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail.attach('order_form.rtf', buffer.getvalue(), 'application/rtf')
+            mail.send()
+            buffer.close()
+            
+            # Don't need the cart anymore; empty it.
+            cart.empty();
+            
+            request.notifications.create("Your order has been submitted! Ta very much!", 'success')
+        except Exception, e:
+            request.notifications.create("There was a problem sending the email :( " + str(e), 'error')
 
-        return response
+        # Get the list of aisles.
+        return render_to_response('review.html', {'cart':cart, 'submit_success':True}, context_instance=RequestContext(request))
     else:
         return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
         

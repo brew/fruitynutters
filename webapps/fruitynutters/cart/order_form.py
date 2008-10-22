@@ -5,6 +5,10 @@ from rtfng.Styles import TextStyle, ParagraphStyle
 from rtfng.PropertySets import TextPropertySet, ParagraphPropertySet, TabPropertySet, BorderPropertySet, FramePropertySet, MarginsPropertySet
 from rtfng.document.section import Section
 from rtfng.document.paragraph import Paragraph, Table, Cell
+from rtfng.Constants import Languages
+from rtfng.Renderer import Renderer
+
+from cStringIO import StringIO
 
 def createOrderForm(cart, member_details):
     """Creates and returns an order form pdf."""
@@ -15,7 +19,7 @@ def createOrderForm(cart, member_details):
     order_comments = unicode(member_details.get('order_comments'))
 
     ss = makeReportStylesheet()
-    doc = Document(ss)
+    doc = Document(ss, default_language=Languages.EnglishUK)
     section = Section(margins=MarginsPropertySet( top=600, left=600, bottom=600, right=600 ))
     doc.Sections.append( section )
 
@@ -45,15 +49,15 @@ def createOrderForm(cart, member_details):
     c1 = Cell(c1_para, thin_frame)
 
     c2_para = Paragraph(header_props)
-    c2_para.append('Product ordered')
+    c2_para.append(u'Product ordered')
     c2 = Cell(c2_para, thin_frame )
 
     c3_para = Paragraph(header_props)
-    c3_para.append('Amount')
+    c3_para.append(u'Amount')
     c3 = Cell(c3_para, thin_frame )
 
     c4_para = Paragraph(header_props)
-    c4_para.append('Cost')
+    c4_para.append(u'Cost')
     c4 = Cell(c4_para, thin_frame )
     table.AddRow(c1, c2, c3, c4)
 
@@ -148,7 +152,12 @@ def createOrderForm(cart, member_details):
     
     section.append(table)
 
-    return doc
+    rtf_doc = StringIO()
+
+    document_renderer = Renderer()
+    document_renderer.Write(doc, rtf_doc)    
+
+    return rtf_doc
 
 def makeReportStylesheet():
     result = StyleSheet()
