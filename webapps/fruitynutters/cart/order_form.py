@@ -9,10 +9,10 @@ from rtfng.document.paragraph import Paragraph, Table, Cell
 def createOrderForm(cart, member_details):
     """Creates and returns an order form pdf."""
 
-    member_name = member_details.get('member_name')
-    member_email = member_details.get('member_email')
-    member_phone = member_details.get('member_phone')
-    order_comments = member_details.get('order_comments')
+    member_name = unicode(member_details.get('member_name'))
+    member_email = unicode(member_details.get('member_email'))
+    member_phone = unicode(member_details.get('member_phone'))
+    order_comments = unicode(member_details.get('order_comments'))
 
     ss = makeReportStylesheet()
     doc = Document(ss)
@@ -23,8 +23,11 @@ def createOrderForm(cart, member_details):
     header_text.append(u"Fruity Nutters - Order form")
     section.Header.append(header_text)
 
-    footer_text = member_name + " -  Phone: " + member_phone
-    section.Footer.append(str(footer_text))
+    footer_text = member_name + u" -  Phone: " + member_phone
+    
+    if len(member_email) > 0:
+        footer_text += u" - Email: " + member_email
+    section.Footer.append(unicode(footer_text))
 
     thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
     thin_frame  = FramePropertySet( thin_edge,  thin_edge,  thin_edge,  thin_edge )
@@ -73,7 +76,7 @@ def createOrderForm(cart, member_details):
         brand = cart_item.product.brand
         if brand:
             c2_para.append(" - " + unicode(brand))
-        c2_para.append(" (" + unicode(cart_item.product.unit_number) + " x " + str(measure_per_unit) + unicode(cart_item.product.measure_type) + ")")
+        c2_para.append(" (" + unicode(cart_item.product.unit_number) + " x " + unicode(measure_per_unit) + unicode(cart_item.product.measure_type) + ")")
         if cart_item.product.bundle:
             c2_para.append(u"\n")
             for bundle_item in cart_item.cart_bundle.cartitem_set.all():
@@ -98,7 +101,7 @@ def createOrderForm(cart, member_details):
     c1 = Cell(c1_para, thin_frame, span=3)
 
     c2_para = Paragraph(ParagraphPropertySet(alignment=2))
-    c2_para.append(u"£"+str(cart.total))
+    c2_para.append(u"£"+unicode(cart.total))
     c2 = Cell(c2_para,thin_frame)
     table.AddRow(c1,c2)
 

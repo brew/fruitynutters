@@ -27,6 +27,13 @@
 		<div id="crumb">
 			{% block crumb %}{% endblock %}
 		</div>
+		{% load basic_logic %}
+		{% if notifications %}
+			<ul id="notifications">
+			    {% for notification in notifications %}{% if "cart_"|IN:notification.type %}{% else %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
+			    {% endfor %}
+			</ul>
+		{% endif %}
 
 		{% block content %}{% endblock %}
 		

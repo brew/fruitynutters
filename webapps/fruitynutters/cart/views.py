@@ -7,7 +7,7 @@ from django.template import RequestContext
 
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem
-from fruitynutters.util import get_session_cart
+from fruitynutters.util import get_session_cart, isAddressValid
 from fruitynutters.cart.order_form import createOrderForm
 
 def add_to_cart(request, item_id, quantity=1):
@@ -82,14 +82,42 @@ def submit(request):
     """Validates and emails the cart and member details to FNs team."""
     
     cart = get_session_cart(request.session)
+    isValid = True
 
-    response = HttpResponse(mimetype = 'application/rtf')
-    # response = render_to_response('order_form.rtf', {'cart':cart}, context_instance=RequestContext(request), mimetype = 'application/rtf')
-    response['Content-Disposition'] = 'attachment;filename=order_form.rtf'
+    member_name = request.POST.get('member_name', '')
+    member_phone = request.POST.get('member_phone', '')
+    member_email = request.POST.get('member_email', '')
+    order_comments = request.POST.get('order_comments', '')
+    
+    if cart.numItems == 0:
+        isValid = False
+        request.notifications.create("There are no items your shopping list!", 'error')
 
-    document_renderer = Renderer()
-    document_renderer.Write(createOrderForm(cart, request.POST), response)
+    if len(member_name) == 0:
+        isValid = False
+        request.notifications.create("Please enter your name", 'error')
+    if len(member_phone) == 0:
+        isValid = False
+        request.notifications.create("Please provide a phone number in case we need to contact you", 'error')
+    if len(member_email) > 0 and not isAddressValid(member_email):
+        isValid = False
+        request.notifications.create("Please check that your email address is valid", 'error')
 
-    return response
+    # assert False
+        
+    if isValid:
+        
+        response = HttpResponse(mimetype = 'application/rtf')
+        # response = render_to_response('order_form.rtf', {'cart':cart}, context_instance=RequestContext(request), mimetype = 'application/rtf')
+        response['Content-Disposition'] = 'attachment;filename=order_form.rtf'
 
+        document_renderer = Renderer()
+        document_renderer.Write(createOrderForm(cart, request.POST), response)
+
+        return response
+    else:
+        return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
+        
+
+        
 

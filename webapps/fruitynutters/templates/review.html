@@ -15,24 +15,24 @@
 	<form action="/cart/submit/" method="post" accept-charset="utf-8" id="order_details">
 		
 		<p>
-			<label for="member_name">Your name</label>
-			<input type="text" name="member_name" value="" id="member_name" />
+			<label for="member_name">Your name (required)</label>
+			<input type="text" name="member_name" value="{{ member_name }}" id="member_name" />
+		</p>
+
+		<p>
+			<label for="member_phone">Phone number (required)</label>
+			<input type="text" name="member_phone" value="{{ member_phone }}" id="member_phone" />
 		</p>
 		
 		<p>
 			<label for="member_email">Email</label>
-			<input type="text" name="member_email" value="" id="member_email" />
+			<input type="text" name="member_email" value="{{ member_email }}" id="member_email" />
 			<span class="secondary"><input type="checkbox" name="email_member_order" checked="checked" id="email_member_order" /><label for="email_member_order">Send a copy of your order to your email</label></span>
 		</p>
 		
 		<p>
-			<label for="member_phone">Phone number</label>
-			<input type="text" name="member_phone" value="" id="member_phone" />
-		</p>
-
-		<p>
 			<label for="order_comments">Comments / Wishlist</label>
-			<textarea name="order_comments" rows="8" cols="40"></textarea>
+			<textarea name="order_comments" rows="8" cols="40">{{ order_comments }}</textarea>
 		</p>
 		
 		<p><input type="submit" value="Submit your order" id="submit_order" /></p>
