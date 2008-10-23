@@ -26,7 +26,7 @@ class Item(models.Model):
     
     bundle = models.ForeignKey('Bundle', null=True, blank=True)
     
-    unit_number = models.PositiveIntegerField()
+    unit_number = models.PositiveIntegerField(help_text='How many units make up this item?')
     measure_per_unit = models.FloatField(null=True, blank=True)
     measure_type = models.CharField(max_length=10, null=True, blank=True)
     price = models.DecimalField(max_digits=4,decimal_places=2, null=True, blank=True)
@@ -41,6 +41,15 @@ class Item(models.Model):
     def _has_bundle(self):
         return self.bundle is not None
     has_bundle = property(_has_bundle)
+    
+    picking_order_choices = (
+        (1, 'Lightest'),
+        (2, 'Light'),
+        (3, 'Medium'),
+        (4, 'Heavy'),
+        (5, 'Heaviest'),
+    )
+    picking_order = models.IntegerField(choices=picking_order_choices, default=3, verbose_name='Picking Order', help_text='Ordered by weight of the item')
 
     def __unicode__(self):
         return self.name
