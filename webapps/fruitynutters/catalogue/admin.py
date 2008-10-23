@@ -2,7 +2,7 @@ from django.contrib import admin
 from models import Aisle, Item, Brand, Bundle
 
 class AisleAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'active')
     
 admin.site.register(Aisle, AisleAdmin)
 
@@ -23,7 +23,7 @@ class ItemAdmin(admin.ModelAdmin):
         }),
     )
     radio_fields = {"price_change": admin.HORIZONTAL}
-    list_display = ('name', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'active', 'has_bundle')
+    list_display = ('name', 'brand', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'active', 'has_bundle')
     search_fields = ['name']
     list_filter = ['aisle']
 
