@@ -15,18 +15,21 @@ def add_to_cart(request, item_id, quantity=1):
     """Adds the item with item_id to the cart associated with the session."""
     if request.method == 'POST':        
         
-        quantity = int(quantity)
-        cart = get_session_cart(request.session)
-
-        bundle = None
-        # If there are items in the post request, then there are bundle items to deal with.
-        # Use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
-        if request.POST.items():
-            bundle = [(Item.objects.get(id__exact=bi[0]), int(bi[1])) for bi in request.POST.items() if bi[1] != "" and int(bi[1]) > 0]
-            request.notifications.create(Cart.CART_BUNDLE_ADDED_NOTICE, 'cart_information')
-        
         item_to_add = Item.objects.get(id__exact=item_id)
-        cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
+        cart = get_session_cart(request.session)
+        # Only add active items, from active bundles.
+        if not item_to_add.active or not item_to_add.aisle.active:
+            request.notifications.create(Cart.CART_ITEM_UNAVAILABLE_ERROR, 'cart_error')
+        else:        
+            quantity = int(quantity)
+            bundle = None
+            # If there are items in the post request, then there are bundle items to deal with.
+            # Use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
+            if request.POST.items():
+                bundle = [(Item.objects.get(id__exact=bi[0]), int(bi[1])) for bi in request.POST.items() if bi[1] != "" and int(bi[1]) > 0]
+                request.notifications.create(Cart.CART_BUNDLE_ADDED_NOTICE, 'cart_information')
+        
+            cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
                 
         response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         return response
@@ -126,7 +129,9 @@ def submit(request):
             buffer.close()
             
             # Don't need the cart anymore; empty it.
-            cart.empty();
+            cart.empty()
+            cart.delete()
+            cart.save()
             
             request.notifications.create("Your order has been submitted! Ta very much!", 'success')
         except Exception, e:

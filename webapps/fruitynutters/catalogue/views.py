@@ -8,8 +8,8 @@ from fruitynutters.util import get_session_cart
 
 def aisle_index(request):
     
-    # Get the list of aisles.
-    aisle_list = Aisle.objects.all().order_by('name')
+    # Get the list of active aisles.
+    aisle_list = Aisle.objects.filter(active=True).order_by('name')
     
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)

@@ -15,10 +15,12 @@ class Cart(models.Model):
     Store items currently in a cart
     """
     date_created = models.DateField(auto_now_add=True)
+    date_updated = models.DateField(auto_now=True)
     
     CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_ERROR = "A problem. lol?"
+    CART_ITEM_UNAVAILABLE_ERROR = "Sorry, this item isn\'t currently available."
 
     def _get_count(self):
         """ Quantity of items in the cart. """

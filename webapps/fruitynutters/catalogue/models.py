@@ -3,6 +3,7 @@ from django.db import models
 class Aisle(models.Model):
     name = models.CharField(max_length=60, unique=True)
     description = models.TextField(null=True,blank=True)
+    active = models.BooleanField(help_text='Determines whether the Aisle is active to the user. This doesn\'t affect the active status of items.')
 
     def __unicode__(self):
         return self.name
@@ -18,7 +19,7 @@ class Item(models.Model):
     aisle = models.ForeignKey(Aisle)
     brand = models.ForeignKey(Brand, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    active = models.BooleanField()
+    active = models.BooleanField(help_text='Determines whether the item is active to the user.')
     organic = models.BooleanField()
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
