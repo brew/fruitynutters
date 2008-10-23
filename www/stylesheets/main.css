@@ -37,13 +37,22 @@ img {
     padding:17px 10px 10px 20px;
 }
 #main_content h1 {
-    text-indent:-9999px;
-    background: transparent url(/furniture/fruitynutters_logo.gif) no-repeat top left;
     width:327px;
     height:36px;
         
     margin:0 auto 29px;
 }
+#main_content h1 a {
+    display:block;
+    height:100%;
+    width:100%;
+    text-indent:-9999px;
+    background: transparent url(/furniture/fruitynutters_logo.gif) no-repeat top left;
+}
+#main_content h1 a:focus {
+    outline:none;
+}
+
 #main_content .notice {
     padding:9px 20px 10px;
     
