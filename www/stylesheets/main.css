@@ -180,6 +180,7 @@ img {
 #main_content form#order_details span.secondary input {
     display:inline;
     vertical-align:bottom;
+    width:auto;
 }
 
 
