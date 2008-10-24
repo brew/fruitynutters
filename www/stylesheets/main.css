@@ -222,7 +222,7 @@ img {
 #cart_content ul#shopping_list li .product {
     margin-top:0;
     float:left;
-    width:128px;
+    width:123px;
 }
 #cart_content ul#shopping_list li .product .quantity {
     color:#666;
@@ -246,7 +246,10 @@ img {
     text-align:right;
 }
 #cart_content ul#shopping_list li .product_price a.remove_item {
-    margin-top:2px;
+    margin:2px 0 0;
+}
+#cart_content ul#shopping_list li .product_price a.remove_item img {
+
 }
 #cart_content ul#shopping_list li ul.bundle_items {
     margin-left:0;
@@ -277,8 +280,9 @@ img {
     float:left;
 }
 #continue_form  {
+    overflow:hidden;
     float:right;
-    width:100px;
+    margin-right:20px;
 }
 #continue_form #continue_button {
     float:right;
