@@ -117,7 +117,7 @@ def submit(request):
         # store the result of createOrderForm (a StringIO object) in a buffer.
         buffer = createOrderForm(cart, request.POST)
         
-        email_to = ['brook@brookelgie.com',]
+        email_to = ['fruitynutters@googlemail.com',]
         if email_to_user:
             email_to.append(member_email)
 
