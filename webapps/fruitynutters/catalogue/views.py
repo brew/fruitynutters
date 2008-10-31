@@ -23,7 +23,7 @@ def aisle(request, aisle_id):
     """Aisle view"""
 
     aisle = Aisle.objects.get(id__exact=aisle_id)
-    aisle_items = Item.objects.filter(aisle__exact=aisle_id).filter(active=True).order_by('name')    
+    aisle_items = Item.objects.filter(aisle__exact=aisle_id).filter(active=True).order_by('sort_name')    
     
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
