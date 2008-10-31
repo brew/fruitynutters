@@ -44,13 +44,17 @@ class Item(models.Model):
     has_bundle = property(_has_bundle)
     
     picking_order_choices = (
-        (1, 'Lightest'),
-        (2, 'Light'),
-        (3, 'Medium'),
-        (4, 'Heavy'),
-        (5, 'Heaviest'),
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5'),
+        (6, '6'),
+        (7, '7'),
+        (8, '8'),
+        (9, '9'),
     )
-    picking_order = models.IntegerField(choices=picking_order_choices, default=3, verbose_name='Picking Order', help_text='Ordered by weight of the item')
+    picking_order = models.IntegerField(choices=picking_order_choices, default=9, verbose_name='Picking Order', help_text='Ordered by weight of the item (1 is heaviest, 9 is lightest)')
 
     def __unicode__(self):
         return self.name

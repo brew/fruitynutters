@@ -62,7 +62,7 @@ def createOrderForm(cart, member_details):
     table.AddRow(c1, c2, c3, c4)
 
     # list
-    for cart_item in cart.cartitem_set.all().order_by('-product__picking_order'):
+    for cart_item in cart.cartitem_set.all().order_by('product__picking_order'):
         organic = ""
         if cart_item.product.organic:
             organic = "o"
