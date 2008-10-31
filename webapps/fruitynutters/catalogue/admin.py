@@ -16,7 +16,7 @@ admin.site.register(Brand, BrandAdmin)
 class ItemAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': ('name', 'aisle', 'brand', 'description', 'active', 'organic', 'new_changed', 'bundle', 'picking_order')
+            'fields': (('name', 'sort_name'), 'aisle', 'brand', 'description', 'active', 'organic', 'new_changed', 'bundle', 'picking_order')
         }),
         ('Price options', {
             'fields': ('unit_number', ('measure_per_unit', 'measure_type'), 'price', 'price_change')
@@ -26,6 +26,7 @@ class ItemAdmin(admin.ModelAdmin):
     list_display = ('name', 'brand', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'active', 'has_bundle')
     search_fields = ['name']
     list_filter = ['aisle']
+    prepopulated_fields = {'sort_name': ('name',)}
 
 
 admin.site.register(Item, ItemAdmin)
