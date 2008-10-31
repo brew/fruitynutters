@@ -6,6 +6,7 @@ from django.http import HttpResponseForbidden, HttpResponse
 from django.template import RequestContext
 from django.core.mail import EmailMessage
 
+from fruitynutters.settings import ORDER_FORM_EMAIL
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart, CartItem
 from fruitynutters.util import get_session_cart, isAddressValid
@@ -117,7 +118,9 @@ def submit(request):
         # store the result of createOrderForm (a StringIO object) in a buffer.
         buffer = createOrderForm(cart, request.POST)
         
-        email_to = ['fruitynutters@googlemail.com',]
+        # email_to = ['fruitynutters@googlemail.com',]
+        email_to = ORDER_FORM_EMAIL
+
         if email_to_user:
             email_to.append(member_email)
 
