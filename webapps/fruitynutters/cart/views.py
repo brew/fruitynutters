@@ -123,7 +123,7 @@ def submit(request):
 
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] '+member_name, 'Order attached.\n', 'specialbrew@gmail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail = EmailMessage('[FruityNuttersOrder] '+member_name, 'Order attached.\n', 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
             mail.attach('order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()
