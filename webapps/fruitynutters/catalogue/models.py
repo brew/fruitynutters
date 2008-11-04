@@ -29,7 +29,7 @@ class Item(models.Model):
     
     bundle = models.ForeignKey('Bundle', null=True, blank=True)
     
-    unit_number = models.PositiveIntegerField(help_text='How many units make up this item?')
+    unit_number = models.PositiveIntegerField(help_text='How many units make up this item?', verbose_name='Unit')
     measure_per_unit = models.FloatField(null=True, blank=True)
     measure_type = models.CharField(max_length=10, null=True, blank=True)
     price = models.DecimalField(max_digits=4,decimal_places=2, null=True, blank=True)
