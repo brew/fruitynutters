@@ -23,10 +23,6 @@ def createOrderForm(cart, member_details):
     section = Section(margins=MarginsPropertySet( top=600, left=600, bottom=600, right=600 ))
     doc.Sections.append( section )
 
-    header_text = Paragraph(ss.ParagraphStyles.Heading2Short, ParagraphPropertySet(alignment=3))
-    header_text.append(u"Fruity Nutters - Order form")
-    section.Header.append(header_text)
-
     footer_text = member_name + u" -  Phone: " + member_phone
     
     if len(member_email) > 0:
@@ -36,17 +32,12 @@ def createOrderForm(cart, member_details):
     thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
     thin_frame  = FramePropertySet( thin_edge,  thin_edge,  thin_edge,  thin_edge )
 
-    table = Table(  TabPropertySet.DEFAULT_WIDTH,
-                    TabPropertySet.DEFAULT_WIDTH * 9,
+    table = Table(  TabPropertySet.DEFAULT_WIDTH * 10,
                     TabPropertySet.DEFAULT_WIDTH * 2,
                     TabPropertySet.DEFAULT_WIDTH * 2 )
 
     # header
     header_props = ParagraphPropertySet(alignment=3)
-
-    c1_para = Paragraph(ss.ParagraphStyles.Heading2Short, header_props)
-    c1_para.append('O')
-    c1 = Cell(c1_para, thin_frame)
 
     c2_para = Paragraph(header_props)
     c2_para.append(u'Product ordered')
@@ -59,24 +50,18 @@ def createOrderForm(cart, member_details):
     c4_para = Paragraph(header_props)
     c4_para.append(u'Cost')
     c4 = Cell(c4_para, thin_frame )
-    table.AddRow(c1, c2, c3, c4)
+    table.AddRow(c2, c3, c4)
 
     # list
     for cart_item in cart.cartitem_set.all().order_by('product__picking_order'):
-        organic = ""
-        if cart_item.product.organic:
-            organic = "o"
-
         centre_props = ParagraphPropertySet(alignment=3)    
-
-        c1_para = Paragraph(ss.ParagraphStyles.Normal, centre_props)
-        c1_para.append(organic)
-        c1 = Cell(c1_para, thin_frame)
 
         measure_per_unit = "%g" % cart_item.product.measure_per_unit
 
-        c2_para = Paragraph()
+        c2_para = Paragraph(ss.ParagraphStyles.Normal)
         c2_para.append(unicode(cart_item.product.name))
+        if not cart_item.product.organic:
+            c2_para.append(u" - NON ORG")
         brand = cart_item.product.brand
         if brand:
             c2_para.append(" - " + unicode(brand))
@@ -97,12 +82,12 @@ def createOrderForm(cart, member_details):
         c4_para = Paragraph(cost_props)
         c4_para.append(unicode(cart_item.line_total))
         c4 = Cell(c4_para, thin_frame)
-        table.AddRow(c1, c2, c3, c4)
+        table.AddRow(c2, c3, c4)
 
     # table footer
     c1_para = Paragraph(ss.ParagraphStyles.Heading2Short, ParagraphPropertySet(alignment=2))
     c1_para.append(u'Total cost')
-    c1 = Cell(c1_para, thin_frame, span=3)
+    c1 = Cell(c1_para, thin_frame, span=2)
 
     c2_para = Paragraph(ParagraphPropertySet(alignment=2))
     c2_para.append(u"£"+unicode(cart.total))
@@ -127,30 +112,7 @@ def createOrderForm(cart, member_details):
     
     section.append(table)
     
-    section.append(Paragraph())    
-    
-    # admin table
-    table = Table(  TabPropertySet.DEFAULT_WIDTH * 7,
-                    TabPropertySet.DEFAULT_WIDTH * 7)
-                    
-    c1_para = Paragraph(ss.ParagraphStyles.AdminPara)
-    c1_para.append(u'Extras')
-    c1 = Cell(c1_para, thin_frame)
-
-    c2_para = Paragraph()
-    c2_para.append(u'Refunds')
-    c2 = Cell(c2_para, thin_frame )    
-    table.AddRow(c1, c2)
-    
-    c1_para = Paragraph(ss.ParagraphStyles.AdminPara)
-    c1 = Cell(c1_para, thin_frame)
-
-    c2_para = Paragraph()
-    c2_para.append(u'Paid')
-    c2 = Cell(c2_para, thin_frame )    
-    table.AddRow(c1, c2)
-    
-    section.append(table)
+    section.append(Paragraph())
 
     rtf_doc = StringIO()
 
