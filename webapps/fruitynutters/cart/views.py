@@ -92,7 +92,6 @@ def submit(request):
     member_phone = request.POST.get('member_phone', '')
     member_email = request.POST.get('member_email', '')
     order_comments = request.POST.get('order_comments', '')
-    email_to_user = request.POST.get('email_member_order', False)
     
     # Validate the form and cart.
     isValid = True
@@ -105,24 +104,17 @@ def submit(request):
     if len(member_phone) == 0:
         isValid = False
         request.notifications.create("Please provide a phone number in case we need to contact you", 'error')
-    if len(member_email) > 0 and not isAddressValid(member_email):
+    if len(member_email) == 0 or not isAddressValid(member_email):
         isValid = False
         request.notifications.create("Please check that your email address is valid", 'error')
-    if email_to_user and len(member_email) == 0:
-        isValid = False
-        request.notifications.create("If you want a copy of the order sent to you, you'll need to supply your email address", 'error')
-
 
     # If it's valid, make the rtf, attach and send to the email, clear the cart and return success page.
     if isValid:
         # store the result of createOrderForm (a StringIO object) in a buffer.
         buffer = createOrderForm(cart, request.POST)
         
-        # email_to = ['fruitynutters@googlemail.com',]
         email_to = ORDER_FORM_EMAIL
-
-        if email_to_user:
-            email_to.append(member_email)
+        email_to.append(member_email)
 
         # Try making and sending the email.
         try:
