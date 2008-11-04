@@ -2,7 +2,13 @@ from django.contrib import admin
 from models import Aisle, Item, Brand, Bundle
 
 class AisleAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {
+            'fields':(('name', 'sort_name'), 'description', 'active')
+        }),
+    )
     list_display = ('name', 'active')
+    prepopulated_fields = {'sort_name': ('name',)}
     
 admin.site.register(Aisle, AisleAdmin)
 

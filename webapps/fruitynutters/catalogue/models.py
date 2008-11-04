@@ -1,7 +1,9 @@
 from django.db import models
 
 class Aisle(models.Model):
-    name = models.CharField(max_length=60, unique=True)
+    name = models.CharField(max_length=60, unique=True, help_text="Display name for the aisle.")
+    sort_name = models.CharField(max_length=60, help_text="Name the aisle is sorted on. Not displayed to the user.")
+    
     description = models.TextField(null=True,blank=True)
     active = models.BooleanField(help_text='Determines whether the Aisle is active to the user. This doesn\'t affect the active status of items.')
 
@@ -16,7 +18,7 @@ class Brand(models.Model):
 
 class Item(models.Model):
     name = models.CharField(max_length=60, help_text='Display name for the item.')
-    sort_name = models.CharField(max_length=60, help_text='Name the item is sorted on. Not displayed to the user')
+    sort_name = models.CharField(max_length=60, help_text='Name the item is sorted on. Not displayed to the user.')
     
     aisle = models.ForeignKey(Aisle)
     brand = models.ForeignKey(Brand, null=True, blank=True)
