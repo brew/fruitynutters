@@ -18,6 +18,7 @@ urlpatterns += patterns('fruitynutters.catalogue.views',
     (r'^catalogue/$', 'aisle_index'),
     (r'^catalogue/aisle/$', 'aisle_index'),
     (r'^catalogue/aisle/(?P<aisle_id>\d+)/$', 'aisle'),
+    (r'^catalogue/reset/$', 'reset_items'),
 )
 
 urlpatterns += patterns('fruitynutters.cart.views',
