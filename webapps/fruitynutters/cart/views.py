@@ -115,10 +115,17 @@ def submit(request):
         
         email_to = ORDER_FORM_EMAIL
         email_to.append(member_email)
+        
+        email_message = 'Order attached. \n\n';
+        if order_comments:
+            email_message += 'The order has following comments attached:\n'
+            email_message += '#####################\n\n'
+            email_message += order_comments
+            email_message += '\n\n'
 
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] '+member_name, 'Order attached.\n', 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail = EmailMessage('[FruityNuttersOrder] '+member_name, email_message, 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
             mail.attach('order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()

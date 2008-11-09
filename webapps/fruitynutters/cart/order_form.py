@@ -89,24 +89,6 @@ def createOrderForm(cart, member_details):
     c2_para.append(u"£"+unicode(cart.total))
     c2 = Cell(c2_para,thin_frame)
     table.AddRow(c1,c2)
-
-    section.append( table )
-    
-    section.append(Paragraph())
-
-    # Comments / Wishlist
-    comments_header = Paragraph(ss.ParagraphStyles.Heading2Short)
-    comments_header.append(u'Comments / Wishlist')
-    section.append(comments_header)
-    
-    table = Table(10000)
-    
-    comments_para = Paragraph(ss.ParagraphStyles.Normal)
-    comments_para.append( order_comments )
-    c1 = Cell(comments_para, thin_frame)
-    table.AddRow(c1)
-    
-    section.append(table)
     
     section.append(Paragraph())
 
