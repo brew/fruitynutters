@@ -19,7 +19,7 @@
 <div id="content-main">
 {% block object-tools %}
 {% if has_add_permission %}
-<ul class="object-tools"><li><a href="/catalogue/reset/" id="reset_items_button">Reset items</a></li><li><a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">{% blocktrans with cl.opts.verbose_name|escape as name %}Add {{ name }}{% endblocktrans %}</a></li></ul>
+<ul class="object-tools"><script>document.write('<li><a href="/catalogue/reset/" id="reset_items_button">Reset items</a></li>');</script><li><a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">{% blocktrans with cl.opts.verbose_name|escape as name %}Add {{ name }}{% endblocktrans %}</a></li></ul>
 {% endif %}
 {% endblock %}
 <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
