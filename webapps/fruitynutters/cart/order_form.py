@@ -89,6 +89,8 @@ def createOrderForm(cart, member_details):
     c2_para.append(u"£"+unicode(cart.total))
     c2 = Cell(c2_para,thin_frame)
     table.AddRow(c1,c2)
+
+    section.append( table )
     
     section.append(Paragraph())
 
