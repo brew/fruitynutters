@@ -22,7 +22,7 @@ admin.site.register(Brand, BrandAdmin)
 class ItemAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': (('name', 'sort_name'), 'aisle', 'brand', 'description', 'active', 'organic', 'new_changed', 'bundle', 'picking_order')
+            'fields': (('name', 'sort_name'), 'order_name', 'aisle', 'brand', 'description', 'active', 'organic', 'new_changed', 'bundle', 'picking_order')
         }),
         ('Price options', {
             'fields': ('unit_number', ('measure_per_unit', 'measure_type'), 'price', 'price_change')

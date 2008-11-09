@@ -40,11 +40,11 @@ def createOrderForm(cart, member_details):
     header_props = ParagraphPropertySet(alignment=3)
 
     c2_para = Paragraph(header_props)
-    c2_para.append(u'Product ordered')
+    c2_para.append(u'Product')
     c2 = Cell(c2_para, thin_frame )
 
     c3_para = Paragraph(header_props)
-    c3_para.append(u'Amount')
+    c3_para.append(u'No.')
     c3 = Cell(c3_para, thin_frame )
 
     c4_para = Paragraph(header_props)
@@ -56,19 +56,16 @@ def createOrderForm(cart, member_details):
     for cart_item in cart.cartitem_set.all().order_by('product__picking_order'):
         centre_props = ParagraphPropertySet(alignment=3)    
 
-        measure_per_unit = "%g" % cart_item.product.measure_per_unit
-
         c2_para = Paragraph(ss.ParagraphStyles.Normal)
-        c2_para.append(unicode(cart_item.product.name))
+        c2_para.append(unicode(cart_item.product.order_name))
 
         brand = cart_item.product.brand
         if brand:
             c2_para.append(" - " + unicode(brand))
-        c2_para.append(" (" + unicode(cart_item.product.unit_number) + " x " + unicode(measure_per_unit) + unicode(cart_item.product.measure_type) + ")")
         if cart_item.product.bundle:
             c2_para.append(u"\n")
             for bundle_item in cart_item.cart_bundle.cartitem_set.all():
-                c2_para.append(unicode(bundle_item.product.name))
+                c2_para.append(unicode(bundle_item.product.order_name))
                 c2_para.append(u" x " + unicode(bundle_item.quantity) + u", ")
         c2 = Cell(c2_para, thin_frame)
 

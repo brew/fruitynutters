@@ -20,6 +20,8 @@ class Item(models.Model):
     name = models.CharField(max_length=60, help_text='Display name for the item.')
     sort_name = models.CharField(max_length=60, help_text='Name the item is sorted on. Not displayed to the user.')
     
+    order_name = models.CharField(max_length=60, help_text='Used in the order form.')
+    
     aisle = models.ForeignKey(Aisle)
     brand = models.ForeignKey(Brand, null=True, blank=True)
     description = models.TextField(null=True, blank=True)
