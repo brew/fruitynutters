@@ -59,9 +59,6 @@ def createOrderForm(cart, member_details):
         c2_para = Paragraph(ss.ParagraphStyles.Normal)
         c2_para.append(unicode(cart_item.product.order_name))
 
-        brand = cart_item.product.brand
-        if brand:
-            c2_para.append(" - " + unicode(brand))
         if cart_item.product.bundle:
             c2_para.append(u"\n")
             for bundle_item in cart_item.cart_bundle.cartitem_set.all():
