@@ -118,7 +118,7 @@ def submit(request):
         
         email_message = 'Order attached. \n\n';
         if order_comments:
-            email_message += 'The order has following comments attached:\n'
+            email_message += 'The order has the following comments:\n'
             email_message += '#####################\n\n'
             email_message += order_comments
             email_message += '\n\n'
