@@ -60,8 +60,7 @@ def createOrderForm(cart, member_details):
 
         c2_para = Paragraph(ss.ParagraphStyles.Normal)
         c2_para.append(unicode(cart_item.product.name))
-        if not cart_item.product.organic:
-            c2_para.append(u" - NON ORG")
+
         brand = cart_item.product.brand
         if brand:
             c2_para.append(" - " + unicode(brand))
