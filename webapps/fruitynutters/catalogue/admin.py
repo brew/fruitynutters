@@ -1,5 +1,6 @@
 from django.contrib import admin
-from models import Aisle, Item, Brand, Bundle
+from models import Aisle, Item, Brand, Bundle, InfoPage
+from forms import InfoPageAdminModelForm
 
 class AisleAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -42,3 +43,8 @@ class BundleAdmin(admin.ModelAdmin):
     pass
     
 admin.site.register(Bundle, BundleAdmin)
+
+class InfoPageAdmin(admin.ModelAdmin):
+    form = InfoPageAdminModelForm
+    
+admin.site.register(InfoPage, InfoPageAdmin)
