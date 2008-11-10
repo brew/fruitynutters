@@ -6,7 +6,7 @@ class WYMEditor(forms.Textarea):
     class Media:
         js = (
             '/javascript/jquery/jquery.js',
-            '/javascript/wymeditor/jquery.wymeditor.pack.js',
+            '/javascript/wymeditor/jquery.wymeditor.js',
         )
 
     def __init__(self, language=None, attrs=None):
