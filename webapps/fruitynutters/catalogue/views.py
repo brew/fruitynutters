@@ -10,7 +10,7 @@ from fruitynutters.util import get_session_cart
 
 def index_page(request):
     
-    index_object = InfoPage.objects.get(name__exact='index')
+    index_object = Page.objects.get(name__exact='index')
     title = index_object.title
     body = index_object.body
     
