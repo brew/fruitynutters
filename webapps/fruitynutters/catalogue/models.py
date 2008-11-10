@@ -72,8 +72,11 @@ class Bundle(models.Model):
     def __unicode__(self):
         return self.name
         
-class InfoPage(models.Model):
+class Page(models.Model):
     """Model for simple ancillary pages, like the home page."""
     name = models.CharField(max_length=30, verbose_name='Internal name', unique=True)
     title = models.CharField(max_length=60, verbose_name='Page title')
     body = models.TextField()
+    
+    def __unicode__(self):
+        return self.name

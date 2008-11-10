@@ -4,9 +4,18 @@ from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseRedirect
 
-from fruitynutters.catalogue.models import Aisle, Item
+from fruitynutters.catalogue.models import Aisle, Item, Page
 from fruitynutters.cart.models import Cart
 from fruitynutters.util import get_session_cart
+
+def index_page(request):
+    
+    index_object = InfoPage.objects.get(name__exact='index')
+    title = index_object.title
+    body = index_object.body
+    
+    response = render_to_response('info_page.html', {'title':title, 'body':body})
+    return response
 
 def aisle_index(request):
     """Aisle list view"""
