@@ -350,7 +350,7 @@ img {
     padding:0;
 }
 #side_links ul li {
-    background-color:#50a863;
+    background:#50a863 url(/furniture/link_arrow.png) no-repeat center right;
     padding:3px 5px;
 }
 #side_links a {
