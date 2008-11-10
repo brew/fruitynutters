@@ -339,6 +339,27 @@ img {
   color:#eb830c;
 }
 
+#side_links {
+    float:left;
+    width:238px;
+    padding:82px 20px 10px 10px;
+}
+#side_links ul {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+#side_links ul li {
+    background-color:#50a863;
+    padding:3px 5px;
+}
+#side_links a {
+    color:#ffffff;
+    display:block;
+    text-decoration:none;
+}
+
+
 #crumb {
     margin-bottom:8px;
     
@@ -348,10 +369,6 @@ img {
 }
 #crumb a {
     color: #666;
-    text-decoration:none;
-}
-#crumb a:hover {
-    text-decoration:underline;
 }
 #crumb .active {
     color:#50a863;
