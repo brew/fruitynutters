@@ -60,7 +60,7 @@ def createOrderForm(cart, member_details):
         c2_para.append(unicode(cart_item.product.order_name))
 
         if cart_item.product.bundle:
-            c2_para.append(u"\n")
+            c2_para.append(u": ")
             for bundle_item in cart_item.cart_bundle.cartitem_set.all():
                 c2_para.append(unicode(bundle_item.product.order_name))
                 c2_para.append(u" x " + unicode(bundle_item.quantity) + u", ")
