@@ -23,10 +23,10 @@ def createOrderForm(cart, member_details):
     section = Section(margins=MarginsPropertySet( top=600, left=600, bottom=600, right=600 ))
     doc.Sections.append( section )
 
-    footer_text = member_name + u" -  Phone: " + member_phone
+    footer_text = member_name + " " + member_phone
     
     if len(member_email) > 0:
-        footer_text += u" - Email: " + member_email
+        footer_text += " " + member_email
     section.Footer.append(unicode(footer_text))
 
     thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
@@ -83,7 +83,7 @@ def createOrderForm(cart, member_details):
     c1 = Cell(c1_para, thin_frame, span=2)
 
     c2_para = Paragraph(ParagraphPropertySet(alignment=2))
-    c2_para.append(u"£"+unicode(cart.total))
+    c2_para.append(unicode(cart.total))
     c2 = Cell(c2_para,thin_frame)
     table.AddRow(c1,c2)
 

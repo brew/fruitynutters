@@ -8,14 +8,14 @@ class AisleAdmin(admin.ModelAdmin):
             'fields':(('name', 'sort_name'), 'description', 'active')
         }),
     )
-    list_display = ('name', 'active')
+    list_display = ('name', 'sort_name', 'active')
     prepopulated_fields = {'sort_name': ('name',)}
     
 admin.site.register(Aisle, AisleAdmin)
 
 
 class BrandAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name',)
     
 admin.site.register(Brand, BrandAdmin)
 
@@ -23,14 +23,14 @@ admin.site.register(Brand, BrandAdmin)
 class ItemAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields': (('name', 'sort_name'), 'order_name', 'aisle', 'brand', 'description', 'active', 'organic', 'new_changed', 'bundle', 'picking_order')
+            'fields': (('name', 'sort_name'), 'order_name', ('aisle', 'brand'), ('active', 'organic', 'new_changed'), 'bundle', 'picking_order')
         }),
         ('Price options', {
-            'fields': ('unit_number', ('measure_per_unit', 'measure_type'), 'price', 'price_change')
+            'fields': (('unit_number', 'measure_per_unit', 'measure_type'), 'price', 'price_change')
         }),
     )
     radio_fields = {"price_change": admin.HORIZONTAL}
-    list_display = ('name', 'brand', 'unit_number', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'active', 'has_bundle')
+    list_display = ('name', 'organic', 'order_name', 'sort_name', 'brand', 'unit_number', 'measure_per_unit', 'measure_type', 'price', 'aisle', 'picking_order', 'active', 'has_bundle')
     search_fields = ['name']
     list_filter = ['aisle']
     prepopulated_fields = {'sort_name': ('name',)}
