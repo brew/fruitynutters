@@ -49,6 +49,11 @@ class Item(models.Model):
         return self.bundle is not None
     has_bundle = property(_has_bundle)
     
+    def _size(self):
+        measure_unit = "%g" % self.measure_per_unit
+        return str(measure_unit) + self.measure_type
+    size = property(_size)
+    
     picking_order_choices = (
         (1, '1'),
         (2, '2'),
