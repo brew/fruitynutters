@@ -6,6 +6,30 @@
 {% block extrahead %}
   <script type="text/javascript" src="/javascript/prototype.js"></script>
 	<script type="text/javascript" src="/javascript/fn_admin_reset_items.js" charset="utf-8"></script>
+	
+  <script type="text/javascript">
+
+	// Sets up filter list to show/hide
+	Event.observe(window, 'load', function(event){
+		$$('#changelist-filter h2').each(function(h2, index) {
+			h2.observe('click', function(ev) {
+				$$('#changelist-filter *').each(function(el, index) {
+					if(el.tagName != 'H2') el.toggle	();
+				});
+			});
+		});
+	});
+
+  
+  </script>
+
+<style type="text/css" media="screen">
+	#changelist-filter h2 {
+		cursor:pointer;
+	}
+</style>
+
+	
 {% endblock %}
 
 
