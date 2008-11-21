@@ -2,7 +2,7 @@
 
 from rtfng.Elements import StyleSheet, Document
 from rtfng.Styles import TextStyle, ParagraphStyle
-from rtfng.PropertySets import TextPropertySet, ParagraphPropertySet, TabPropertySet, BorderPropertySet, FramePropertySet, MarginsPropertySet
+from rtfng.PropertySets import TextPropertySet, ParagraphPropertySet, TabPropertySet, BorderPropertySet, FramePropertySet, MarginsPropertySet, Paper
 from rtfng.document.section import Section
 from rtfng.document.paragraph import Paragraph, Table, Cell
 from rtfng.Constants import Languages
@@ -20,7 +20,8 @@ def createOrderForm(cart, member_details):
 
     ss = makeReportStylesheet()
     doc = Document(ss, default_language=Languages.EnglishUK)
-    section = Section(margins=MarginsPropertySet( top=600, left=600, bottom=600, right=600 ))
+    paper = Paper('A4', 9, 'A4 297 x 210 mm', 16838, 11907)
+    section = Section(margins=MarginsPropertySet( top=100, left=200, bottom=100, right=200 ), paper=paper, landscape=True, headery=0, footery=100)
     doc.Sections.append( section )
 
     footer_text = member_name + " " + member_phone
@@ -32,9 +33,10 @@ def createOrderForm(cart, member_details):
     thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
     thin_frame  = FramePropertySet( thin_edge,  thin_edge,  thin_edge,  thin_edge )
 
-    table = Table(  TabPropertySet.DEFAULT_WIDTH * 10,
-                    TabPropertySet.DEFAULT_WIDTH * 2,
-                    TabPropertySet.DEFAULT_WIDTH * 2 )
+    # based on twirps or 567/cm.
+    table = Table(  3118,
+                    567,
+                    709 )
 
     # header
     header_props = ParagraphPropertySet(alignment=3)
@@ -101,12 +103,12 @@ def createOrderForm(cart, member_details):
 def makeReportStylesheet():
     result = StyleSheet()
 
-    NormalText = TextStyle( TextPropertySet( result.Fonts.Arial, 20 ) )
+    NormalText = TextStyle( TextPropertySet( result.Fonts.Arial, 16 ) )
 
     ps = ParagraphStyle( 'Normal',
                          NormalText.Copy(),
-                         ParagraphPropertySet( space_before = 60,
-                                               space_after  = 60 ) )
+                         ParagraphPropertySet( space_before = 30,
+                                               space_after  = 30 ) )
     result.ParagraphStyles.append( ps )
 
     ps = ParagraphStyle( 'Normal Short',
@@ -120,7 +122,7 @@ def makeReportStylesheet():
                                                space_after  = 60 ) )
     result.ParagraphStyles.append( ps )
 
-    NormalText.textProps.size = 24
+    NormalText.textProps.size = 16
     NormalText.textProps.bold = True
     ps = ParagraphStyle( 'Heading 2',
                          NormalText.Copy(),
@@ -128,20 +130,13 @@ def makeReportStylesheet():
                                                space_after  = 60 ) )
     result.ParagraphStyles.append( ps )
     
-    NormalText.textProps.size = 24
+    NormalText.textProps.size = 16
     NormalText.textProps.bold = True
     ps = ParagraphStyle( 'Heading 2 Short',
                          NormalText.Copy() )
 
     result.ParagraphStyles.append( ps )
     
-    result.ParagraphStyles.append(ParagraphStyle('Admin Para',
-                                NormalText.Copy(),
-                                ParagraphPropertySet(space_after = 2000)) )
-                                
-    result.ParagraphStyles.append(ParagraphStyle('Comments',
-                                NormalText.Copy(),
-                                ParagraphPropertySet(space_after = 200, space_before=200, left_indent=200, right_indent=200)) )
 
     return result
         
