@@ -21,7 +21,7 @@ def createOrderForm(cart, member_details):
     ss = makeReportStylesheet()
     doc = Document(ss, default_language=Languages.EnglishUK)
     paper = Paper('A4', 9, 'A4 297 x 210 mm', 16838, 11907)
-    section = Section(margins=MarginsPropertySet( top=100, left=200, bottom=100, right=200 ), paper=paper, landscape=True, headery=0, footery=100)
+    section = Section(margins=MarginsPropertySet( top=100, left=400, bottom=100, right=400 ), paper=paper, landscape=True, headery=0, footery=300)
     doc.Sections.append( section )
 
     footer_text = member_name + " " + member_phone
