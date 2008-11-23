@@ -5,6 +5,7 @@ from django.contrib.sessions.models import Session
 from django.http import HttpResponseForbidden, HttpResponse
 from django.template import RequestContext
 from django.core.mail import EmailMessage
+from django.template.defaultfilters import slugify
 
 from fruitynutters.settings import ORDER_FORM_EMAIL
 from fruitynutters.catalogue.models import Item
@@ -122,11 +123,13 @@ def submit(request):
             email_message += '#####################\n\n'
             email_message += order_comments
             email_message += '\n\n'
+            
+        slug_name = slugify(member_name)
 
         # Try making and sending the email.
         try:
             mail = EmailMessage('[FruityNuttersOrder] '+member_name, email_message, 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
-            mail.attach('order_form.rtf', buffer.getvalue(), 'application/rtf')
+            mail.attach(slug_name+'_order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()
             
