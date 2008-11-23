@@ -10,7 +10,7 @@ var FNBundle = Class.create({
     $(bundle_container).select('.bundle input.quantity').each(function(input, index) {
       input.observe('keyup',this.boundBundleInputKeyUp);
     }.bind(this));
-    
+        
     // Set up the keyup event for the bundle_container's quantity input field.
     this.boundQuantityInputKeyUp = this.onQuantityKeyUp.bind(this);
     $(bundle_container).down('.product_add input.quantity').observe('keyup', this.boundQuantityInputKeyUp);
@@ -23,7 +23,7 @@ var FNBundle = Class.create({
    */
   onBundleKeyUp: function(ev) {
     // First check that the field contains a number. If it doesn't abort.
-    if(!this._isStringANumber(ev.target.getValue())) {
+    if(ev.target.getValue() != "" && !this._isStringANumber(ev.target.getValue())) {
       ev.target.focus();
       return false;
     }
@@ -34,7 +34,7 @@ var FNBundle = Class.create({
     ev.target.focus();
     
   },
-    
+      
   /**
    *  Handler for the keyup event on the product_add form's quantity input field.
    */
