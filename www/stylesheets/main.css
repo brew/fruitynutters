@@ -273,12 +273,20 @@ img {
     color:#666;
 }
 #cart_content #shopping_list_total {
+    text-align:right;
+}
+#cart_content #shopping_list_total.top {
+    border-bottom:1px solid #a9beae;
+    margin-bottom:10px;
+    margin-top:0;
+    padding-bottom:5px;
+}
+#cart_content #shopping_list_total.bottom {
+    border-top:1px solid #a9beae;
     margin-top:10px;
     padding-top:5px;
-    
-    text-align:right;
-    border-top:1px solid #a9beae;
 }
+
 
 #cart_content #list_controls {
     margin-top:30px;
