@@ -8,10 +8,10 @@
 	</ul>
 {% endif %}
 <form action="/cart/update/" method="post" accept-charset="utf-8" id="cart_form">
-	{% if cart.numItems %}
 	<p id="shopping_list_total" class="top">Total: <strong>£{{ cart.total }}</strong></p>
+	{% if cart.numItems %}
 		<ul id="shopping_list">
-			{% for item in cart.cartitem_set.all  %}
+			{% for item in cart.cartitem_set.all reversed  %}
 				<li>
 					<div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1  %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat:"-2" }}{{ item.product.measure_type }}</span></div>
 

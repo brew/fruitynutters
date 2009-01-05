@@ -21,6 +21,7 @@ class Cart(models.Model):
     CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_ERROR = "A problem. lol?"
     CART_ITEM_UNAVAILABLE_ERROR = "Sorry, this item isn\'t currently available."
+    CART_INVALID_UPDATE_NUMBER_ERROR = "Please ensure you only update with whole numbers." 
 
     def _get_count(self):
         """ Quantity of items in the cart. """

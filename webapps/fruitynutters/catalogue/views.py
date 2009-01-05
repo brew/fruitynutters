@@ -27,7 +27,7 @@ def aisle_index(request):
     cart = get_session_cart(request.session)
     
     response = render_to_response('aisle_index.html', {'aisle_list':aisle_list, 'cart':cart})
-    response["Cache-Control"] = 'no-cache, must-revalidate'
+    response["Cache-Control"] = 'no-cache, no-store, must-revalidate'
     return response
     
 
@@ -41,7 +41,7 @@ def aisle(request, aisle_id):
     cart = get_session_cart(request.session)
         
     response = render_to_response('aisle.html', {'aisle':aisle, 'aisle_items':aisle_items, 'cart':cart}, context_instance=RequestContext(request))
-    response["Cache-Control"] = 'no-cache, must-revalidate'
+    response["Cache-Control"] = 'no-cache, no-store, must-revalidate'
     return response
     
 @staff_member_required

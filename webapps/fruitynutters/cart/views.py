@@ -43,7 +43,12 @@ def update_cart(request):
     if request.method == "POST":
         cart = get_session_cart(request.session)
 
-        items_to_update = [(Item.objects.get(id__exact=item[0]), int(item[1])) for item in request.POST.items() if item[0].isdigit()]
+        try:
+            items_to_update = [(Item.objects.get(id__exact=item[0]), int(item[1])) for item in request.POST.items() if item[0].isdigit()]            
+        except ValueError, e:
+            request.notifications.create(Cart.CART_INVALID_UPDATE_NUMBER_ERROR, 'cart_error')
+            return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+
         for item_to_update, new_quantity in items_to_update:
             # If not a bundle, update this item.
             if not item_to_update.has_bundle:
