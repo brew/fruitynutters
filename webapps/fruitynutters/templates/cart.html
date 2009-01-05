@@ -9,6 +9,7 @@
 {% endif %}
 <form action="/cart/update/" method="post" accept-charset="utf-8" id="cart_form">
 	{% if cart.numItems %}
+	<p id="shopping_list_total" class="top">Total: <strong>£{{ cart.total }}</strong></p>
 		<ul id="shopping_list">
 			{% for item in cart.cartitem_set.all  %}
 				<li>
@@ -31,5 +32,5 @@
 		<p>Your list is currently empty</p>
 	{% endif %}
 	<p id="list_controls"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
-	<p id="shopping_list_total">Total: <strong>£{{ cart.total }}</strong></p>
+	<p id="shopping_list_total" class="bottom">Total: <strong>£{{ cart.total }}</strong></p>
 </form>
