@@ -73,11 +73,7 @@ img {
     clear:left;
 }
 #main_content .notice a {
-    text-decoration:none;
     color:#006633;
-}
-#main_content .notice a:hover {
-    text-decoration:underline;
 }
 
 #main_content ul#product_list {
