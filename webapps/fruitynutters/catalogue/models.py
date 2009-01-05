@@ -7,8 +7,30 @@ class Aisle(models.Model):
     description = models.TextField(null=True,blank=True)
     active = models.BooleanField(help_text='Determines whether the Aisle is active to the user. This doesn\'t affect the active status of items.')
 
+    def get_next_by_sort_name(self):
+        all_aisles = Aisle.objects.filter(active=True)
+        all_aisle_names = [aisle.name for aisle in all_aisles]
+        this_aisle_index = all_aisle_names.index(self.name)
+        try:
+            next_aisle = all_aisles[this_aisle_index+1]
+        except Exception, e:
+            next_aisle = None
+
+        return next_aisle
+    
+    def get_previous_by_sort_name(self):
+        all_aisles = Aisle.objects.filter(active=True)
+        all_aisle_names = [aisle.name for aisle in all_aisles]
+        this_aisle_index = all_aisle_names.index(self.name)
+        try:
+            prev_aisle = all_aisles[this_aisle_index-1]
+        except Exception, e:
+            prev_aisle = None
+
+        return prev_aisle
+
     def __unicode__(self):
-        return self.name
+        return self.name    
         
     class Meta:
         ordering = ['sort_name']
