@@ -9,6 +9,9 @@ class Aisle(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+    class Meta:
+        ordering = ['sort_name']
 
 class Brand(models.Model):
     name = models.CharField(max_length=60, unique=True)
@@ -69,6 +72,9 @@ class Item(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+    class Meta:
+        ordering = ['sort_name']
         
 class Bundle(models.Model):
     name = models.CharField(max_length=30, verbose_name='Internal name')

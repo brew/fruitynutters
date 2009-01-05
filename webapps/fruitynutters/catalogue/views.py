@@ -21,7 +21,7 @@ def aisle_index(request):
     """Aisle list view"""
     
     # Get the list of active aisles.
-    aisle_list = Aisle.objects.filter(active=True).order_by('sort_name')
+    aisle_list = Aisle.objects.filter(active=True)
     
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
@@ -35,7 +35,7 @@ def aisle(request, aisle_id):
     """Aisle detail view"""
 
     aisle = Aisle.objects.get(id__exact=aisle_id)
-    aisle_items = Item.objects.filter(aisle__exact=aisle_id).filter(active=True).order_by('sort_name')    
+    aisle_items = Item.objects.filter(aisle__exact=aisle_id).filter(active=True)
     
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)

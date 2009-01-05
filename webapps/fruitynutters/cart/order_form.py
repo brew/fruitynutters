@@ -55,7 +55,7 @@ def createOrderForm(cart, member_details):
     table.AddRow(c2, c3, c4)
 
     # list
-    for cart_item in cart.cartitem_set.all().order_by('product__picking_order'):
+    for cart_item in cart.cartitem_set.all().order_by('product__picking_order', 'product__aisle'):
         centre_props = ParagraphPropertySet(alignment=3)    
 
         c2_para = Paragraph(ss.ParagraphStyles.Normal)
