@@ -25,10 +25,9 @@ def createOrderForm(cart, member_details):
     doc.Sections.append( section )
 
     footer_text = member_name + " " + member_phone
-    
-    if len(member_email) > 0:
-        footer_text += " " + member_email
-    section.Footer.append(unicode(footer_text))
+    footer_p = Paragraph(ss.ParagraphStyles.Heading1)
+    footer_p.append(unicode(footer_text)) 
+    section.Footer.append(footer_p)
 
     thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
     thin_frame  = FramePropertySet( thin_edge,  thin_edge,  thin_edge,  thin_edge )
@@ -41,15 +40,15 @@ def createOrderForm(cart, member_details):
     # header
     header_props = ParagraphPropertySet(alignment=3)
 
-    c2_para = Paragraph(header_props)
+    c2_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
     c2_para.append(u'Product')
     c2 = Cell(c2_para, thin_frame )
 
-    c3_para = Paragraph(header_props)
+    c3_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
     c3_para.append(u'No.')
     c3 = Cell(c3_para, thin_frame )
 
-    c4_para = Paragraph(header_props)
+    c4_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
     c4_para.append(u'Cost')
     c4 = Cell(c4_para, thin_frame )
     table.AddRow(c2, c3, c4)
@@ -115,18 +114,18 @@ def makeReportStylesheet():
                          NormalText.Copy() )
     result.ParagraphStyles.append( ps )
 
-    NormalText.textProps.size = 32
+    NormalText.textProps.size = 24
     ps = ParagraphStyle( 'Heading 1',
                          NormalText.Copy(),
-                         ParagraphPropertySet( space_before = 240,
+                         ParagraphPropertySet( space_before = 30,
                                                space_after  = 60 ) )
     result.ParagraphStyles.append( ps )
 
-    NormalText.textProps.size = 16
+    NormalText.textProps.size = 12
     NormalText.textProps.bold = True
     ps = ParagraphStyle( 'Heading 2',
                          NormalText.Copy(),
-                         ParagraphPropertySet( space_before = 240,
+                         ParagraphPropertySet( space_before = 39,
                                                space_after  = 60 ) )
     result.ParagraphStyles.append( ps )
     
