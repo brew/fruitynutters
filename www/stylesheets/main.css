@@ -359,15 +359,23 @@ img {
     padding:0;
 }
 #side_links ul li {
-    background:#50a863 url(/furniture/link_arrow.png) no-repeat center right;
     padding:3px 5px;
 }
+#side_links ul li#aisle_link {
+    background:#50a863 url(/furniture/link_arrow.png) no-repeat center right;
+    margin-bottom:12px;
+}
 #side_links a {
-    color:#ffffff;
     display:block;
     text-decoration:none;
+    color:#006633;
 }
-
+#side_links a:hover {
+    text-decoration:underline;
+}
+#side_links ul li#aisle_link a {
+    color:#ffffff;
+}
 
 #crumb {
     margin-bottom:8px;
