@@ -14,7 +14,13 @@ urlpatterns = patterns('',
 )
 
 urlpatterns += patterns('fruitynutters.catalogue.views',
-    (r'^$', 'index_page'),
+    (r'^$', 'info_page', {'page_name':'index'}),
+    (r'^tips/$', 'info_page', {'page_name':'tips'}),
+    (r'^links/$', 'info_page', {'page_name':'links'}),
+    (r'^small-print/$', 'info_page', {'page_name':'small-print'}),
+    (r'^future-dates/$', 'info_page', {'page_name':'future-dates'}),
+    (r'^donations/$', 'info_page', {'page_name':'donations'}),
+    
     (r'^catalogue/$', 'aisle_index'),
     (r'^catalogue/aisle/$', 'aisle_index'),
     (r'^catalogue/aisle/(?P<aisle_id>\d+)/$', 'aisle'),

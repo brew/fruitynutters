@@ -8,11 +8,12 @@ from fruitynutters.catalogue.models import Aisle, Item, Page
 from fruitynutters.cart.models import Cart
 from fruitynutters.util import get_session_cart
 
-def index_page(request):
     
-    index_object = Page.objects.get(name__exact='index')
-    title = index_object.title
-    body = index_object.body
+def info_page(request, page_name):
+    """Handles text pages."""
+    page_object = Page.objects.get(name__exact=page_name)
+    title = page_object.title
+    body = page_object.body
     
     response = render_to_response('info_page.html', {'title':title, 'body':body})
     return response
@@ -30,7 +31,6 @@ def aisle_index(request):
     response["Cache-Control"] = 'no-cache, no-store, must-revalidate'
     return response
     
-
 def aisle(request, aisle_id):
     """Aisle detail view"""
 
