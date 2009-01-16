@@ -132,6 +132,7 @@ def submit(request):
             
         slug_name = slugify(member_name)
 
+        success = False;
         # Try making and sending the email.
         try:
             mail = EmailMessage('[FruityNuttersOrder] '+member_name, email_message, 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
@@ -144,12 +145,12 @@ def submit(request):
             cart.delete()
             cart.save()
             
+            success = True
             request.notifications.create("Your order has been submitted! Ta very much!", 'success')
         except Exception, e:
-            request.notifications.create("There was a problem sending the email :( " + str(e), 'error')
+            request.notifications.create("There was a problem sending the email :( . Please email fruitynutter@googlemail.com to let us know what is says here: " + str(e), 'error')
 
-        # Get the list of aisles.
-        return render_to_response('review.html', {'cart':cart, 'submit_success':True}, context_instance=RequestContext(request))
+        return render_to_response('review.html', {'cart':cart, 'submit_success':success}, context_instance=RequestContext(request))
     else:
         return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
         
