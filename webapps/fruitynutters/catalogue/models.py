@@ -97,9 +97,6 @@ class Item(models.Model):
         
     class Meta:
         ordering = ['sort_name']
-
-class WriteinItem(Item):
-    code = models.CharField(max_length=20)
         
 class Bundle(models.Model):
     name = models.CharField(max_length=30, verbose_name='Internal name')

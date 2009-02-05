@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 
 from fruitynutters.settings import ORDER_FORM_EMAIL
 from fruitynutters.catalogue.models import Item
-from fruitynutters.cart.models import Cart, CartItem
+from fruitynutters.cart.models import Cart, CartItem, CartWriteinItem
 from fruitynutters.util import get_session_cart, isAddressValid
 from fruitynutters.cart.order_form import createOrderForm
 
@@ -58,13 +58,13 @@ def add_writein_to_cart(request):
         if isValid == True:
             # Form is valid, process it here!
             
+            cart.add_writein_item(name=description, code=code)
             
             # Now the form is processed, finish up with the data.
             description = ''
             code = ''
-        else:
-            show_writein = "True"
 
+        show_writein = "True"
     
         return render_to_response('cart.html', {'cart':cart, 'writein_description':description, 'writein_code':code, 'show_writein':show_writein}, context_instance=RequestContext(request))
         
@@ -97,6 +97,17 @@ def remove_from_cart(request, item_id):
     if request.method == 'POST':
         cart = get_session_cart(request.session)
         cart.remove_item(item_id)
+        
+        response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        return response
+        
+    return HttpResponseForbidden
+    
+def remove_writein_from_cart(request, item_id):
+    """Removes the writein item with item_id from the cart associated with the session."""
+    if request.method == 'POST':
+        cart = get_session_cart(request.session)
+        cart.remove_writein_item(item_id)
         
         response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         return response

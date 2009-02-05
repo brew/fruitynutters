@@ -28,6 +28,10 @@ class Cart(models.Model):
         itemCount = 0
         for item in self.cartitem_set.all():
             itemCount += item.quantity
+            
+        for writein in self.cartwriteinitem_set.all():
+            itemCount += 1
+        
         return (itemCount)
     numItems = property(_get_count)
 
@@ -83,8 +87,6 @@ class Cart(models.Model):
             for bundle_item, bundle_item_quantity in bundle_items:
                 item_to_modify.cart_bundle.add_item(bundle_item, bundle_item_quantity)
                 
-                
-
         item_to_modify.quantity += number_added
         
         # Before we save the item, is it still valid?
@@ -112,12 +114,29 @@ class Cart(models.Model):
         if item_to_modify.quantity <= 0:
             item_to_modify.delete()
         self.save()
-
+        
+    def add_writein_item(self, name, code):
+        writein_to_add = CartWriteinItem(cart=self, name=name, code=code)
+        self.cartwriteinitem_set.add(writein_to_add)
+        writein_to_add.save()
+        
+        return writein_to_add
+        
+    def remove_writein_item(self, writein_item_id):
+        writein_to_remove = self.cartwriteinitem_set.get(id__exact=writein_item_id)
+        writein_to_remove.delete()
+        
+        self.save()
+        
     def empty(self):
         for item in self.cartitem_set.all():
             if item.cart_bundle:
                 item.cart_bundle.empty()
             item.delete()
+        
+        for writein in self.cartwriteinitem_set.all():
+            writein.delete()    
+        
         self.save()
 
     def save(self, force_insert=False, force_update=False):
@@ -177,7 +196,15 @@ class CartItem(models.Model):
     def __unicode__(self):
         return u"%s x %s, %s" % (self.quantity, self.product.name, self.line_total)
         
-        
     class Meta:
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"
+        
+class CartWriteinItem(models.Model):
+    """Model for a write-in item."""
+    cart = models.ForeignKey(Cart, verbose_name='Cart')
+    name = models.CharField(max_length=140)
+    code = models.CharField(max_length=20)
+
+    def __unicode__(self):
+        return self.name
