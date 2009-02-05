@@ -217,6 +217,9 @@ img {
 #cart_content a {
     color:#006633;
 }
+#cart_content a.remove_item {
+    float:right;
+}
 #cart_content form {
     float:left;
     width:238px;
@@ -286,6 +289,15 @@ img {
     margin-top:10px;
     padding-top:5px;
 }
+#cart_content ul#shopping_list li .writein {
+    width:220px;
+    float:left;
+    margin-top:0;
+}
+#cart_content ul#shopping_list li .writein .code {
+    color:#666;
+}
+
 
 #cart_content form#writein_form {
 /*    padding:0 10px;*/
