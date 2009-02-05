@@ -35,4 +35,10 @@ urlpatterns += patterns('fruitynutters.cart.views',
     (r'^cart/empty/$', 'empty_cart'),
     (r'^cart/review/$', 'review'),
     (r'^cart/submit/$', 'submit'),
+    (r'^cart/addwritein/$', 'add_writein_to_cart'),
+)
+
+# Static mockups
+urlpatterns += patterns('fruitynutters.catalogue.views', 
+    (r'^aislemock.html', 'aisle_mock'),
 )

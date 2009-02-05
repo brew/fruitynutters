@@ -37,7 +37,39 @@ def add_to_cart(request, item_id, quantity=1):
         return response
             
     return HttpResponseForbidden()
+    
+def add_writein_to_cart(request):
+    """Adds a write-in item to the cart associated with the session."""
+    if request.method == "POST":
+        cart = get_session_cart(request.session)
         
+        description = request.POST.get('writein_description', '')
+        code = request.POST.get('writein_code', '')
+        
+        isValid = True
+        if len(description) == 0:
+            isValid = False
+            request.notifications.create("Please add a description.", 'cart_error')
+        if len(code) == 0:
+            isValid = False
+            request.notifications.create("Please add a product code.", 'cart_error')
+    
+        show_writein = "False"
+        if isValid == True:
+            # Form is valid, process it here!
+            
+            
+            # Now the form is processed, finish up with the data.
+            description = ''
+            code = ''
+        else:
+            show_writein = "True"
+
+    
+        return render_to_response('cart.html', {'cart':cart, 'writein_description':description, 'writein_code':code, 'show_writein':show_writein}, context_instance=RequestContext(request))
+        
+    return HttpResponseForbidden()
+    
 def update_cart(request):
     """Updates the cart associated with the session based on items in the POST object."""
     if request.method == "POST":

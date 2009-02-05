@@ -55,3 +55,6 @@ def reset_items(request):
         item.save()
 
     return HttpResponseRedirect('/catalogue/admin/catalogue/item/')
+    
+def aisle_mock(request):
+    return render_to_response('aisle_mock.html')
