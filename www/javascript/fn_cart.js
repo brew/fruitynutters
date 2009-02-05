@@ -33,6 +33,11 @@ var FNCart = Class.create({
     
   },
   
+  onAddWriteinFormSubmit: function(ev) {
+    ev.stop();
+    this.updateCart(ev.target.action, ev.target.serialize());
+  },
+
   onRemoveItem: function(ev) {
     ev.stop();
     this.updateCart($(ev.target).up('a.remove_item').href);
@@ -109,6 +114,15 @@ var FNCart = Class.create({
       input.observe('keyup', this.boundCartKeydown);
     }.bind(this));
 
+    // Prepare writein elements.
+    $('writein_opener').observe('click', function(ev) {
+      ev.stop();
+      Effect.toggle('writein_elements','blind');
+    });
+
+    this.boundAddWriteinSubmit = this.onAddWriteinFormSubmit.bind(this);
+    $('writein_form').observe('submit', this.boundAddWriteinSubmit);
+
   },
   
   /**
@@ -126,6 +140,9 @@ var FNCart = Class.create({
     $('cart_form').getInputs().each(function(input, index){
       input.stopObserving('keyup', this.boundCartKeydown);
     }.bind(this));
+    
+    $('writein_form').stopObserving('submit', this.boundAddWriteinSubmit);
+    
   },
   
   /**

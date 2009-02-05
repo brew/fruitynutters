@@ -217,7 +217,7 @@ img {
 #cart_content a {
     color:#006633;
 }
-#cart_content form#cart_form {
+#cart_content form {
     float:left;
     width:238px;
 }
@@ -287,6 +287,32 @@ img {
     padding-top:5px;
 }
 
+#cart_content form#writein_form {
+/*    padding:0 10px;*/
+    margin-bottom:10px;
+    border-bottom:1px solid #a9beae;
+    border-top:1px solid #a9beae;
+/*    width:218px;*/
+}
+#cart_content form#writein_form #writein_elements {
+
+}
+#cart_content form#writein_form p#writein_code_block {
+    width:70px;
+    float:left;
+    margin-top:0;
+}
+#cart_content form#writein_form p#writein_code_block input {
+    width:70px;
+}
+#cart_content form#writein_form p#writein_description_block {
+    float:left;
+    margin-right:7px;
+    margin-top:0;
+}
+#cart_content form#writein_form label {
+    display:block;
+}
 
 #cart_content #list_controls {
     margin-top:30px;
