@@ -87,6 +87,26 @@ def createOrderForm(cart, member_details):
     c2_para.append(unicode(cart.total))
     c2 = Cell(c2_para,thin_frame)
     table.AddRow(c1,c2)
+    
+    # write ins
+    for writein_item in cart.cartwriteinitem_set.all():
+        centre_props = ParagraphPropertySet(alignment=3)    
+
+        c2_para = Paragraph(ss.ParagraphStyles.Normal)
+        c2_para.append(unicode(writein_item.name) + u" -- " + unicode(writein_item.code))
+        c2 = Cell(c2_para, thin_frame)
+
+        c3_para = Paragraph(centre_props)
+        # c3_para.append(unicode(cart_item.quantity))
+        c3 = Cell(c3_para, thin_frame)
+
+        cost_props = ParagraphPropertySet(alignment=2)
+
+        c4_para = Paragraph(cost_props)
+        # c4_para.append(unicode(cart_item.line_total))
+        c4 = Cell(c4_para, thin_frame)
+        table.AddRow(c2, c3, c4)
+    
 
     section.append( table )
     
