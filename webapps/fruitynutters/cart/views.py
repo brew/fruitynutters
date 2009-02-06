@@ -215,9 +215,6 @@ def save_cart_details(request):
         
         return HttpResponse("Comment saved successfully!", mimetype="text/plain")
         
-
-
-
     return HttpResponseForbidden()
         
 
