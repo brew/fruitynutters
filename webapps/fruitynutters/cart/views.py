@@ -197,6 +197,27 @@ def submit(request):
     else:
         return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
         
+def save_cart_details(request):
+    if request.method == 'POST':
+        cart = get_session_cart(request.session)
+        
+        member_name = request.POST.get('member_name', '')
+        member_phone = request.POST.get('member_phone', '')
+        member_email = request.POST.get('member_email', '')
+        order_comments = request.POST.get('order_comments', '')
+        
+        
+        cart.cart_comment = order_comments
+        cart.cart_username = member_name
+        cart.cart_useremail = member_email
+        cart.cart_userphone = member_phone
+        cart.save()
+        
+        return HttpResponse("Comment saved successfully!", mimetype="text/plain")
+        
 
+
+
+    return HttpResponseForbidden()
         
 

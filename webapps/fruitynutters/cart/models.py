@@ -17,6 +17,11 @@ class Cart(models.Model):
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
     
+    cart_comment = models.TextField(null=True, blank=True, default='')
+    cart_username = models.CharField(max_length=60, null=True, blank=True, default='')
+    cart_useremail = models.CharField(max_length=60, null=True, blank=True, default='')
+    cart_userphone = models.CharField(max_length=60, null=True, blank=True, default='')
+    
     CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_ERROR = "A problem. lol?"
