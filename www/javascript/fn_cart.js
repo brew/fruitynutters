@@ -6,6 +6,10 @@ var FNCart = Class.create({
     $$('.product_add').each(function(form, index) {
       form.observe('submit', this.boundAddSubmit);
     }, this);
+    
+    if($('save_details_button')) {
+      $('save_details_button').observe('click', this.onSaveDetailsButtonClick.bind(this));
+    }
 
     this._prepareCart();
   },
@@ -60,7 +64,7 @@ var FNCart = Class.create({
       // console.info(ev.target.serialize());
       this.updateCart(ev.target.action, ev.target.serialize());
     } else {
-      console.info('Cart has not changed.');
+      // console.info('Cart has not changed.');
     }
   },
   
@@ -90,6 +94,19 @@ var FNCart = Class.create({
         this._prepareCart();
       }.bind(this)
     });    
+  },
+  
+  onSaveDetailsButtonClick: function(ev) {
+    new Ajax.Request('/cart/savedetails/', {
+      method: 'post',
+      parameters:$('order_details').serialize(),
+      onSuccess: function(transport) {
+        window.location.replace("/catalogue/aisle/");
+      },
+      onFailure: function(transport) {
+
+      }
+    });
   },
   
   /**
