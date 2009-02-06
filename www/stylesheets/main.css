@@ -307,8 +307,11 @@ p {
     border-bottom:1px solid #a9beae;
     border-top:1px solid #a9beae;
 }
-#cart_content form#writein_form #writein_elements {
-
+#cart_content form#writein_form #writein_elements {}
+#cart_content form#writein_form #writein_elements p.note {
+    color:#666;
+    font-size:11px;
+    margin:0 0 1em;
 }
 #cart_content form#writein_form p#writein_code_block {
     width:60px;
@@ -429,6 +432,9 @@ p {
 }
 #crumb a {
     color: #666;
+}
+#crumb a:hover {
+    color:#50a863;
 }
 #crumb .active {
     color:#50a863;
