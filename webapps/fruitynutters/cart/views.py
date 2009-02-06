@@ -206,7 +206,6 @@ def save_cart_details(request):
         member_email = request.POST.get('member_email', '')
         order_comments = request.POST.get('order_comments', '')
         
-        
         cart.cart_comment = order_comments
         cart.cart_username = member_name
         cart.cart_useremail = member_email
