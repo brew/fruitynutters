@@ -360,42 +360,44 @@ p {
     float:right;
 }
 
-#cart_content ul#notifications {
+#cart_content ul.notifications {
     float:left;
     padding:0;
     margin-top:0;
     width:238px;
 }
-#main_content ul#notifications {
+#main_content ul.notifications {
     padding:0;
     clear:left;
 }
-#notifications, #notifications li {
+.notifications, .notifications li {
   list-style: none;
   list-style-type: none;
   margin-left: 0;
   margin-top:0;
 }
-.information, .error, .success, .warning, .cart_information, .cart_error, .cart_success, .cart_warning {
+.information, .error,.success, .warning, 
+.cart_information, .cart_error, .cart_success, .cart_warning,
+.writein_information, .writein_error, .writein_success, .writein_warning {
   margin-bottom: 0.4em;
   border: 1px solid #9bb8d9;
   padding: 6px 6px 6px 30px;
 }
-.information, .cart_information {
+.information, .cart_information, .writein_information {
   background: #dedfff url('/furniture/information.png') 6px 0.7em no-repeat;
   color: #406299;
 }
-.error, .cart_error {
+.error, .cart_error, .writein_error {
   background: #ffe1da url('/furniture/exclamation.png') 6px 0.7em no-repeat;
   border-color: #f34f4f;
   color: #be0b0b;
 }
-.success, .cart_success {
+.success, .cart_success, .writein_success {
   background: #e2f9e3 url('/furniture/accept.png') 6px 0.7em no-repeat;
   border-color: #9c9;
   color: #080;
 }
-.warning, .cart_warning {
+.warning, .cart_warning, .writein_warning {
   background:#fff8bf url('/furniture/error.png') 6px 0.7em no-repeat;
   border-color: #ffd324;
   color:#eb830c;
