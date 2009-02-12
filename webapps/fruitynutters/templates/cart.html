@@ -2,7 +2,7 @@
 <img src="/furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
 {% load basic_logic %}
 {% if notifications %}
-	<ul id="notifications">
+	<ul class="notifications">
 	    {% for notification in notifications %}{% if "cart_"|IN:notification.type %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
 	    {% endfor %}
 	</ul>
@@ -46,6 +46,12 @@
 
 <form action="/cart/addwritein/" id="writein_form" method="post" accept-charset="utf-8">
 	<p><a href="#" id="writein_opener">Add a custom 'write-in' item</a></p>
+	{% if notifications %}
+		<ul class="notifications">
+		    {% for notification in notifications %}{% if "writein_"|IN:notification.type %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
+		    {% endfor %}
+		</ul>
+	{% endif %}
 	<div id="writein_elements" {% ifnotequal show_writein "True" %}style="display:none"{% endifnotequal %}>
 		<p class="note">Want something not in the aisles? Use the <a href="http://sumawholesale.com/index.php/customer/account/login/">Suma</a> and <a href="http://www.zen17754.zen.co.uk/fn/Infinity%20-%20Jan09.pdf">Infinity</a> catalogues to add the Description &amp; Code below. Price will be confirmed on acknowledging the order.</p>
 		<p id="writein_description_block"><label for="writein_description">Description</label><input type="text" name="writein_description" value="{{ writein_description }}" id="writein_description" /></p>

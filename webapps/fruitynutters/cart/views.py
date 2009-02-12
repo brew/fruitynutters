@@ -49,10 +49,10 @@ def add_writein_to_cart(request):
         isValid = True
         if len(description) == 0:
             isValid = False
-            request.notifications.create("Please add a description.", 'cart_error')
+            request.notifications.create("Please add a description.", 'writein_error')
         if len(code) == 0:
             isValid = False
-            request.notifications.create("Please add a product code.", 'cart_error')
+            request.notifications.create("Please add a product code.", 'writein_error')
     
         show_writein = "False"
         if isValid == True:
