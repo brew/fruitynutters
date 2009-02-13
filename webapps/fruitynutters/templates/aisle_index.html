@@ -16,6 +16,9 @@
 	    {% for aisle in aisle_list %}
 	        <li><a href="/catalogue/aisle/{{ aisle.id }}">{{ aisle.name }}</a></li>
 	    {% endfor %}
+	
+			<li><a href="/catalogue/virtualshop/">Virtual shop</a></li>
+	
 	    </ul>
 	{% else %}
 	    <p>No aisles are available.</p>

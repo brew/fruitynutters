@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}: {{ title }}{% endblock %}
+
+{% block scripts %}
+	<script src="/javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+
+	<script src="/javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
+{% endblock %}
+
+{% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>: <span class="active">{{ title }}</span>{% endblock %}
+
+{% block content %}
+
+<div class="aisle_nav">
+		<a href="/catalogue/aisle/{{ last_aisle.id }}" title="{{last_aisle.name}}">Previous</a>	| <span>Next</span>
+</div>
+
+		
+
+
+{% autoescape off %}
+<div class="notice">
+{{ body }}	
+</div>
+
+<ol>
+	<li>Download the PDF: <a href="{{ pdf_path }}" class="download">Download it!</a></li>
+	<li>Find what you want and decide how many</li>
+	<li>Add it to your cart using the form below:</li>
+</ol>
+
+<form action="/addvirtualshopitem/" method="post" accept-charset="utf-8" id="virtualshop_form">
+	<p id="virtualshop_description_block"><label for="virtualshop_description">Description</label><input type="text" name="virtualshop_description" value="{{ virtualshop_description }}" id="virtualshop_description" /></p>
+	<p id="virtualshop_quantity_block"><label for="virtualshop_code">Quantity</label><input type="text" name="virtualshop_quantity" value="{{ virtualshop_quantity }}" id="virtualshop_quantity" /></p>
+	<p id="virtualshop_submit_block"><input type="submit" name="virtualshop_submit" value="Add item" id="virtualshop_submit" /></p>
+</form>
+
+
+{% endautoescape %}
+
+
+		
+<div class="aisle_nav">
+		<a href="/catalogue/aisle/{{ last_aisle.id }}" title="{{last_aisle.name}}">Previous</a>	| <span>Next</span>
+</div>
+
+		
+{% endblock %}
+
+{% block side %}
+	<div id="cart_content">
+		{% include "cart.html" %}		
+		<script type="text/javascript" charset="utf-8">
+			Event.observe(window, 'load', function(event){var cart = new FNCart();});
+		</script>
+	</div>
+	
+	{% block review %}
+		<form id="continue_form" action="/cart/review/" method="get"><input type="submit" value="Prepare for submission" id="continue_button" /></form>
+	{% endblock %}
+{% endblock %}

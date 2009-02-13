@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Aisle, Item, Brand, Bundle, Page
+from models import Aisle, Item, Brand, Bundle, Page, VirtualShopPage
 from forms import PageAdminModelForm
 
 class AisleAdmin(admin.ModelAdmin):
@@ -49,3 +49,9 @@ class PageAdmin(admin.ModelAdmin):
     form = PageAdminModelForm
     
 admin.site.register(Page, PageAdmin)
+
+class VirtualShopPageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'title', 'shopPdf')
+    form = PageAdminModelForm
+    
+admin.site.register(VirtualShopPage, VirtualShopPageAdmin)

@@ -113,3 +113,7 @@ class Page(models.Model):
     
     def __unicode__(self):
         return self.name
+        
+class VirtualShopPage(Page):
+    """Model for a virtual shop launch page."""
+    shopPdf = models.FileField(upload_to='files', verbose_name="Shop PDF file")
