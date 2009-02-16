@@ -7,6 +7,11 @@ var FNCart = Class.create({
       form.observe('submit', this.boundAddSubmit);
     }, this);
     
+    if($('virtualshop_form')) {
+      this.boundAddVirtualSubmit = this.onVirtualShopAddFormSubmit.bind(this);
+      $('virtualshop_form').observe('submit', this.boundAddVirtualSubmit);      
+    }
+    
     if($('save_details_button')) {
       $('save_details_button').observe('click', this.onSaveDetailsButtonClick.bind(this));
     }
@@ -38,6 +43,11 @@ var FNCart = Class.create({
   },
   
   onAddWriteinFormSubmit: function(ev) {
+    ev.stop();
+    this.updateCart(ev.target.action, ev.target.serialize());
+  },
+  
+  onVirtualShopAddFormSubmit: function(ev) {
     ev.stop();
     this.updateCart(ev.target.action, ev.target.serialize());
   },
@@ -139,7 +149,7 @@ var FNCart = Class.create({
 
     this.boundAddWriteinSubmit = this.onAddWriteinFormSubmit.bind(this);
     $('writein_form').observe('submit', this.boundAddWriteinSubmit);
-
+  
   },
   
   /**

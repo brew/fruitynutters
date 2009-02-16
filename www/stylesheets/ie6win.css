@@ -4,7 +4,7 @@
 
 /* Tricks ie6 into hasLayout for these elements. */
 * html #main_content ul#product_list li,
-* html #cart_content ul#shopping_list li,
+* html #cart_content ul.shopping_list li,
 * html #cart_content #list_controls,
 * html #continue_form {
     zoom:1;
@@ -18,6 +18,6 @@
     width: 532px;
 }
 
-* html #cart_content ul#shopping_list li .product_price .total_product_price {
+* html #cart_content ul.shopping_list li .product_price .total_product_price {
     margin:0 0 0 3px;
 }
