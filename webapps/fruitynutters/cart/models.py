@@ -36,6 +36,9 @@ class Cart(models.Model):
             
         for writein in self.cartwriteinitem_set.all():
             itemCount += 1
+            
+        for virtualshop_item in self.cartvirtualshopitem_set.all():
+            itemCount += 1
         
         return (itemCount)
     numItems = property(_get_count)
@@ -120,6 +123,7 @@ class Cart(models.Model):
             item_to_modify.delete()
         self.save()
         
+    # Write in items
     def add_writein_item(self, name, code):
         writein_to_add = CartWriteinItem(cart=self, name=name, code=code)
         self.cartwriteinitem_set.add(writein_to_add)
@@ -133,6 +137,20 @@ class Cart(models.Model):
         
         self.save()
         
+    # Virtual shop items
+    def add_virtualshop_item(self, name, quantity=1):
+        virtualshop_item_to_add = CartVirtualShopItem(cart=self, name=name, quantity=quantity)
+        self.cartvirtualshopitem_set.add(virtualshop_item_to_add)
+        virtualshop_item_to_add.save()
+        
+        return virtualshop_item_to_add
+        
+    def remove_virtualshop_item(self, virtualshop_item_id):
+        virtualshop_item_to_remove = self.cartvirtualshopitem_set.get(id__exact=virtualshop_item_id)
+        virtualshop_item_to_remove.delete()
+        
+        self.save()
+        
     def empty(self):
         for item in self.cartitem_set.all():
             if item.cart_bundle:
@@ -140,7 +158,10 @@ class Cart(models.Model):
             item.delete()
         
         for writein in self.cartwriteinitem_set.all():
-            writein.delete()    
+            writein.delete()
+            
+        for virtualshop_item in self.cartvirtualshopitem_set.all():
+            virtualshop_item.delete()
         
         self.save()
 
@@ -213,3 +234,13 @@ class CartWriteinItem(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+class CartVirtualShopItem(models.Model):
+    """Model for a virtual shop item."""
+    cart = models.ForeignKey(Cart, verbose_name='Cart')
+    name = models.CharField(max_length=140)
+    quantity = models.IntegerField("Quantity",)
+    
+    def __unicode__(self):
+        return self.name
+    

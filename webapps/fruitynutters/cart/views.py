@@ -70,6 +70,37 @@ def add_writein_to_cart(request):
         
     return HttpResponseForbidden()
     
+def add_virtualshop_item_to_cart(request):
+    """Adds a virtual shop item to the cart associated with the session."""
+    if request.method == "POST":
+        cart = get_session_cart(request.session)
+        
+        description = request.POST.get('virtualshop_description', '')
+        quantity = request.POST.get('virtualshop_quantity', '')
+        
+        isValid = True
+        if len(description) ==0:
+            isValid = False
+            request.notifications.create("Please add a description.", 'cart_error')
+        if len(quantity) == 0:
+            isValid = False
+            request.notifications.create("Please add a quantity.", 'cart_error')
+        
+        if isValid == True:
+            
+            try:
+                quantity = int(quantity)
+            except ValueError, e:
+                request.notifications.create("Quantity must be a number.", 'cart_error')
+                return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+            
+            cart.add_virtualshop_item(name=description, quantity=quantity)
+
+            
+        return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        
+    return HttpResponseForbidden()
+    
 def update_cart(request):
     """Updates the cart associated with the session based on items in the POST object."""
     if request.method == "POST":
@@ -101,7 +132,7 @@ def remove_from_cart(request, item_id):
         response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         return response
         
-    return HttpResponseForbidden
+    return HttpResponseForbidden()
     
 def remove_writein_from_cart(request, item_id):
     """Removes the writein item with item_id from the cart associated with the session."""
@@ -112,7 +143,18 @@ def remove_writein_from_cart(request, item_id):
         response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         return response
         
-    return HttpResponseForbidden
+    return HttpResponseForbidden()
+    
+def remove_virtualshop_item_from_cart(request, item_id):
+    """Removes the virtual shop item writh item_id from the cart associated with the session."""
+    if request.method == "POST":
+        cart = get_session_cart(request.session)
+        cart.remove_virtualshop_item(item_id)
+        
+        response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        return response
+        
+    return HttpResponseForbidden()
         
 def empty_cart(request):
     """Emptys the cart object associated with the session."""
