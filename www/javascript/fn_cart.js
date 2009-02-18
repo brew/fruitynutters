@@ -39,19 +39,32 @@ var FNCart = Class.create({
     } else {
       this.updateCart(url);
     }
-    
   },
   
+  /**
+   *  Handler for submission of the add write-in form.
+   */
   onAddWriteinFormSubmit: function(ev) {
     ev.stop();
     this.updateCart(ev.target.action, ev.target.serialize());
   },
   
+  /**
+   *  Handler for submission of the add virtual shop item form.
+   */
   onVirtualShopAddFormSubmit: function(ev) {
     ev.stop();
-    this.updateCart(ev.target.action, ev.target.serialize());
+    var completeAction = function(transport) {
+      this._prepareCart();
+      if($$('.cart_error').length == 0)
+        ev.target.reset();
+    }.bind(this);
+    this.updateCart(ev.target.action, ev.target.serialize(), completeAction);
   },
 
+  /**
+   *  Handler for the remove item button.
+   */
   onRemoveItem: function(ev) {
     ev.stop();
     this.updateCart($(ev.target).up('a.remove_item').href);
@@ -66,7 +79,7 @@ var FNCart = Class.create({
   },
   
   /**
-   *  Handler for the submittion of the cart form (Update cart).
+   *  Handler for the submission of the cart form (Update cart).
    */
   onCartUpdateSubmit: function(ev) {
     ev.stop();
@@ -89,9 +102,11 @@ var FNCart = Class.create({
   },
   
   /**
-   *  Updates the cart with a given url.
+   *  Updates the cart with a given url and parameters, updating the cart container with the successful return value.
    */
-  updateCart: function(url, parameters) {
+  updateCart: function(url, parameters, completeAction) {
+    
+    var completeAction = completeAction || function() {this._prepareCart();}.bind(this);
     
     this._prepareCartForUpdate();
     
@@ -100,12 +115,13 @@ var FNCart = Class.create({
     new Ajax.Updater({success:'cart_content', failure:'cart_notice'}, url, {
       method:'post',
       parameters:parameters,
-      onComplete: function() {
-        this._prepareCart();
-      }.bind(this)
-    });    
+      onComplete: completeAction
+    });
   },
   
+  /**
+   *  Handler for click of the save details button.
+   */
   onSaveDetailsButtonClick: function(ev) {
     new Ajax.Request('/cart/savedetails/', {
       method: 'post',
