@@ -7,7 +7,7 @@
 
 {% endblock %}
 
-{% block crumb %}Review and confirm your order{% endblock %}
+{% block crumb %}Fill in your details and submit your order{% endblock %}
 
 {% block content %}
 	{% if submit_success %}
@@ -16,7 +16,7 @@
 
 	{% else %}
 
-		<p class="notice">Fill in your details below and submit your order to the Fruity Nutters team. Or you can <a href="/catalogue/aisle/">continue shopping</a>.</p>
+		<p class="notice">Fill in your details below and submit your order to the Fruity Nutters team.</p>
 
 		<form action="/cart/submit/" method="post" accept-charset="utf-8" id="order_details">
 	
