@@ -171,7 +171,7 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    return render_to_response('review.html', {'cart':cart}, context_instance=RequestContext(request))
+    return render_to_response('review.html', {'cart':cart, 'member_name':cart.cart_username, 'member_email':cart.cart_useremail, 'member_phone':cart.cart_userphone, 'order_comments':cart.cart_comment}, context_instance=RequestContext(request))
     
 
 def submit(request):
@@ -236,6 +236,8 @@ def submit(request):
             request.notifications.create("There was a problem sending the email :( . Please email fruitynutter@googlemail.com to let us know what is says here: " + str(e), 'error')
 
         return render_to_response('review.html', {'cart':cart, 'submit_success':success}, context_instance=RequestContext(request))
+    
+    # Else if the form isn't valid...    
     else:
         return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
         

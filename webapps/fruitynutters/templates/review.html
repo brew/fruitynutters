@@ -22,22 +22,22 @@
 	
 			<p>
 				<label for="member_name">Your name (required)</label>
-				<input type="text" name="member_name" value="{{ cart.cart_username }}" id="member_name" />
+				<input type="text" name="member_name" value="{{ member_name }}" id="member_name" />
 			</p>
 
 			<p>
 				<label for="member_phone">Phone number (required)</label>
-				<input type="text" name="member_phone" value="{{ cart.cart_userphone }}" id="member_phone" />
+				<input type="text" name="member_phone" value="{{ member_phone }}" id="member_phone" />
 			</p>
 	
 			<p>
 				<label for="member_email">Email (required)</label>
-				<input type="text" name="member_email" value="{{ cart.cart_useremail }}" id="member_email" />
+				<input type="text" name="member_email" value="{{ member_email }}" id="member_email" />
 			</p>
 	
 			<p>
 				<label for="order_comments">Comments box (this is your message to Fruity Nutters)</label>
-				<textarea name="order_comments" rows="8" cols="40" id="order_comments">{{ cart.cart_comment }}</textarea>
+				<textarea name="order_comments" rows="8" cols="40" id="order_comments">{{ order_comments }}</textarea>
 			</p>
 	
 			<p id="submit_button_block"><button type="button" id="save_details_button">Save details and continue shopping</button> <input type="submit" value="Submit your order" id="submit_order" /></p>
