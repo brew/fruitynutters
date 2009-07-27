@@ -14,13 +14,13 @@
 
 <div class="aisle_nav">
 	{% if aisle.get_previous_by_sort_name %}
-		<a href="/catalogue/aisle/{{ aisle.get_previous_by_sort_name.id }}" title="{{aisle.get_previous_by_sort_name.name}}">Previous</a>	
+		<a href="/catalogue/aisle/{{ aisle.get_previous_by_sort_name.id }}/" title="{{aisle.get_previous_by_sort_name.name}}">Previous</a>	
 	{% else %}
 		<span>Previous</span>
 	{% endif %}
 	 | 
 	{% if aisle.get_next_by_sort_name %}
-		<a href="/catalogue/aisle/{{ aisle.get_next_by_sort_name.id }}" title="{{aisle.get_next_by_sort_name.name}}">Next</a>		
+		<a href="/catalogue/aisle/{{ aisle.get_next_by_sort_name.id }}/" title="{{aisle.get_next_by_sort_name.name}}">Next</a>		
 	{% else %}
 		<a href="/catalogue/virtualshop/" title="Virtual shop">Next</a>
 	{% endif %}
@@ -75,13 +75,13 @@
 		
 		<div class="aisle_nav">
 			{% if aisle.get_previous_by_sort_name %}
-				<a href="/catalogue/aisle/{{ aisle.get_previous_by_sort_name.id }}" title="{{aisle.get_previous_by_sort_name.name}}">Previous</a>	
+				<a href="/catalogue/aisle/{{ aisle.get_previous_by_sort_name.id }}/" title="{{aisle.get_previous_by_sort_name.name}}">Previous</a>	
 			{% else %}
 				<span>Previous</span>
 			{% endif %}
 			 | 
 			{% if aisle.get_next_by_sort_name %}
-				<a href="/catalogue/aisle/{{ aisle.get_next_by_sort_name.id }}" title="{{aisle.get_next_by_sort_name.name}}">Next</a>		
+				<a href="/catalogue/aisle/{{ aisle.get_next_by_sort_name.id }}/" title="{{aisle.get_next_by_sort_name.name}}">Next</a>		
 			{% else %}
 				<a href="/catalogue/virtualshop/" title="Virtual shop">Next</a>
 			{% endif %}

@@ -58,5 +58,5 @@ if settings.DEBUG:
     if static_url.startswith('/'):
         static_url = static_url.lstrip('/')
     urlpatterns += patterns('',
-        (r'^%s(?P<path>.*)$' % static_url, 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
+        (r'^%s(?P<path>.*)$' % static_url, 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),        
     )

@@ -14,7 +14,7 @@
 	{% if aisle_list %}
 	    <ul id="aisle_list">
 	    {% for aisle in aisle_list %}
-	        <li><a href="/catalogue/aisle/{{ aisle.id }}">{{ aisle.name }}</a></li>
+	        <li><a href="/catalogue/aisle/{{ aisle.id }}/">{{ aisle.name }}</a></li>
 	    {% endfor %}
 	
 			<li><a href="/catalogue/virtualshop/">Virtual shop</a></li>
