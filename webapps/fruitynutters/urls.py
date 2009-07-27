@@ -4,6 +4,8 @@ from django.conf.urls.defaults import *
 from django.contrib import admin
 admin.autodiscover()
 
+from fruitynutters import settings
+
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
     # to INSTALLED_APPS to enable admin documentation:
@@ -47,3 +49,14 @@ urlpatterns += patterns('fruitynutters.cart.views',
 urlpatterns += patterns('fruitynutters.catalogue.views', 
     (r'^aislemock.html', 'aisle_mock'),
 )
+
+# this is for serving static files in development
+if settings.DEBUG:
+    import os
+    # get the static path from settings
+    static_url = settings.MEDIA_URL
+    if static_url.startswith('/'):
+        static_url = static_url.lstrip('/')
+    urlpatterns += patterns('',
+        (r'^%s(?P<path>.*)$' % static_url, 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
+    )
