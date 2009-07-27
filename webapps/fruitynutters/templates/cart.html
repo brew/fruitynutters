@@ -13,9 +13,9 @@
 		<ul class="shopping_list">
 			{% for item in cart.cartitem_set.all reversed  %}
 				<li>
-					<div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1  %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat:"-2" }}{{ item.product.measure_type }}</span></div>
+					<div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1 %}{% if not item.cart_bundle %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% endif %}{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat:"-2" }}{{ item.product.measure_type }} {% if item.cart_bundle %}each{% endif %}</span></div>
 
-					<span class="product_price"><span>&times;</span> {% if item.cart_bundle %}<input type="text" value="{{ item.quantity }}" class="quantity" disabled="disabled" />{% else %}<input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span> <a href="/cart/{{ item.product.id }}/remove/" class="remove_item"><img src="/furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
+					<span class="product_price">{% if not item.cart_bundle %}<span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span> <a href="/cart/{{ item.product.id }}/remove/" class="remove_item"><img src="/furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
 
 					{% if item.cart_bundle %}
 						<ul class="bundle_items">

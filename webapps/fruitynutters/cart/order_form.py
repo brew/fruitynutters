@@ -68,7 +68,10 @@ def createOrderForm(cart, member_details):
         c2 = Cell(c2_para, thin_frame)
 
         c3_para = Paragraph(centre_props)
-        c3_para.append(unicode(cart_item.quantity))
+        if cart_item.cart_bundle:
+            c3_para.append(u"PnM")
+        else:
+            c3_para.append(unicode(cart_item.quantity))
         c3 = Cell(c3_para, thin_frame)
 
         cost_props = ParagraphPropertySet(alignment=2)
