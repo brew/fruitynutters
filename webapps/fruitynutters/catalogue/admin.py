@@ -30,8 +30,8 @@ class ItemAdmin(admin.ModelAdmin):
         }),
     )
     radio_fields = {"price_change": admin.HORIZONTAL}
-    list_display = ('name', 'organic', 'order_name', 'sort_name', 'brand', 'unit_number', 'size', 'price', 'aisle', 'picking_order', 'active', 'has_bundle')
-    search_fields = ['name']
+    list_display = ('id', 'name', 'organic', 'order_name', 'sort_name', 'brand', 'unit_number', 'size', 'price', 'aisle', 'picking_order', 'active', 'has_bundle')
+    search_fields = ['name', 'id']
     list_filter = ['aisle']
     prepopulated_fields = {'sort_name': ('name',)}
 
