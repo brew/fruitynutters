@@ -6,12 +6,12 @@
 <head>
 	<title>Fruity Nutters{% block title %}{% endblock %}</title>
 	
-	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="screen" title="Main styles" charset="utf-8" />
+	<link rel="stylesheet" href="{{MEDIA_URL}}stylesheets/main.css" type="text/css" media="screen" title="Main styles" charset="utf-8" />
 	
-	<link rel="shortcut icon" href="/furniture/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="{{MEDIA_URL}}furniture/favicon.ico" type="image/x-icon" />
 	
-	<script src="/javascript/prototype.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/javascript/fn_cart.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{{MEDIA_URL}}javascript/prototype.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{{MEDIA_URL}}javascript/fn_cart.js" type="text/javascript" charset="utf-8"></script>
 	
 	{% block scripts %}{% endblock %}
 	

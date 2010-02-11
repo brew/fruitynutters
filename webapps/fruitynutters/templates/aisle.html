@@ -3,9 +3,9 @@
 {% block title %}: {{ aisle.name }}{% endblock %}
 
 {% block scripts %}
-	<script src="/javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{{MEDIA_URL}}javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
 
-	<script src="/javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{{MEDIA_URL}}javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 
 {% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>: <span class="active">{{ aisle.name }}</span>{% endblock %}
@@ -56,16 +56,16 @@
 						
 						{% endif %} 
 						{% if not item.organic %}
-							<img src="/furniture/non_organic.png" width="55" height="12" alt="Not Organic" />
+							<img src="{{MEDIA_URL}}furniture/non_organic.png" width="55" height="12" alt="Not Organic" />
 						{% endif %}
 						{% ifequal item.price_change 'increase' %}
-							<img src="/furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" />
+							<img src="{{MEDIA_URL}}furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" />
 						{% endifequal %}
 						{% ifequal item.price_change 'decrease'  %}
-							<img src="/furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" />
+							<img src="{{MEDIA_URL}}furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" />
 						{% endifequal %}
 						{% if item.new_changed  %}
-							<img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" />
+							<img src="{{MEDIA_URL}}furniture/new_product_star.png" width="11" height="12" alt="New product" />
 						{% endif %}</span></div>
 					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="quantity_{{item.id}}" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" /></form>
 				</li>
@@ -88,7 +88,7 @@
 		</div>
 		
 		<div id="footer">
-			<span class="key_item"><img src="/furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="/furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" /> New product / brand / size</span>
+			<span class="key_item"><img src="{{MEDIA_URL}}furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="{{MEDIA_URL}}furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="{{MEDIA_URL}}furniture/new_product_star.png" width="11" height="12" alt="New product" /> New product / brand / size</span>
 		</div>
 		
 {% endblock %}
