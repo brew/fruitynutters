@@ -5,7 +5,7 @@
 @import "ie6win.css";
 
 body {
-    background: #cae5d0 url(/furniture/background_tile.gif) repeat-y top left;
+    background: #cae5d0 url('/media/furniture/background_tile.gif') repeat-y top left;
     color:#222;
     margin:0;
     
@@ -51,7 +51,7 @@ p {
     height:100%;
     width:100%;
     text-indent:-9999px;
-    background: transparent url(/furniture/fruitynutters_logo.gif) no-repeat top left;
+    background: transparent url('/media/furniture/fruitynutters_logo.gif') no-repeat top left;
 }
 #main_content h1 a:focus {
     outline:none;
@@ -425,21 +425,21 @@ p {
   padding: 6px 6px 6px 30px;
 }
 .information, .cart_information, .writein_information {
-  background: #dedfff url('/furniture/information.png') 6px 0.7em no-repeat;
+  background: #dedfff url('/media/furniture/information.png') 6px 0.7em no-repeat;
   color: #406299;
 }
 .error, .cart_error, .writein_error {
-  background: #ffe1da url('/furniture/exclamation.png') 6px 0.7em no-repeat;
+  background: #ffe1da url('/media/furniture/exclamation.png') 6px 0.7em no-repeat;
   border-color: #f34f4f;
   color: #be0b0b;
 }
 .success, .cart_success, .writein_success {
-  background: #e2f9e3 url('/furniture/accept.png') 6px 0.7em no-repeat;
+  background: #e2f9e3 url('/media/furniture/accept.png') 6px 0.7em no-repeat;
   border-color: #9c9;
   color: #080;
 }
 .warning, .cart_warning, .writein_warning {
-  background:#fff8bf url('/furniture/error.png') 6px 0.7em no-repeat;
+  background:#fff8bf url('/media/furniture/error.png') 6px 0.7em no-repeat;
   border-color: #ffd324;
   color:#eb830c;
 }
@@ -458,7 +458,7 @@ p {
     padding:3px 5px;
 }
 #side_links ul li#aisle_link {
-    background:#50a863 url(/furniture/link_arrow.png) no-repeat center right;
+    background:#50a863 url('/media/furniture/link_arrow.png') no-repeat center right;
     margin-bottom:12px;
 }
 #side_links a {
