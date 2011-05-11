@@ -40,6 +40,9 @@ class Brand(models.Model):
 
     def __unicode__(self):
         return self.name
+        
+    class Meta:
+        ordering = ['name',]
 
 class Item(models.Model):
     name = models.CharField(max_length=60, help_text='Display name for the item.')
