@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.sessions.models import Session
 from django.http import HttpResponseForbidden, HttpResponse
@@ -13,9 +15,11 @@ from fruitynutters.cart.models import Cart, CartItem, CartWriteinItem
 from fruitynutters.util import get_session_cart, isAddressValid
 from fruitynutters.cart.order_form import createOrderForm
 
+log = logging.getLogger('cart')
+
 def add_to_cart(request, item_id, quantity=1):
     """Adds the item with item_id to the cart associated with the session."""
-    if request.method == 'POST':        
+    if request.method == 'POST':
         
         item_to_add = Item.objects.get(id__exact=item_id)
         cart = get_session_cart(request.session)
@@ -33,7 +37,6 @@ def add_to_cart(request, item_id, quantity=1):
         
             cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
             cart.remove_multiple_cart_item(chosen_item_id=item_to_add.id)
-                
                 
         response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         return response
