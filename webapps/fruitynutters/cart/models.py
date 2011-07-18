@@ -67,18 +67,7 @@ class Cart(models.Model):
         bundle          a list of tuples containing the id and quantity of subitems
         """
         
-        alreadyInCart = False
-
-        # Initially create a CartItem
-        item_to_modify = CartItem(cart=self, product=chosen_item, quantity=0)
-        # If there's an item in the cart that already corresponds with the chosen_item, select it. 
-        for similarItem in self.cartitem_set.filter(product__id = chosen_item.id):
-            item_to_modify = similarItem
-            alreadyInCart = True
-            break
-            
-        if not alreadyInCart:
-            self.cartitem_set.add(item_to_modify)
+        item_to_modify, created = CartItem.objects.get_or_create(cart=self, product=chosen_item, defaults={'quantity':0})
             
         # If we need to deal with a bundle...
         if bundle_items:
@@ -97,11 +86,22 @@ class Cart(models.Model):
                 
         item_to_modify.quantity += number_added
         
-        # Before we save the item, is it still valid?
-        if item_to_modify.is_valid():
-            item_to_modify.save()
+        item_to_modify.save()
 
         return item_to_modify
+        
+    def remove_multiple_cart_item(self, chosen_item_id):
+        """Verifies there is only one cart item per product id in the cart. Removes multiple if it exists.
+        
+        This is used by the view to deal with the double click race condition when adding new items to the cart.
+        """
+
+        try:
+            CartItem.objects.get(cart=self, product__id=chosen_item_id)
+        except CartItem.MultipleObjectsReturned:
+            multiple_items_to_delete = self.cartitem_set.filter(product__id=chosen_item_id)[1:]
+            for item_to_delete in multiple_items_to_delete:
+                item_to_delete.delete()
 
 
     def update_item(self, update_item, quantity):
@@ -209,15 +209,7 @@ class CartItem(models.Model):
         except AttributeError:
             pass
         super(CartItem, self).delete()
-        
-    def is_valid(self):
-        """If the item is a bundle, does it contain the correct number of sub items."""
-        return True
-        if self.cart_bundle:
-            cart_bundle_quantity = self.cart_bundle.numItems
-            if cart_bundle_quantity is not self.product.unit_number * self.quantity:
-                return False
-        return True
+
 
     def __unicode__(self):
         return u"%s x %s, %s" % (self.quantity, self.product.name, self.line_total)

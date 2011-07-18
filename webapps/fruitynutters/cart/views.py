@@ -32,6 +32,8 @@ def add_to_cart(request, item_id, quantity=1):
                 request.notifications.create(Cart.CART_BUNDLE_ADDED_NOTICE, 'cart_information')
         
             cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
+            cart.remove_multiple_cart_item(chosen_item_id=item_to_add.id)
+                
                 
         response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
         return response
