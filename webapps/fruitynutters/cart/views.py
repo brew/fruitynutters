@@ -7,6 +7,7 @@ from django.http import HttpResponseForbidden, HttpResponse
 from django.template import RequestContext
 from django.core.mail import EmailMessage
 from django.template.defaultfilters import slugify
+from django.views.decorators.csrf import csrf_exempt
 
 from fruitynutters.settings import ORDER_FORM_EMAIL
 from fruitynutters.catalogue.models import Item
@@ -16,6 +17,7 @@ from fruitynutters.cart.order_form import createOrderForm
 
 log = logging.getLogger('cart')
 
+@csrf_exempt
 def add_to_cart(request, item_id, quantity=1):
     """Adds the item with item_id to the cart associated with the session."""
     if request.method == 'POST':
@@ -42,6 +44,7 @@ def add_to_cart(request, item_id, quantity=1):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def add_writein_to_cart(request):
     """Adds a write-in item to the cart associated with the session."""
     if request.method == "POST":
@@ -74,6 +77,7 @@ def add_writein_to_cart(request):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def add_virtualshop_item_to_cart(request):
     """Adds a virtual shop item to the cart associated with the session."""
     if request.method == "POST":
@@ -105,6 +109,7 @@ def add_virtualshop_item_to_cart(request):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def update_cart(request):
     """Updates the cart associated with the session based on items in the POST object."""
     if request.method == "POST":
@@ -127,6 +132,7 @@ def update_cart(request):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def remove_from_cart(request, item_id):
     """Removes the item with item_id from the cart associated with the session."""
     if request.method == 'POST':
@@ -138,6 +144,7 @@ def remove_from_cart(request, item_id):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def remove_writein_from_cart(request, item_id):
     """Removes the writein item with item_id from the cart associated with the session."""
     if request.method == 'POST':
@@ -149,6 +156,7 @@ def remove_writein_from_cart(request, item_id):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def remove_virtualshop_item_from_cart(request, item_id):
     """Removes the virtual shop item writh item_id from the cart associated with the session."""
     if request.method == "POST":
@@ -160,6 +168,7 @@ def remove_virtualshop_item_from_cart(request, item_id):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def empty_cart(request):
     """Emptys the cart object associated with the session."""
     if request.method == "POST":
@@ -169,6 +178,7 @@ def empty_cart(request):
 
     return HttpResponseForbidden()
 
+@csrf_exempt
 def review(request):
     """Review the current cart and collect user info."""
 
@@ -178,6 +188,7 @@ def review(request):
     return render_to_response('review.html', {'cart':cart, 'member_name':cart.cart_username, 'member_email':cart.cart_useremail, 'member_phone':cart.cart_userphone, 'order_comments':cart.cart_comment}, context_instance=RequestContext(request))
 
 
+@csrf_exempt
 def submit(request):
     """Validates and emails the cart and member details to FNs team."""
 
@@ -245,6 +256,7 @@ def submit(request):
     else:
         return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
 
+@csrf_exempt
 def save_cart_details(request):
     if request.method == 'POST':
         cart = get_session_cart(request.session)
