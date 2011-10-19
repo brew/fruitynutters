@@ -9,10 +9,10 @@ from fruitynutters import settings
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
-    (r'^catalogue/admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^catalogue/admin/', include(admin.site.urls)),
+    (r'^admin/', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('fruitynutters.catalogue.views',
