@@ -10,14 +10,14 @@ class AisleAdmin(admin.ModelAdmin):
     )
     list_display = ('name', 'sort_name', 'active')
     prepopulated_fields = {'sort_name': ('name',)}
-    
+
 admin.site.register(Aisle, AisleAdmin)
 
 
 class BrandAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name',]
-    
+
 admin.site.register(Brand, BrandAdmin)
 
 
@@ -42,17 +42,17 @@ admin.site.register(Item, ItemAdmin)
 
 class BundleAdmin(admin.ModelAdmin):
     pass
-    
+
 admin.site.register(Bundle, BundleAdmin)
 
 class PageAdmin(admin.ModelAdmin):
     list_display = ('name', 'title')
     form = PageAdminModelForm
-    
+
 admin.site.register(Page, PageAdmin)
 
 class VirtualShopPageAdmin(admin.ModelAdmin):
     list_display = ('name', 'title', 'shopPdf')
     form = PageAdminModelForm
-    
+
 admin.site.register(VirtualShopPage, VirtualShopPageAdmin)

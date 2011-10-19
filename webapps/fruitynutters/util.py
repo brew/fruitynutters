@@ -19,7 +19,7 @@ def get_session_cart(session):
             return get_session_cart(session)
 
 
-      
+
 # Ported from Recipe 3.9 in Secure Programming Cookbook for C and C++ by
 # John Viega and Matt Messier (O'Reilly 2003)
 

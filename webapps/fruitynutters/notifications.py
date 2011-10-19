@@ -23,7 +23,7 @@ Example template code:
 {% endif %}
 
 Example styling:
-points to names of famfam icons and assumes structure like 
+points to names of famfam icons and assumes structure like
 #notifications, #notifications li {
   list-style: none;
   list-style-type: none;
@@ -71,13 +71,13 @@ class Notifications:
 
     def get(self):
             return self.session.get(self.SESSION_VARIABLE, [])
-    
+
     def get_and_clear(self):
             return self.session.pop(self.SESSION_VARIABLE, [])
-    
+
     def create(self, message, type=DEFAULT_TYPE):
         """creates a notification
-        
+
         arguments:
         message: text content of notification
         type: optional type (defaults to the value of DEFAULT_TYPE)
