@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     (r'^catalogue/admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^catalogue/admin/(.*)', include(admin.site.urls)),
+    (r'^catalogue/admin/', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('fruitynutters.catalogue.views',
