@@ -2,71 +2,71 @@
 <img src="{{MEDIA_URL}}furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
 {% load basic_logic %}
 {% if notifications %}
-	<ul class="notifications">
-	    {% for notification in notifications %}{% if "cart_"|IN:notification.type %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
-	    {% endfor %}
-	</ul>
+  <ul class="notifications">
+      {% for notification in notifications %}{% if "cart_"|IN:notification.type %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
+      {% endfor %}
+  </ul>
 {% endif %}
 <form action="/cart/update/" method="post" accept-charset="utf-8" id="cart_form">
-	<p id="shopping_list_total" class="top">Total: <strong>£{{ cart.total }}</strong></p>
-	{% if cart.numItems %}
-		<ul class="shopping_list">
-			{% for item in cart.cartitem_set.all reversed  %}
-				<li>
-					<div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1 %}{% if not item.cart_bundle %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% endif %}{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat:"-2" }}{{ item.product.measure_type }} {% if item.cart_bundle %}each{% endif %}</span></div>
+  <p id="shopping_list_total" class="top">Total: <strong>£{{ cart.total }}</strong></p>
+  {% if cart.numItems %}
+    <ul class="shopping_list">
+      {% for item in cart.cartitem_set.all reversed  %}
+        <li>
+          <div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1 %}{% if not item.cart_bundle %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% endif %}{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat:"-2" }}{{ item.product.measure_type }} {% if item.cart_bundle %}each{% endif %}</span></div>
 
-					<span class="product_price">{% if not item.cart_bundle %}<span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span> <a href="/cart/{{ item.product.id }}/remove/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
+          <span class="product_price">{% if not item.cart_bundle %}<span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span> <a href="/cart/{{ item.product.id }}/remove/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
 
-					{% if item.cart_bundle %}
-						<ul class="bundle_items">
-						{% for bundle_item in item.cart_bundle.cartitem_set.all %}
-							<li>{{ bundle_item.product.name }}&nbsp;&times;&nbsp;{{ bundle_item.quantity }}</li>
-						{% endfor %}
-						</ul>
-					{% endif %}
-					
-				</li>
-			{% endfor %}
-			
-			{% for writein in cart.cartwriteinitem_set.all %}
-			
-				<li>
-					<div class="writein">{{ writein.name }} <span class="code">{{ writein.code }}</span></div><a href="/cart/{{ writein.id }}/removewritein/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
-				</li>
-			
-			{% endfor %}
-			
-			{% for virtualshop_item in cart.cartvirtualshopitem_set.all %}
-				<li>
-					<div class="virtualshop_item">{{ virtualshop_item.name }} <span class="quantity">&times; {{ virtualshop_item.quantity }}</span></div><a href="/cart/{{ virtualshop_item.id }}/removevirtualshopitem/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a>
-				</li>
-			{% endfor %}
-			
-		</ul>
-	{% else %}
-		<p>Your list is currently empty</p>
-	{% endif %}
-	<p id="list_controls"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
-	<p id="shopping_list_total" class="bottom">Total: <strong>£{{ cart.total }}</strong></p>
-	{% if cart.cartvirtualshopitem_set.all or cart.cartwriteinitem_set.all %}
-	<p class="note">The total doesn't include write-in or virtual shop items.</p>		
-	{% endif %}
-	
+          {% if item.cart_bundle %}
+            <ul class="bundle_items">
+            {% for bundle_item in item.cart_bundle.cartitem_set.all %}
+              <li>{{ bundle_item.product.name }}&nbsp;&times;&nbsp;{{ bundle_item.quantity }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+
+        </li>
+      {% endfor %}
+
+      {% for writein in cart.cartwriteinitem_set.all %}
+
+        <li>
+          <div class="writein">{{ writein.name }} <span class="code">{{ writein.code }}</span></div><a href="/cart/{{ writein.id }}/removewritein/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
+        </li>
+
+      {% endfor %}
+
+      {% for virtualshop_item in cart.cartvirtualshopitem_set.all %}
+        <li>
+          <div class="virtualshop_item">{{ virtualshop_item.name }} <span class="quantity">&times; {{ virtualshop_item.quantity }}</span></div><a href="/cart/{{ virtualshop_item.id }}/removevirtualshopitem/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a>
+        </li>
+      {% endfor %}
+
+    </ul>
+  {% else %}
+    <p>Your list is currently empty</p>
+  {% endif %}
+  <p id="list_controls"><a href="#" id="empty_list">Empty list</a><input type="submit" value="Update" id="update_list_button" disabled="disabled" /></p>
+  <p id="shopping_list_total" class="bottom">Total: <strong>£{{ cart.total }}</strong></p>
+  {% if cart.cartvirtualshopitem_set.all or cart.cartwriteinitem_set.all %}
+  <p class="note">The total doesn't include write-in or virtual shop items.</p>
+  {% endif %}
+
 
 </form>
 
 <form action="/cart/addwritein/" id="writein_form" method="post" accept-charset="utf-8">
-	<p><a href="#" id="writein_opener">Add a custom 'write-in' item</a></p>
-	<div id="writein_elements" {% ifnotequal show_writein "True" %}style="display:none"{% endifnotequal %}>
-		{% if notifications %}
-			<ul class="notifications">
-			    {% for notification in notifications %}{% if "writein_"|IN:notification.type %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
-			    {% endfor %}
-			</ul>
-		{% endif %}
-		<p class="note">Want something not in the aisles? Use the <a href="http://www.zen17754.zen.co.uk/fn/Suma-FNformat.pdf" target="_blank">Suma</a> and <a href="http://www.zen17754.zen.co.uk/fn/Infinity-FNformat.pdf" target="_blank">Infinity</a> catalogues to add the Description &amp; Code below. Price will be confirmed on acknowledging the order.</p>
-		<p id="writein_description_block"><label for="writein_description">Description</label><input type="text" name="writein_description" value="{{ writein_description }}" id="writein_description" /></p>
-		<p id="writein_code_block"><label for="writein_code">Code</label><input type="text" name="writein_code" value="{{ writein_code }}" id="writein_code" /></p>
-		<p><input type="submit" name="writein_submit" value="Add custom item" id="writein_submit" /></p>
-	</div>
+  <p><a href="#" id="writein_opener">Add a custom 'write-in' item</a></p>
+  <div id="writein_elements" {% ifnotequal show_writein "True" %}style="display:none"{% endifnotequal %}>
+    {% if notifications %}
+      <ul class="notifications">
+          {% for notification in notifications %}{% if "writein_"|IN:notification.type %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
+          {% endfor %}
+      </ul>
+    {% endif %}
+    <p class="note">Want something not in the aisles? Use the <a href="http://www.zen17754.zen.co.uk/fn/Suma-FNformat.pdf" target="_blank">Suma</a> and <a href="http://www.zen17754.zen.co.uk/fn/Infinity-FNformat.pdf" target="_blank">Infinity</a> catalogues to add the Description &amp; Code below. Price will be confirmed on acknowledging the order.</p>
+    <p id="writein_description_block"><label for="writein_description">Description</label><input type="text" name="writein_description" value="{{ writein_description }}" id="writein_description" /></p>
+    <p id="writein_code_block"><label for="writein_code">Code</label><input type="text" name="writein_code" value="{{ writein_code }}" id="writein_code" /></p>
+    <p><input type="submit" name="writein_submit" value="Add custom item" id="writein_submit" /></p>
+  </div>
 </form>

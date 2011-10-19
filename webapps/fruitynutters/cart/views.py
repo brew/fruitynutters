@@ -33,7 +33,7 @@ def add_to_cart(request, item_id, quantity=1):
             # If there are items in the post request, then there are bundle items to deal with.
             # Use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
             if request.POST.items():
-                bundle = [(Item.objects.get(id__exact=bi[0]), int(bi[1])) for bi in request.POST.items() if bi[1] != "" and int(bi[1]) > 0]
+                bundle = [(Item.objects.get(id__exact=bi[0]), int(bi[1])) for bi in request.POST.items() if bi[0] != u'csrfmiddlewaretoken' and bi[1] != "" and int(bi[1]) > 0]
                 request.notifications.create(Cart.CART_BUNDLE_ADDED_NOTICE, 'cart_information')
 
             cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
