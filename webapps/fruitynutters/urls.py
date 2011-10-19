@@ -7,12 +7,12 @@ admin.autodiscover()
 from fruitynutters import settings
 
 urlpatterns = patterns('',
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
+    # Uncomment the admin/doc line below and add 'django.contrib.admindocs'
     # to INSTALLED_APPS to enable admin documentation:
     (r'^catalogue/admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    (r'^catalogue/admin/(.*)', admin.site.root),
+    (r'^catalogue/admin/(.*)', include(admin.site.urls)),
 )
 
 urlpatterns += patterns('fruitynutters.catalogue.views',
@@ -22,7 +22,7 @@ urlpatterns += patterns('fruitynutters.catalogue.views',
     (r'^small-print/$', 'info_page', {'page_name':'small-print'}),
     (r'^future-dates/$', 'info_page', {'page_name':'future-dates'}),
     (r'^donations/$', 'info_page', {'page_name':'donations'}),
-    
+
     (r'^catalogue/$', 'aisle_index'),
     (r'^catalogue/aisle/$', 'aisle_index'),
     (r'^catalogue/aisle/(?P<aisle_id>\d+)/$', 'aisle'),
@@ -46,7 +46,7 @@ urlpatterns += patterns('fruitynutters.cart.views',
 )
 
 # Static mockups
-urlpatterns += patterns('fruitynutters.catalogue.views', 
+urlpatterns += patterns('fruitynutters.catalogue.views',
     (r'^aislemock.html', 'aisle_mock'),
 )
 
@@ -58,5 +58,5 @@ if settings.DEBUG:
     if static_url.startswith('/'):
         static_url = static_url.lstrip('/')
     urlpatterns += patterns('',
-        (r'^%s(?P<path>.*)$' % static_url, 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),        
+        (r'^%s(?P<path>.*)$' % static_url, 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
     )
