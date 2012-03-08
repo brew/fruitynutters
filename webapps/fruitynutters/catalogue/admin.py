@@ -41,15 +41,17 @@ admin.site.register(Item, ItemAdmin)
 
 
 class BundleAdmin(admin.ModelAdmin):
-    pass
+    filter_horizontal = ('items',)
 
 admin.site.register(Bundle, BundleAdmin)
+
 
 class PageAdmin(admin.ModelAdmin):
     list_display = ('name', 'title')
     form = PageAdminModelForm
 
 admin.site.register(Page, PageAdmin)
+
 
 class VirtualShopPageAdmin(admin.ModelAdmin):
     list_display = ('name', 'title', 'shopPdf')
