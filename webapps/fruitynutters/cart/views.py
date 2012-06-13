@@ -2,7 +2,7 @@
 
 import logging
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from django.template import RequestContext
 from django.core.mail import EmailMessage
@@ -25,22 +25,26 @@ def add_to_cart(request, item_id, quantity=1):
 
         item_to_add = Item.objects.get(id__exact=item_id)
         cart = get_session_cart(request.session)
-        # Only add active items, from active bundles.
+        # Only add active items, from active aisles.
         if not item_to_add.active or not item_to_add.aisle.active:
             request.notifications.create(Cart.CART_ITEM_UNAVAILABLE_ERROR, 'cart_error')
         else:
-            quantity = int(quantity)
+            quantity = int(request.POST.get('quantity', quantity))
+
             bundle = None
-            # If there are items in the post request, then there are bundle items to deal with.
-            # Use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
-            if request.POST.items():
-                bundle = [(Item.objects.get(id__exact=bi[0]), int(bi[1])) for bi in request.POST.items() if bi[0] != u'csrfmiddlewaretoken' and bi[1] != "" and int(bi[1]) > 0]
+            # If there are bundle items in the post request,
+            # use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
+            if request.POST.get('has_bundle', False):
+                bundle = [(Item.objects.get(id__exact=i[0].split(':')[1]), int(i[1])) for i in request.POST.items() if i[0].startswith('bi:') and i[1] != '' and int(i[1]) > 0]
                 request.notifications.create(Cart.CART_BUNDLE_ADDED_NOTICE, 'cart_information')
 
             cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
             cart.remove_multiple_cart_item(chosen_item_id=item_to_add.id)
 
-        response = render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
+        if request.is_ajax():
+            response = render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
+        else:
+            response = redirect(request.POST.get('next', '/'))
         return response
 
     return HttpResponseForbidden()

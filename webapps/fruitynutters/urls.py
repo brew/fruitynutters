@@ -25,7 +25,7 @@ urlpatterns += patterns('fruitynutters.catalogue.views',
 
     (r'^catalogue/$', 'aisle_index'),
     (r'^catalogue/aisle/$', 'aisle_index'),
-    (r'^catalogue/aisle/(?P<aisle_id>\d+)/$', 'aisle'),
+    url(r'^catalogue/aisle/(?P<aisle_id>\d+)/$', 'aisle', name='aisle'),
     (r'^catalogue/reset/$', 'reset_items'),
     (r'^catalogue/virtualshop/$', 'virtual_shop'),
 )
