@@ -1,7 +1,7 @@
 var FNBundle = Class.create({
   initialize: function(bundle_container) {
     this.bundle_container = bundle_container;
-    
+
     // Initially disable the add button
     $(bundle_container).down('.add_button').disable();
 
@@ -10,14 +10,14 @@ var FNBundle = Class.create({
     $(bundle_container).select('.bundle input.quantity').each(function(input, index) {
       input.observe('keyup',this.boundBundleInputKeyUp);
     }.bind(this));
-        
+
     // Set up the keyup event for the bundle_container's quantity input field.
     this.boundQuantityInputKeyUp = this.onQuantityKeyUp.bind(this);
     $(bundle_container).down('.product_add input.quantity').observe('keyup', this.boundQuantityInputKeyUp);
-    
+
     // this.setTotalUnitsElement();
   },
-  
+
   /**
    *  Handler for keyup events on the bundle input fields.
    */
@@ -29,12 +29,12 @@ var FNBundle = Class.create({
     }
 
     this.setAddButton();
-    
+
     // Reselect the input.
     ev.target.focus();
-    
+
   },
-      
+
   /**
    *  Handler for the keyup event on the product_add form's quantity input field.
    */
@@ -43,14 +43,14 @@ var FNBundle = Class.create({
     if(!this._isStringANumber(ev.target.getValue())) {
       ev.target.focus();
       return false;
-    }  
+    }
 
     // Set the new totalUnit quantity.
     this.setTotalUnitsElement();
-    
+
     ev.target.focus();
   },
-  
+
   /**
    *  Sets the total units element's innerhtml with the current quantity * the number of units in the item.
    */
@@ -60,10 +60,10 @@ var FNBundle = Class.create({
     if( totalUnits != Number($(this.bundle_container).down('.total_units').innerHTML)) {
       $(this.bundle_container).down('.total_units').update(totalUnits);
       new Effect.Highlight($(this.bundle_container).down('.total_units'), { startcolor: '#ffff99', endcolor: '#E7F3EA', restorecolor: 'transparent'});
-      this.setAddButton();      
+      this.setAddButton();
     }
   },
-  
+
   /**
    *  Determines if the bundle is valid or not.
    *  Does it have enough bundle items choosen?
@@ -73,18 +73,18 @@ var FNBundle = Class.create({
     var totalUnits = Number($(this.bundle_container).down('.total_units').innerHTML);
 
     var numberOfUnitsSelected = 0;
-    
+
     for (var i=0;i<allBundleInputs.length;i++) {
       // If the input doesn't contain a number, the bundle is invalid.
       if(!this._isStringANumber(allBundleInputs[i].getValue()) && allBundleInputs[i].getValue() != "") return false;
-      
+
       // Add the value of the context input to the numberOfUnitsSelected.
-      numberOfUnitsSelected += Number(allBundleInputs[i].getValue());      
+      numberOfUnitsSelected += Number(allBundleInputs[i].getValue());
     }
-    
-    return (numberOfUnitsSelected == totalUnits);    
+
+    return (numberOfUnitsSelected == totalUnits);
   },
-  
+
   /**
    *  Sets the enabled state of the add button based on results from the isBundleValid method.
    */
@@ -96,15 +96,15 @@ var FNBundle = Class.create({
       $(this.bundle_container).down('.add_button').disable();
     }
   },
-  
+
   /**
    *  Returns boolean determining if the passed string contains only digits.
    */
   _isStringANumber: function(str) {
     return (/^\d+$/.test(str));
   }
-  
-  
+
+
 });
 
 
