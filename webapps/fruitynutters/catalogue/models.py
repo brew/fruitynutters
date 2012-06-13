@@ -1,10 +1,11 @@
 from django.db import models
 
+
 class Aisle(models.Model):
     name = models.CharField(max_length=60, unique=True, help_text="Display name for the aisle.")
     sort_name = models.CharField(max_length=60, verbose_name="Order", help_text="Name the aisle is sorted on. Not displayed to the user.")
 
-    description = models.TextField(null=True,blank=True)
+    description = models.TextField(null=True, blank=True)
     active = models.BooleanField(help_text='Determines whether the Aisle is active to the user. This doesn\'t affect the active status of items.')
 
     def get_next_by_sort_name(self):
@@ -12,7 +13,7 @@ class Aisle(models.Model):
         all_aisle_names = [aisle.name for aisle in all_aisles]
         this_aisle_index = all_aisle_names.index(self.name)
         try:
-            next_aisle = all_aisles[this_aisle_index+1]
+            next_aisle = all_aisles[this_aisle_index + 1]
         except Exception:
             next_aisle = None
 
@@ -23,7 +24,7 @@ class Aisle(models.Model):
         all_aisle_names = [aisle.name for aisle in all_aisles]
         this_aisle_index = all_aisle_names.index(self.name)
         try:
-            prev_aisle = all_aisles[this_aisle_index-1]
+            prev_aisle = all_aisles[this_aisle_index - 1]
         except Exception:
             prev_aisle = None
 
@@ -35,6 +36,7 @@ class Aisle(models.Model):
     class Meta:
         ordering = ['sort_name']
 
+
 class Brand(models.Model):
     name = models.CharField(max_length=60, unique=True)
 
@@ -42,7 +44,8 @@ class Brand(models.Model):
         return self.name
 
     class Meta:
-        ordering = ['name',]
+        ordering = ['name', ]
+
 
 class Item(models.Model):
     name = models.CharField(max_length=60, help_text='Display name for the item.')
@@ -64,12 +67,12 @@ class Item(models.Model):
     unit_number = models.PositiveIntegerField(help_text='How many units make up this item?', verbose_name='Unit')
     measure_per_unit = models.FloatField(null=True, blank=True)
     measure_type = models.CharField(max_length=10, null=True, blank=True)
-    price = models.DecimalField(max_digits=4,decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
 
     price_change_choices = (
-        ('increase','Increase'),
-        ('no_change','No change'),
-        ('decrease','Decrease')
+        ('increase', 'Increase'),
+        ('no_change', 'No change'),
+        ('decrease', 'Decrease')
     )
     price_change = models.CharField(max_length=30, null=True, default='no_change', choices=price_change_choices)
 
@@ -112,12 +115,14 @@ class Item(models.Model):
     class Meta:
         ordering = ['sort_name']
 
+
 class Bundle(models.Model):
     name = models.CharField(max_length=30, verbose_name='Internal name')
     items = models.ManyToManyField('Item', related_name='bundle_item')
 
     def __unicode__(self):
         return self.name
+
 
 class Page(models.Model):
     """Model for simple ancillary pages, like the home page."""
@@ -127,6 +132,7 @@ class Page(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class VirtualShopPage(Page):
     """Model for a virtual shop launch page."""

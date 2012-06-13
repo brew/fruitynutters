@@ -13,8 +13,9 @@ def info_page(request, page_name):
     title = page_object.title
     body = page_object.body
 
-    response = render_to_response('info_page.html', {'title':title, 'body':body}, context_instance=RequestContext(request))
+    response = render_to_response('info_page.html', {'title': title, 'body': body}, context_instance=RequestContext(request))
     return response
+
 
 def virtual_shop(request):
     """Handles virtual shop aisle."""
@@ -31,7 +32,7 @@ def virtual_shop(request):
 
     cart = get_session_cart(request.session)
 
-    response = render_to_response('virtual_shop.html', {'cart':cart, 'title':title, 'body':body, 'pdf_path':pdf_path, 'last_aisle':last_aisle}, context_instance=RequestContext(request))
+    response = render_to_response('virtual_shop.html', {'cart': cart, 'title': title, 'body': body, 'pdf_path': pdf_path, 'last_aisle': last_aisle}, context_instance=RequestContext(request))
     return response
 
 
@@ -44,9 +45,10 @@ def aisle_index(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    response = render_to_response('aisle_index.html', {'aisle_list':aisle_list, 'cart':cart}, context_instance=RequestContext(request))
+    response = render_to_response('aisle_index.html', {'aisle_list': aisle_list, 'cart': cart}, context_instance=RequestContext(request))
     response["Cache-Control"] = 'no-cache, no-store, must-revalidate'
     return response
+
 
 def aisle(request, aisle_id):
     """Aisle detail view"""
@@ -57,9 +59,10 @@ def aisle(request, aisle_id):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    response = render_to_response('aisle.html', {'aisle':aisle, 'aisle_items':aisle_items, 'cart':cart}, context_instance=RequestContext(request))
+    response = render_to_response('aisle.html', {'aisle': aisle, 'aisle_items': aisle_items, 'cart': cart}, context_instance=RequestContext(request))
     response["Cache-Control"] = 'no-cache, no-store, must-revalidate'
     return response
+
 
 @staff_member_required
 def reset_items(request):
@@ -72,6 +75,7 @@ def reset_items(request):
         item.save()
 
     return HttpResponseRedirect('/catalogue/admin/catalogue/item/')
+
 
 def aisle_mock(request):
     return render_to_response('aisle_mock.html', context_instance=RequestContext(request))

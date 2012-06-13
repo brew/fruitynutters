@@ -10,6 +10,7 @@ from rtfng.Renderer import Renderer
 
 from cStringIO import StringIO
 
+
 def createOrderForm(cart, member_details):
     """Creates and returns an order form pdf."""
 
@@ -21,36 +22,34 @@ def createOrderForm(cart, member_details):
     ss = makeReportStylesheet()
     doc = Document(ss, default_language=Languages.EnglishUK)
     paper = Paper('A4', 9, 'A4 297 x 210 mm', 16838, 11907)
-    section = Section(margins=MarginsPropertySet( top=100, left=400, bottom=100, right=400 ), paper=paper, landscape=True, headery=0, footery=300)
-    doc.Sections.append( section )
+    section = Section(margins=MarginsPropertySet(top=100, left=400, bottom=100, right=400), paper=paper, landscape=True, headery=0, footery=300)
+    doc.Sections.append(section)
 
     footer_text = member_name + " " + member_phone
     footer_p = Paragraph(ss.ParagraphStyles.Heading1)
     footer_p.append(unicode(footer_text))
     section.Footer.append(footer_p)
 
-    thin_edge  = BorderPropertySet( width=10, style=BorderPropertySet.SINGLE )
-    thin_frame  = FramePropertySet( thin_edge,  thin_edge,  thin_edge,  thin_edge )
+    thin_edge = BorderPropertySet(width=10, style=BorderPropertySet.SINGLE)
+    thin_frame = FramePropertySet(thin_edge,  thin_edge,  thin_edge,  thin_edge)
 
     # based on twirps or 567/cm.
-    table = Table(  3118,
-                    567,
-                    709 )
+    table = Table(3118, 567, 709)
 
     # header
     header_props = ParagraphPropertySet(alignment=3)
 
     c2_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
     c2_para.append(u'Product')
-    c2 = Cell(c2_para, thin_frame )
+    c2 = Cell(c2_para, thin_frame)
 
     c3_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
     c3_para.append(u'No.')
-    c3 = Cell(c3_para, thin_frame )
+    c3 = Cell(c3_para, thin_frame)
 
     c4_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
     c4_para.append(u'Cost')
-    c4 = Cell(c4_para, thin_frame )
+    c4 = Cell(c4_para, thin_frame)
     table.AddRow(c2, c3, c4)
 
     # list
@@ -88,8 +87,8 @@ def createOrderForm(cart, member_details):
 
     c2_para = Paragraph(ParagraphPropertySet(alignment=2))
     c2_para.append(unicode(cart.total))
-    c2 = Cell(c2_para,thin_frame)
-    table.AddRow(c1,c2)
+    c2 = Cell(c2_para, thin_frame)
+    table.AddRow(c1, c2)
 
     # write ins
     for writein_item in cart.cartwriteinitem_set.all():
@@ -129,8 +128,7 @@ def createOrderForm(cart, member_details):
         c4 = Cell(c4_para, thin_frame)
         table.AddRow(c2, c3, c4)
 
-
-    section.append( table )
+    section.append(table)
 
     section.append(Paragraph())
 
@@ -141,42 +139,39 @@ def createOrderForm(cart, member_details):
 
     return rtf_doc
 
+
 def makeReportStylesheet():
     result = StyleSheet()
 
-    NormalText = TextStyle( TextPropertySet( result.Fonts.Arial, 16 ) )
+    NormalText = TextStyle(TextPropertySet(result.Fonts.Arial, 16))
 
-    ps = ParagraphStyle( 'Normal',
-                         NormalText.Copy(),
-                         ParagraphPropertySet( space_before = 30,
-                                               space_after  = 30 ) )
-    result.ParagraphStyles.append( ps )
+    ps = ParagraphStyle('Normal',
+                        NormalText.Copy(),
+                        ParagraphPropertySet(space_before=30, space_after=30))
+    result.ParagraphStyles.append(ps)
 
-    ps = ParagraphStyle( 'Normal Short',
-                         NormalText.Copy() )
-    result.ParagraphStyles.append( ps )
+    ps = ParagraphStyle('Normal Short',
+                        NormalText.Copy())
+    result.ParagraphStyles.append(ps)
 
     NormalText.textProps.size = 24
-    ps = ParagraphStyle( 'Heading 1',
-                         NormalText.Copy(),
-                         ParagraphPropertySet( space_before = 30,
-                                               space_after  = 60 ) )
-    result.ParagraphStyles.append( ps )
+    ps = ParagraphStyle('Heading 1',
+                        NormalText.Copy(),
+                        ParagraphPropertySet(space_before=30, space_after=60))
+    result.ParagraphStyles.append(ps)
 
     NormalText.textProps.size = 12
     NormalText.textProps.bold = True
-    ps = ParagraphStyle( 'Heading 2',
-                         NormalText.Copy(),
-                         ParagraphPropertySet( space_before = 39,
-                                               space_after  = 60 ) )
-    result.ParagraphStyles.append( ps )
+    ps = ParagraphStyle('Heading 2',
+                        NormalText.Copy(),
+                        ParagraphPropertySet(space_before=39, space_after=60))
+    result.ParagraphStyles.append(ps)
 
     NormalText.textProps.size = 16
     NormalText.textProps.bold = True
-    ps = ParagraphStyle( 'Heading 2 Short',
-                         NormalText.Copy() )
+    ps = ParagraphStyle('Heading 2 Short',
+                        NormalText.Copy())
 
-    result.ParagraphStyles.append( ps )
-
+    result.ParagraphStyles.append(ps)
 
     return result

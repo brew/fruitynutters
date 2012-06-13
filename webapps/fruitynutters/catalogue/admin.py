@@ -2,10 +2,11 @@ from django.contrib import admin
 from models import Aisle, Item, Brand, Bundle, Page, VirtualShopPage
 from forms import PageAdminModelForm
 
+
 class AisleAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {
-            'fields':(('name', 'sort_name'), 'description', 'active')
+            'fields': (('name', 'sort_name'), 'description', 'active')
         }),
     )
     list_display = ('name', 'sort_name', 'active')
@@ -16,7 +17,7 @@ admin.site.register(Aisle, AisleAdmin)
 
 class BrandAdmin(admin.ModelAdmin):
     list_display = ('name',)
-    search_fields = ['name',]
+    search_fields = ['name', ]
 
 admin.site.register(Brand, BrandAdmin)
 

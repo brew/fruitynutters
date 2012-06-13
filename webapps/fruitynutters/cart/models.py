@@ -67,7 +67,7 @@ class Cart(models.Model):
         bundle          a list of tuples containing the id and quantity of subitems
         """
 
-        item_to_modify, created = CartItem.objects.get_or_create(cart=self, product=chosen_item, defaults={'quantity':0})
+        item_to_modify, created = CartItem.objects.get_or_create(cart=self, product=chosen_item, defaults={'quantity': 0})
 
         # If we need to deal with a bundle...
         if bundle_items:
@@ -103,9 +103,8 @@ class Cart(models.Model):
             for item_to_delete in multiple_items_to_delete:
                 item_to_delete.delete()
 
-
     def update_item(self, update_item, quantity):
-        item_to_modify = self.cartitem_set.get(product__id = update_item.id)
+        item_to_modify = self.cartitem_set.get(product__id=update_item.id)
         item_to_modify.quantity = quantity
         if item_to_modify.quantity <= 0:
             item_to_modify.delete()
@@ -114,7 +113,7 @@ class Cart(models.Model):
             item_to_modify.save()
 
     def remove_item(self, chosen_item_id, number_removed=None):
-        item_to_modify = self.cartitem_set.get(product__id = chosen_item_id)
+        item_to_modify = self.cartitem_set.get(product__id=chosen_item_id)
         # If no number_removed was provided, remove them all.
         if not number_removed:
             number_removed = item_to_modify.quantity
@@ -171,7 +170,6 @@ class Cart(models.Model):
             self.date_created = datetime.datetime.now()
         super(Cart, self).save(force_insert=force_insert, force_update=force_update)
 
-
     class Meta:
         verbose_name = "Shopping Cart"
         verbose_name_plural = "Shopping Carts"
@@ -210,13 +208,13 @@ class CartItem(models.Model):
             pass
         super(CartItem, self).delete()
 
-
     def __unicode__(self):
         return u"%s x %s, %s" % (self.quantity, self.product.name, self.line_total)
 
     class Meta:
         verbose_name = "Cart Item"
         verbose_name_plural = "Cart Items"
+
 
 class CartWriteinItem(models.Model):
     """Model for a write-in item."""
@@ -226,6 +224,7 @@ class CartWriteinItem(models.Model):
 
     def __unicode__(self):
         return self.name
+
 
 class CartVirtualShopItem(models.Model):
     """Model for a virtual shop item."""

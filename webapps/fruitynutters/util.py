@@ -1,5 +1,6 @@
 from fruitynutters.cart.models import Cart
 
+
 # Util
 def get_session_cart(session):
     # If there is no cart id in the session, create a cart and save its id to the session.
@@ -19,13 +20,12 @@ def get_session_cart(session):
             return get_session_cart(session)
 
 
-
 # Ported from Recipe 3.9 in Secure Programming Cookbook for C and C++ by
 # John Viega and Matt Messier (O'Reilly 2003)
-
 from string import *
-
 rfc822_specials = '()<>@,;:\\"[]'
+
+
 def isAddressValid(addr):
     # First we validate the name portion (name@domain)
     c = 0

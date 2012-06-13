@@ -17,6 +17,7 @@ from fruitynutters.cart.order_form import createOrderForm
 
 log = logging.getLogger('cart')
 
+
 @csrf_exempt
 def add_to_cart(request, item_id, quantity=1):
     """Adds the item with item_id to the cart associated with the session."""
@@ -39,10 +40,11 @@ def add_to_cart(request, item_id, quantity=1):
             cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
             cart.remove_multiple_cart_item(chosen_item_id=item_to_add.id)
 
-        response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        response = render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
         return response
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def add_writein_to_cart(request):
@@ -73,9 +75,10 @@ def add_writein_to_cart(request):
 
         show_writein = "True"
 
-        return render_to_response('cart.html', {'cart':cart, 'writein_description':description, 'writein_code':code, 'show_writein':show_writein}, context_instance=RequestContext(request))
+        return render_to_response('cart.html', {'cart': cart, 'writein_description': description, 'writein_code': code, 'show_writein': show_writein}, context_instance=RequestContext(request))
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def add_virtualshop_item_to_cart(request):
@@ -87,7 +90,7 @@ def add_virtualshop_item_to_cart(request):
         quantity = request.POST.get('virtualshop_quantity', '')
 
         isValid = True
-        if len(description) ==0:
+        if len(description) == 0:
             isValid = False
             request.notifications.create("Please add a description.", 'cart_error')
         if len(quantity) == 0:
@@ -100,14 +103,14 @@ def add_virtualshop_item_to_cart(request):
                 quantity = int(quantity)
             except ValueError:
                 request.notifications.create("Quantity must be a number.", 'cart_error')
-                return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+                return render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
 
             cart.add_virtualshop_item(name=description, quantity=quantity)
 
-
-        return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        return render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def update_cart(request):
@@ -119,7 +122,7 @@ def update_cart(request):
             items_to_update = [(Item.objects.get(id__exact=item[0]), int(item[1])) for item in request.POST.items() if item[0].isdigit()]
         except ValueError:
             request.notifications.create(Cart.CART_INVALID_UPDATE_NUMBER_ERROR, 'cart_error')
-            return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+            return render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
 
         for item_to_update, new_quantity in items_to_update:
             # If not a bundle, update this item.
@@ -128,9 +131,10 @@ def update_cart(request):
             else:
                 request.notifications.create(Cart.CART_BUNDLE_UPDATE_WARNING, 'cart_warning')
 
-        return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        return render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def remove_from_cart(request, item_id):
@@ -139,10 +143,11 @@ def remove_from_cart(request, item_id):
         cart = get_session_cart(request.session)
         cart.remove_item(item_id)
 
-        response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        response = render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
         return response
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def remove_writein_from_cart(request, item_id):
@@ -151,10 +156,11 @@ def remove_writein_from_cart(request, item_id):
         cart = get_session_cart(request.session)
         cart.remove_writein_item(item_id)
 
-        response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        response = render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
         return response
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def remove_virtualshop_item_from_cart(request, item_id):
@@ -163,10 +169,11 @@ def remove_virtualshop_item_from_cart(request, item_id):
         cart = get_session_cart(request.session)
         cart.remove_virtualshop_item(item_id)
 
-        response = render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        response = render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
         return response
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def empty_cart(request):
@@ -174,9 +181,10 @@ def empty_cart(request):
     if request.method == "POST":
         cart = get_session_cart(request.session)
         cart.empty()
-        return render_to_response('cart.html', {'cart':cart}, context_instance=RequestContext(request))
+        return render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
 
     return HttpResponseForbidden()
+
 
 @csrf_exempt
 def review(request):
@@ -185,7 +193,7 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    return render_to_response('review.html', {'cart':cart, 'member_name':cart.cart_username, 'member_email':cart.cart_useremail, 'member_phone':cart.cart_userphone, 'order_comments':cart.cart_comment}, context_instance=RequestContext(request))
+    return render_to_response('review.html', {'cart': cart, 'member_name': cart.cart_username, 'member_email': cart.cart_useremail, 'member_phone': cart.cart_userphone, 'order_comments': cart.cart_comment}, context_instance=RequestContext(request))
 
 
 @csrf_exempt
@@ -223,7 +231,7 @@ def submit(request):
         email_to.extend(ORDER_FORM_EMAIL)
         email_to.append(member_email)
 
-        email_message = 'Order attached. \n\n';
+        email_message = 'Order attached. \n\n'
         if order_comments:
             email_message += 'The order has the following comments:\n'
             email_message += '#####################\n\n'
@@ -232,11 +240,11 @@ def submit(request):
 
         slug_name = slugify(member_name)
 
-        success = False;
+        success = False
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] '+member_name, email_message, 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
-            mail.attach(slug_name+'_order_form.rtf', buffer.getvalue(), 'application/rtf')
+            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail.attach(slug_name + '_order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()
 
@@ -250,11 +258,12 @@ def submit(request):
         except Exception, e:
             request.notifications.create("There was a problem sending the email :( . Please email fruitynutter@googlemail.com to let us know what is says here: " + str(e), 'error')
 
-        return render_to_response('review.html', {'cart':cart, 'submit_success':success}, context_instance=RequestContext(request))
+        return render_to_response('review.html', {'cart': cart, 'submit_success': success}, context_instance=RequestContext(request))
 
     # Else if the form isn't valid...
     else:
-        return render_to_response('review.html', {'cart':cart, 'member_name':member_name, 'member_email':member_email, 'member_phone':member_phone, 'order_comments':order_comments}, context_instance=RequestContext(request))
+        return render_to_response('review.html', {'cart': cart, 'member_name': member_name, 'member_email': member_email, 'member_phone': member_phone, 'order_comments': order_comments}, context_instance=RequestContext(request))
+
 
 @csrf_exempt
 def save_cart_details(request):
@@ -275,5 +284,3 @@ def save_cart_details(request):
         return HttpResponse("Comment saved successfully!", mimetype="text/plain")
 
     return HttpResponseForbidden()
-
-
