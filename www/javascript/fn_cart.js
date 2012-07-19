@@ -30,7 +30,6 @@ var FNCart = Class.create({
     // Bail out if the quantity isn't a number.
     if(!this._isStringANumber(quantity)) return false;
 
-    // url = ev.target.action+quantity+"/";
     url = ev.target.action;
 
     // If the item is a bundle, submit its sub items and their quantities.
@@ -39,7 +38,7 @@ var FNCart = Class.create({
       var serializedBundleData = $(ev.target).up('.has_bundle').down('.bundle_product_add').serialize();
       serializedData = serializedBundleData + "&" + serializedData;
     }
-    console.log(serializedData);
+
     this.updateCart(url, serializedData);
   },
 
