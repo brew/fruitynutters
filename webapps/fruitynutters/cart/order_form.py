@@ -40,11 +40,11 @@ def createOrderForm(cart, member_details):
     header_props = ParagraphPropertySet(alignment=3)
 
     c2_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
-    c2_para.append(u'Product')
+    c2_para.append(u'No.')
     c2 = Cell(c2_para, thin_frame)
 
     c3_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
-    c3_para.append(u'No.')
+    c3_para.append(u'Product')
     c3 = Cell(c3_para, thin_frame)
 
     c4_para = Paragraph(ss.ParagraphStyles.Normal, header_props)
@@ -56,21 +56,21 @@ def createOrderForm(cart, member_details):
     for cart_item in cart.cartitem_set.all().order_by('product__picking_order', 'product__aisle', 'product__sort_name'):
         centre_props = ParagraphPropertySet(alignment=3)
 
-        c2_para = Paragraph(ss.ParagraphStyles.Normal)
-        c2_para.append(unicode(cart_item.product.order_name))
-
-        if cart_item.product.bundle:
-            c2_para.append(u": ")
-            for bundle_item in cart_item.cart_bundle.cartitem_set.all():
-                c2_para.append(unicode(bundle_item.product.order_name))
-                c2_para.append(u" x " + unicode(bundle_item.quantity) + u", ")
+        c2_para = Paragraph(centre_props)
+        if cart_item.cart_bundle:
+            c2_para.append(u"PnM")
+        else:
+            c2_para.append(unicode(cart_item.quantity))
         c2 = Cell(c2_para, thin_frame)
 
-        c3_para = Paragraph(centre_props)
-        if cart_item.cart_bundle:
-            c3_para.append(u"PnM")
-        else:
-            c3_para.append(unicode(cart_item.quantity))
+        c3_para = Paragraph(ss.ParagraphStyles.Normal)
+        c3_para.append(unicode(cart_item.product.order_name))
+
+        if cart_item.product.bundle:
+            c3_para.append(u": ")
+            for bundle_item in cart_item.cart_bundle.cartitem_set.all():
+                c3_para.append(unicode(bundle_item.product.order_name))
+                c3_para.append(u" x " + unicode(bundle_item.quantity) + u", ")
         c3 = Cell(c3_para, thin_frame)
 
         cost_props = ParagraphPropertySet(alignment=2)
@@ -94,12 +94,12 @@ def createOrderForm(cart, member_details):
     for writein_item in cart.cartwriteinitem_set.all():
         centre_props = ParagraphPropertySet(alignment=3)
 
-        c2_para = Paragraph(ss.ParagraphStyles.Normal)
-        c2_para.append(unicode(writein_item.name) + u" -- " + unicode(writein_item.code))
+        c2_para = Paragraph(centre_props)
+        # c2_para.append(unicode(cart_item.quantity))
         c2 = Cell(c2_para, thin_frame)
 
-        c3_para = Paragraph(centre_props)
-        # c3_para.append(unicode(cart_item.quantity))
+        c3_para = Paragraph(ss.ParagraphStyles.Normal)
+        c3_para.append(unicode(writein_item.name) + u" -- " + unicode(writein_item.code))
         c3 = Cell(c3_para, thin_frame)
 
         cost_props = ParagraphPropertySet(alignment=2)
@@ -113,12 +113,12 @@ def createOrderForm(cart, member_details):
     for virtualshop_item in cart.cartvirtualshopitem_set.all():
         centre_props = ParagraphPropertySet(alignment=3)
 
-        c2_para = Paragraph(ss.ParagraphStyles.Normal)
-        c2_para.append(unicode(virtualshop_item.name) + u" -- VS")
+        c2_para = Paragraph(centre_props)
+        c2_para.append(unicode(virtualshop_item.quantity))
         c2 = Cell(c2_para, thin_frame)
 
-        c3_para = Paragraph(centre_props)
-        c3_para.append(unicode(virtualshop_item.quantity))
+        c3_para = Paragraph(ss.ParagraphStyles.Normal)
+        c3_para.append(unicode(virtualshop_item.name) + u" -- VS")
         c3 = Cell(c3_para, thin_frame)
 
         cost_props = ParagraphPropertySet(alignment=2)
