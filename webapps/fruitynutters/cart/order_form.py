@@ -34,7 +34,7 @@ def createOrderForm(cart, member_details):
     thin_frame = FramePropertySet(thin_edge,  thin_edge,  thin_edge,  thin_edge)
 
     # based on twirps or 567/cm.
-    table = Table(3118, 567, 709)
+    table = Table(567, 3118, 709)
 
     # header
     header_props = ParagraphPropertySet(alignment=3)
