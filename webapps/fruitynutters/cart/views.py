@@ -247,7 +247,7 @@ def submit(request):
         success = False
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, 'fruitynuttersmailbot@googlemail.com', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, 'mailbot@fruitynutters.org.uk', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
             mail.attach(slug_name + '_order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()
