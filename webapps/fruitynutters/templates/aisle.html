@@ -65,7 +65,7 @@
 						{% if item.new_changed  %}
 							<img src="{{MEDIA_URL}}furniture/new_product_star.png" width="11" height="12" alt="New product" />
 						{% endif %}</span></div>
-					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="hidden" name="next" value="{% url aisle aisle.id %}"  />{% if item.bundle %}<input type="hidden" name="has_bundle" value="1" />{% endif %}<input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" {% if item.bundle %}disabled="disabled"{% endif %} /></form>
+					<form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="hidden" name="next" value="{% url 'aisle' aisle.id %}"  />{% if item.bundle %}<input type="hidden" name="has_bundle" value="1" />{% endif %}<input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" {% if item.bundle %}disabled="disabled"{% endif %} /></form>
 				</li>
 			{% endfor %}
 		</ul>
