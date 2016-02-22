@@ -285,6 +285,6 @@ def save_cart_details(request):
         cart.cart_userphone = member_phone
         cart.save()
 
-        return HttpResponse("Comment saved successfully!", mimetype="text/plain")
+        return HttpResponse("Comment saved successfully!", content_type="text/plain")
 
     return HttpResponseForbidden()

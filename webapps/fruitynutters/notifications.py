@@ -55,14 +55,23 @@ points to names of famfam icons and assumes structure like
 }
 '''
 
-from django.utils.encoding import StrAndUnicode
+from django.utils.encoding import python_2_unicode_compatible
+
+
+@python_2_unicode_compatible
+class StrAndUnicode:
+    def __str__(self):
+        return self.code
+
 
 DEFAULT_TYPE = 'information'
+
 
 class NotificationMiddleware:
     def process_request(self, request):
         request.__class__.notifications = Notifications(request.session)
         return None
+
 
 class Notifications:
     def __init__(self, session):
@@ -89,6 +98,7 @@ class Notifications:
         notifications.append({'content': message, 'type': type})
         self.session.modified = True
 
+
 def notifications(request):
     """
     Returns notifications for the session and the current user.
@@ -106,6 +116,7 @@ def notifications(request):
     if hasattr(request, 'session') or hasattr(request, 'user'):
         return {'notifications': LazyNotifications(request)}
     return {}
+
 
 class LazyNotifications(StrAndUnicode):
     """
