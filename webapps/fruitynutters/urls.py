@@ -49,14 +49,3 @@ urlpatterns += patterns('fruitynutters.cart.views',
 urlpatterns += patterns('fruitynutters.catalogue.views',
     (r'^aislemock.html', 'aisle_mock'),
 )
-
-# this is for serving static files in development
-if settings.DEBUG:
-    import os
-    # get the static path from settings
-    static_url = settings.MEDIA_URL
-    if static_url.startswith('/'):
-        static_url = static_url.lstrip('/')
-    urlpatterns += patterns('',
-        (r'^%s(?P<path>.*)$' % static_url, 'django.views.static.serve',{'document_root': settings.MEDIA_ROOT}),
-    )

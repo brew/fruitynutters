@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}: Aisles{% endblock %}
 
 {% block scripts %}
-	<script src="{{MEDIA_URL}}javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'javascript/scriptaculous/scriptaculous.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 
 {% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>{% endblock %}
@@ -16,14 +18,14 @@
 	    {% for aisle in aisle_list %}
 	        <li><a href="/catalogue/aisle/{{ aisle.id }}/">{{ aisle.name }}</a></li>
 	    {% endfor %}
-	
+
 			<li><a href="/catalogue/virtualshop/">Virtual shop</a></li>
-	
+
 	    </ul>
 	{% else %}
 	    <p>No aisles are available.</p>
 	{% endif %}
-		
+
 {% endblock %}
 
 {% block side %}

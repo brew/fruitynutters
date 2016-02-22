@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}: {{ title }}{% endblock %}
 
 {% block scripts %}
-	<script src="{{MEDIA_URL}}javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'javascript/scriptaculous/scriptaculous.js' %}" type="text/javascript" charset="utf-8"></script>
 
-	<script src="{{MEDIA_URL}}javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'javascript/fn_bundle.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 
 {% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>: <span class="active">{{ title }}</span>{% endblock %}
@@ -16,12 +18,9 @@
 		<a href="/catalogue/aisle/{{ last_aisle.id }}/" title="{{last_aisle.name}}">Previous</a>	| <span>Next</span>
 </div>
 
-		
-
-
 {% autoescape off %}
 <div class="notice">
-{{ body }}	
+{{ body }}
 </div>
 {% endautoescape %}
 
@@ -37,22 +36,22 @@
 	<p id="virtualshop_quantity_block"><label for="virtualshop_code">Quantity</label><input type="text" name="virtualshop_quantity" value="{{ virtualshop_quantity }}" id="virtualshop_quantity" /></p>
 	<p id="virtualshop_submit_block"><input type="submit" name="virtualshop_submit" value="Add item" id="virtualshop_submit" /></p>
 </form>
-		
+
 <div class="aisle_nav">
 		<a href="/catalogue/aisle/{{ last_aisle.id }}/" title="{{last_aisle.name}}">Previous</a>	| <span>Next</span>
 </div>
 
-		
+
 {% endblock %}
 
 {% block side %}
 	<div id="cart_content">
-		{% include "cart.html" %}		
+		{% include "cart.html" %}
 		<script type="text/javascript" charset="utf-8">
 			Event.observe(window, 'load', function(event){var cart = new FNCart();});
 		</script>
 	</div>
-	
+
 	{% block review %}
 		<form id="continue_form" action="/cart/review/" method="get"><input type="submit" value="Prepare for submission" id="continue_button" /></form>
 	{% endblock %}

@@ -1,5 +1,7 @@
+{% load staticfiles %}
+
 <h2>Your list thus far ...</h2>
-<img src="{{MEDIA_URL}}furniture/ajax-loader.gif" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
+<img src="{% static 'furniture/ajax-loader.gif' %}" width="16" height="16" alt="Updating Cart" style="display:none" id="cart_load_indicator" />
 {% load basic_logic %}
 {% if notifications %}
   <ul class="notifications">
@@ -15,7 +17,7 @@
         <li>
           <div class="product">{{ item.product.name }} <span class="quantity">{% ifnotequal item.product.unit_number 1 %}{% if not item.cart_bundle %}{{ item.product.unit_number }}&nbsp;&times;&nbsp;{% endif %}{% else %} {% endifnotequal %}{{ item.product.measure_per_unit|floatformat:"-2" }}{{ item.product.measure_type }} {% if item.cart_bundle %}each{% endif %}</span></div>
 
-          <span class="product_price">{% if not item.cart_bundle %}<span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span> <a href="/cart/{{ item.product.id }}/remove/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
+          <span class="product_price">{% if not item.cart_bundle %}<span>&times;</span> <input type="text" name="{{ item.product.id }}" value="{{ item.quantity }}" class="quantity" id="product_{{ item.product.id }}" />{% endif %} <span class="total_product_price">£{{ item.line_total }}</span> <a href="/cart/{{ item.product.id }}/remove/" class="remove_item"><img src="{% static 'furniture/delete.png' %}" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
 
           {% if item.cart_bundle %}
             <ul class="bundle_items">
@@ -31,14 +33,14 @@
       {% for writein in cart.cartwriteinitem_set.all %}
 
         <li>
-          <div class="writein">{{ writein.name }} <span class="code">{{ writein.code }}</span></div><a href="/cart/{{ writein.id }}/removewritein/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
+          <div class="writein">{{ writein.name }} <span class="code">{{ writein.code }}</span></div><a href="/cart/{{ writein.id }}/removewritein/" class="remove_item"><img src="{% static 'furniture/delete.png' %}" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a></span>
         </li>
 
       {% endfor %}
 
       {% for virtualshop_item in cart.cartvirtualshopitem_set.all %}
         <li>
-          <div class="virtualshop_item">{{ virtualshop_item.name }} <span class="quantity">&times; {{ virtualshop_item.quantity }}</span></div><a href="/cart/{{ virtualshop_item.id }}/removevirtualshopitem/" class="remove_item"><img src="{{MEDIA_URL}}furniture/delete.png" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a>
+          <div class="virtualshop_item">{{ virtualshop_item.name }} <span class="quantity">&times; {{ virtualshop_item.quantity }}</span></div><a href="/cart/{{ virtualshop_item.id }}/removevirtualshopitem/" class="remove_item"><img src="{% static 'furniture/delete.png' %}" width="16" height="16" alt="Remove item" title="Remove item from shopping list" /></a>
         </li>
       {% endfor %}
 

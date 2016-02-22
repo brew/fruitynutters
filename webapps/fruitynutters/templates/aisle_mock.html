@@ -1,35 +1,37 @@
+{% load staticfiles %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	
+
 	<title>Fruity Nutters - Grain Produce</title>
-	
-	<link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="screen" title="Main styles" charset="utf-8" />	
-	
-	<script src="/javascript/prototype.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/javascript/scriptaculous/scriptaculous.js" type="text/javascript" charset="utf-8"></script>
-	
-	<script src="/javascript/fn_bundle.js" type="text/javascript" charset="utf-8"></script>
-	<script src="/javascript/fn_cart.js" type="text/javascript" charset="utf-8"></script>
-	
+
+	<link rel="stylesheet" href="{% static 'stylesheets/main.css' %}" type="text/css" media="screen" title="Main styles" charset="utf-8" />
+
+	<script src="{% static 'javascript/prototype.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'javascript/scriptaculous/scriptaculous.js' %}" type="text/javascript" charset="utf-8"></script>
+
+	<script src="{% static 'javascript/fn_bundle.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script src="{% static 'javascript/fn_cart.js' %}" type="text/javascript" charset="utf-8"></script>
+
 </head>
 
 <body>
 
 <div id="wrapper">
-	
+
 	<div id="main_content">
 		<h1><a href="/">Fruity Nutters</a></h1>
-		
+
 		<div id="crumb">
 			<a href='#'>Aisles</a>: <span class="active">Grain Produce</span>
 		</div>
 
 		<p class="notice">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nullam commodo, elit a ornare fermentum, magna nunc venenatis odio, at ornare velit est.</p>
-		
+
 		<ul id="product_list">
 			<li>
 				<div class="product">Strong Wholemeal Bread Flour &#8212; Marriages
@@ -46,7 +48,7 @@
 			  <span class="product_details new_product">5 &times; 1.5kg, £7.00</span></div>
 				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£7.00 </span><input type="button" name="some_name" value="Add to list" id="some_name" /></form>
 			</li>
-			
+
 			<li class="has_bundle">
 				<div class="product">Pasta Pick 'n' Mix &#8212; Various brands
 			  <span class="product_details new_product"><span class="single_unit">6</span> &times; 500g. Pick any <strong class="total_units">6</strong> from the list:</span>
@@ -59,7 +61,7 @@
 						<li><input type="text" value="0" class="quantity" /> Fusilli (twists) white</li>
 					</ul>
 				</div>
-			
+
 				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£6.00 </span><input type="button" class="add_button" value="Add to list" /></form>
 			</li>
 			<li>
@@ -68,41 +70,41 @@
 				<form action="#" method="post" accept-charset="utf-8" class="product_add"><input type="text" name="some_name" value="1" id="some_name" class="quantity" /> <span class="total_product_price">£99.99</span> <input type="button" name="some_name" value="Add to list" id="some_name" /></form>
 			</li>
 		</ul>
-		
+
 		<div id="footer">
-			<span class="key_item"><img src="/furniture/price_increase_arrow.png" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="/furniture/price_decrease_arrow.png" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="/furniture/new_product_star.png" width="11" height="12" alt="New product" /> New product / brand</span>
+			<span class="key_item"><img src="{% static furniture/price_increase_arrow.png' %}" width="10" height="12" alt="Price increase" /> Price increase</span> <span class="key_item"><img src="{% static furniture/price_decrease_arrow.png' %}" width="10" height="12" alt="Price decrease" /> Price decrease</span> <span class="key_item"><img src="{% static furniture/new_product_star.png' %}" width="11" height="12" alt="New product" /> New product / brand</span>
 		</div>
-		
+
 	</div>
-	
+
 	<div id="cart_content">
 		<h2>Your list thus far ...</h2>
-		<img width="16" height="16" id="cart_load_indicator" style="display: none;" alt="Updating Cart" src="/furniture/ajax-loader.gif"/>
+		<img width="16" height="16" id="cart_load_indicator" style="display: none;" alt="Updating Cart" src="{% static 'furniture/ajax-loader.gif' %}"/>
 		<form id="cart_form" accept-charset="utf-8" method="post" action="/cart/update/">
 			<p class="top" id="shopping_list_total">Total: <strong>£41.70</strong></p>
 
 				<ul class="shopping_list">
 					<li>
 						<div class="product">Rice Cakes Sesame (with Salt) <span class="quantity">12 × 130g</span></div>
-						<span class="product_price"><span>×</span> <input type="text" id="product_15" class="quantity" value="1" name="15"/> <span class="total_product_price">£11.70</span> <a id="" class="remove_item" href="/cart/15/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="/furniture/delete.png"/></a></span>
+						<span class="product_price"><span>×</span> <input type="text" id="product_15" class="quantity" value="1" name="15"/> <span class="total_product_price">£11.70</span> <a id="" class="remove_item" href="/cart/15/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="{% static furniture/delete.png' %}"/></a></span>
 					</li>
 					<li>
 						<div class="product">Plain White Flour <span class="quantity">5 × 1.50kg</span></div>
-						<span class="product_price"><span>×</span> <input type="text" id="product_12" class="quantity" value="1" name="12"/> <span class="total_product_price">£6.60</span> <a id="" class="remove_item" href="/cart/12/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="/furniture/delete.png"/></a></span>
+						<span class="product_price"><span>×</span> <input type="text" id="product_12" class="quantity" value="1" name="12"/> <span class="total_product_price">£6.60</span> <a id="" class="remove_item" href="/cart/12/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="{% static furniture/delete.png' %}"/></a></span>
 					</li>
 					<li>
 						<div class="product">Rice Cakes Plain <span class="quantity">12 × 130g</span></div>
-						<span class="product_price"><span>×</span> <input type="text" id="product_13" class="quantity" value="1" name="13"/> <span class="total_product_price">£11.70</span> <a id="" class="remove_item" href="/cart/13/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="/furniture/delete.png"/></a></span>
+						<span class="product_price"><span>×</span> <input type="text" id="product_13" class="quantity" value="1" name="13"/> <span class="total_product_price">£11.70</span> <a id="" class="remove_item" href="/cart/13/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="{% static furniture/delete.png' %}"/></a></span>
 					</li>
 					<li>
 						<div class="product">Rice Cakes No Salt <span class="quantity">12 × 130g</span></div>
-						<span class="product_price"><span>×</span> <input type="text" id="product_14" class="quantity" value="1" name="14"/> <span class="total_product_price">£11.70</span> <a id="" class="remove_item" href="/cart/14/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="/furniture/delete.png"/></a></span>
+						<span class="product_price"><span>×</span> <input type="text" id="product_14" class="quantity" value="1" name="14"/> <span class="total_product_price">£11.70</span> <a id="" class="remove_item" href="/cart/14/remove/"><img width="16" height="16" title="Remove item from shopping list" alt="Remove item" src="{% static furniture/delete.png' %}"/></a></span>
 					</li>
 			</ul>
 			<p id="list_controls"><a id="empty_list" href="#">Empty list</a><input type="submit" disabled="disabled" id="update_list_button" value="Update"/></p>
 			<p class="bottom" id="shopping_list_total">Total: <strong>£41.70</strong></p>
 		</form>
-		
+
 		<form action="/cart/addwritein/" id="writein_form" method="post" accept-charset="utf-8">
 			<p><a href="#" id="writein_opener">Add a custom 'write-in' item</a></p>
 			<div id="writein_elements" style="display:none">
@@ -111,14 +113,14 @@
 				<p><input type="submit" name="writein_submit" value="Add custom item" id="writein_submit" /></p>
 			</div>
 		</form>
-		
+
 		<form method="get" action="/cart/review/" id="continue_form"><input type="submit" id="continue_button" value="Prepare order for submission"/></form>
-		
+
 		<script type="text/javascript" charset="utf-8">
 			Event.observe(window, 'load', function(event){var cart = new FNCart();});
 		</script>
 	</div>
-		
+
 </div>
 
 
