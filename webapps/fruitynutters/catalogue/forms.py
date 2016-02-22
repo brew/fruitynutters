@@ -8,3 +8,4 @@ class PageAdminModelForm(forms.ModelForm):
 
     class Meta:
         model = get_model('catalogue', 'Page')
+        fields = "__all__"
