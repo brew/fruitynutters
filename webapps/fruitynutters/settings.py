@@ -86,7 +86,7 @@ INSTALLED_APPS = (
 
     'fruitynutters.catalogue',
     'fruitynutters.cart',
-    'south',
+    # 'south',
     # 'debug_toolbar',
 )
 
