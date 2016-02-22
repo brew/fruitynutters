@@ -1,6 +1,9 @@
 import os
 # Django settings for fruitynutters project.
 
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(PROJECT_DIR)
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -35,6 +38,14 @@ MEDIA_ROOT = '/home/fruitynutter/webapps/fruitynutters_media/'
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "www"),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -60,7 +71,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'fruitynutters.notifications.NotificationMiddleware',
-    # 'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
 )
 
@@ -82,11 +92,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.admindocs',
-    # 'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
+
+    'debug_toolbar',
 
     'fruitynutters.catalogue',
     'fruitynutters.cart',
-    # 'debug_toolbar',
 )
 
 try:

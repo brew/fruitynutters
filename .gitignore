@@ -2,4 +2,5 @@ monitor.py
 local_settings.py
 local_settings_prod.py
 etc/
+static/
 *.pyc
