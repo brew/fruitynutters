@@ -2,7 +2,12 @@
 
 from rtfng.Elements import StyleSheet, Document
 from rtfng.Styles import TextStyle, ParagraphStyle
-from rtfng.PropertySets import TextPropertySet, ParagraphPropertySet, BorderPropertySet, FramePropertySet, MarginsPropertySet, Paper
+from rtfng.PropertySets import (TextPropertySet,
+                                ParagraphPropertySet,
+                                BorderPropertySet,
+                                FramePropertySet,
+                                MarginsPropertySet,
+                                Paper)
 from rtfng.document.section import Section
 from rtfng.document.paragraph import Paragraph, Table, Cell
 from rtfng.Constants import Languages
@@ -22,7 +27,8 @@ def createOrderForm(cart, member_details):
     ss = makeReportStylesheet()
     doc = Document(ss, default_language=Languages.EnglishUK)
     paper = Paper('A4', 9, 'A4 297 x 210 mm', 16838, 11907)
-    section = Section(margins=MarginsPropertySet(top=100, left=400, bottom=100, right=400), paper=paper, landscape=True, headery=0, footery=300)
+    section = Section(margins=MarginsPropertySet(top=100, left=400, bottom=100, right=400),
+                      paper=paper, landscape=True, headery=0, footery=300)
     doc.Sections.append(section)
 
     footer_text = member_name + " " + member_phone

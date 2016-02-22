@@ -147,8 +147,8 @@ class LazyNotifications(StrAndUnicode):
         # First, retreive any notifications for the user.
         if hasattr(self.request, 'user') and \
            hasattr(self.request.user, 'get_and_delete_messages'):
-            self._notifications = [{'content': message, 'type': DEFAULT_TYPE} for
-                message in self.request.user.get_and_delete_messages()]
+            self._notifications = [{'content': message, 'type': DEFAULT_TYPE}
+                                   for message in self.request.user.get_and_delete_messages()]
         else:
             self._notifications = []
 

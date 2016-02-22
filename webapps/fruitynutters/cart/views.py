@@ -20,7 +20,7 @@ log = logging.getLogger('cart')
 
 @csrf_exempt
 def add_to_cart(request, item_id, quantity=1):
-    """Adds the item with item_id to the cart associated with the session."""
+    """Add the item with item_id to the cart associated with the session."""
     if request.method == 'POST':
 
         item_to_add = Item.objects.get(id__exact=item_id)
@@ -32,10 +32,12 @@ def add_to_cart(request, item_id, quantity=1):
             quantity = int(request.POST.get('quantity', quantity))
 
             bundle = None
-            # If there are bundle items in the post request,
-            # use a list comp to create a new list containing the actual item and quantity. Only if the quantity is more than 0.
+            # If there are bundle items in the post request, create a new list
+            # containing the actual item and quantity, if the quantity is more
+            # than 0.
             if request.POST.get('has_bundle', False):
-                bundle = [(Item.objects.get(id__exact=i[0].split(':')[1]), int(i[1])) for i in request.POST.items() if i[0].startswith('bi:') and i[1] != '' and int(i[1]) > 0]
+                bundle = [(Item.objects.get(id__exact=i[0].split(':')[1]), int(i[1]))
+                          for i in request.POST.items() if i[0].startswith('bi:') and i[1] != '' and int(i[1]) > 0]
                 request.notifications.create(Cart.CART_BUNDLE_ADDED_NOTICE, 'cart_information')
 
             cart.add_item(chosen_item=item_to_add, number_added=quantity, bundle_items=bundle)
@@ -68,9 +70,8 @@ def add_writein_to_cart(request):
             request.notifications.create("Please add a product code.", 'writein_error')
 
         show_writein = "False"
-        if isValid == True:
+        if isValid is True:
             # Form is valid, process it here!
-
             cart.add_writein_item(name=description, code=code)
 
             # Now the form is processed, finish up with the data.
@@ -79,7 +80,10 @@ def add_writein_to_cart(request):
 
         show_writein = "True"
 
-        return render_to_response('cart.html', {'cart': cart, 'writein_description': description, 'writein_code': code, 'show_writein': show_writein}, context_instance=RequestContext(request))
+        return render_to_response('cart.html', {'cart': cart,
+                                                'writein_description': description,
+                                                'writein_code': code,
+                                                'show_writein': show_writein}, context_instance=RequestContext(request))
 
     return HttpResponseForbidden()
 
@@ -101,8 +105,7 @@ def add_virtualshop_item_to_cart(request):
             isValid = False
             request.notifications.create("Please add a quantity.", 'cart_error')
 
-        if isValid == True:
-
+        if isValid is True:
             try:
                 quantity = int(quantity)
             except ValueError:
@@ -123,7 +126,8 @@ def update_cart(request):
         cart = get_session_cart(request.session)
 
         try:
-            items_to_update = [(Item.objects.get(id__exact=item[0]), int(item[1])) for item in request.POST.items() if item[0].isdigit()]
+            items_to_update = [(Item.objects.get(id__exact=item[0]), int(item[1]))
+                               for item in request.POST.items() if item[0].isdigit()]
         except ValueError:
             request.notifications.create(Cart.CART_INVALID_UPDATE_NUMBER_ERROR, 'cart_error')
             return render_to_response('cart.html', {'cart': cart}, context_instance=RequestContext(request))
@@ -197,7 +201,12 @@ def review(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    return render_to_response('review.html', {'cart': cart, 'member_name': cart.cart_username, 'member_email': cart.cart_useremail, 'member_phone': cart.cart_userphone, 'order_comments': cart.cart_comment}, context_instance=RequestContext(request))
+    return render_to_response('review.html', {'cart': cart,
+                                              'member_name': cart.cart_username,
+                                              'member_email': cart.cart_useremail,
+                                              'member_phone': cart.cart_userphone,
+                                              'order_comments': cart.cart_comment},
+                              context_instance=RequestContext(request))
 
 
 @csrf_exempt
@@ -247,7 +256,8 @@ def submit(request):
         success = False
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, 'mailbot@fruitynutters.org.uk', email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, 'mailbot@fruitynutters.org.uk',
+                                email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
             mail.attach(slug_name + '_order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()
@@ -260,13 +270,22 @@ def submit(request):
             success = True
             request.notifications.create("Your order has been submitted! Ta very much!", 'success')
         except Exception, e:
-            request.notifications.create("There was a problem sending the email :( . Please email fruitynutter@googlemail.com to let us know what is says here: " + str(e), 'error')
+            request.notifications.create("There was a problem sending the email :( . "
+                                         "Please email fruitynutter@googlemail.com "
+                                         "to let us know what is says here: " + str(e), 'error')
 
-        return render_to_response('review.html', {'cart': cart, 'submit_success': success}, context_instance=RequestContext(request))
+        return render_to_response('review.html', {'cart': cart,
+                                                  'submit_success': success},
+                                  context_instance=RequestContext(request))
 
     # Else if the form isn't valid...
     else:
-        return render_to_response('review.html', {'cart': cart, 'member_name': member_name, 'member_email': member_email, 'member_phone': member_phone, 'order_comments': order_comments}, context_instance=RequestContext(request))
+        return render_to_response('review.html', {'cart': cart,
+                                                  'member_name': member_name,
+                                                  'member_email': member_email,
+                                                  'member_phone': member_phone,
+                                                  'order_comments': order_comments},
+                                  context_instance=RequestContext(request))
 
 
 @csrf_exempt

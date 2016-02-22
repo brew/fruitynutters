@@ -5,15 +5,15 @@ import datetime
 import fruitynutters
 
 """
-These models are loosely based on models in the Shop app used by http://www.satchmoproject.com/ [BSD]
-
+These models are loosely based on models in the Shop app used by
+http://www.satchmoproject.com/ [BSD]
 """
 
 
 class Cart(models.Model):
-    """
-    Store items currently in a cart
-    """
+
+    """Store items currently in a cart."""
+
     date_created = models.DateField(auto_now_add=True)
     date_updated = models.DateField(auto_now=True)
 
@@ -22,8 +22,10 @@ class Cart(models.Model):
     cart_useremail = models.CharField(max_length=60, null=True, blank=True, default='')
     cart_userphone = models.CharField(max_length=60, null=True, blank=True, default='')
 
-    CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
-    CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. To update a Pick n Mix item, remove it and add it again."
+    CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. "
+    "To update a Pick n Mix item, remove it and add it again."
+    CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. "
+    "To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_ERROR = "A problem. lol?"
     CART_ITEM_UNAVAILABLE_ERROR = "Sorry, this item isn\'t currently available."
     CART_INVALID_UPDATE_NUMBER_ERROR = "Please ensure you only update with whole numbers."
@@ -67,7 +69,9 @@ class Cart(models.Model):
         bundle          a list of tuples containing the id and quantity of subitems
         """
 
-        item_to_modify, created = CartItem.objects.get_or_create(cart=self, product=chosen_item, defaults={'quantity': 0})
+        item_to_modify, created = CartItem.objects.get_or_create(cart=self,
+                                                                 product=chosen_item,
+                                                                 defaults={'quantity': 0})
 
         # If we need to deal with a bundle...
         if bundle_items:
@@ -91,9 +95,11 @@ class Cart(models.Model):
         return item_to_modify
 
     def remove_multiple_cart_item(self, chosen_item_id):
-        """Verifies there is only one cart item per product id in the cart. Removes multiple if it exists.
+        """Verify there is only one cart item per product id in the cart.
+        Removes multiple if it exists.
 
-        This is used by the view to deal with the double click race condition when adding new items to the cart.
+        This is used by the view to deal with the double click race condition
+        when adding new items to the cart.
         """
 
         try:
@@ -176,9 +182,7 @@ class Cart(models.Model):
 
 
 class CartItem(models.Model):
-    """
-    An individual item in the cart
-    """
+    """An individual item in the cart."""
     cart = models.ForeignKey(Cart, verbose_name='Cart')
     product = models.ForeignKey(fruitynutters.catalogue.models.Item, verbose_name='Catalogue Item')
     quantity = models.IntegerField("Quantity", )
