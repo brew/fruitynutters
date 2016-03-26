@@ -19,18 +19,18 @@ class Aisle(models.Model):
         this_aisle_index = all_aisle_names.index(self.name)
         try:
             next_aisle = all_aisles[this_aisle_index + 1]
-        except Exception:
+        except IndexError:
             next_aisle = None
 
         return next_aisle
 
     def get_previous_by_sort_name(self):
-        all_aisles = Aisle.objects.filter(active=True)
+        all_aisles = Aisle.objects.filter(active=True).reverse()
         all_aisle_names = [aisle.name for aisle in all_aisles]
         this_aisle_index = all_aisle_names.index(self.name)
         try:
-            prev_aisle = all_aisles[this_aisle_index - 1]
-        except Exception:
+            prev_aisle = all_aisles[this_aisle_index + 1]
+        except IndexError:
             prev_aisle = None
 
         return prev_aisle
