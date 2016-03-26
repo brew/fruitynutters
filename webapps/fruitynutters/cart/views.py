@@ -271,7 +271,7 @@ def submit(request):
             request.notifications.create("Your order has been submitted! Ta very much!", 'success')
         except Exception, e:
             request.notifications.create("There was a problem sending the email :( . "
-                                         "Please email fruitynutter@googlemail.com "
+                                         "Please email fruitynutters@googlemail.com "
                                          "to let us know what is says here: " + str(e), 'error')
 
         return render_to_response('review.html', {'cart': cart,
