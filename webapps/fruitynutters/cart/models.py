@@ -45,7 +45,7 @@ class Cart(models.Model):
         "Please ensure you only update with whole numbers."
 
     def _get_count(self):
-        """ Quantity of items in the cart. """
+        """Quantity of items in the cart."""
         itemCount = 0
         for item in self.cartitem_set.all():
             itemCount += item.quantity
@@ -216,7 +216,8 @@ class CartItem(models.Model):
         """Get the total price based on the product unit price and quantity"""
         try:
             return self.product.price * self.quantity
-        except Exception:
+        except TypeError:
+            # Product must have a price to return a line total
             return "Not for sale"
     line_total = property(_get_line_total)
 
