@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from smtplib import SMTPException
 
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponseForbidden, HttpResponse
@@ -301,15 +302,20 @@ def submit(request):
         success = False
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] {0}'.format(member_name),
-                                email_message, ORDER_FORM_SEND_EMAIL, email_to,
-                                headers={'Reply-To': ORDER_FORM_REPLY_TO_EMAIL})
+            mail = EmailMessage(
+                '[FruityNuttersOrder] {0}'.format(member_name),
+                email_message, ORDER_FORM_SEND_EMAIL, email_to,
+                headers={'Reply-To': ORDER_FORM_REPLY_TO_EMAIL})
             mail.attach('{0}_order_form.rtf'.format(slug_name),
                         buffer.getvalue(),
                         'application/rtf')
             mail.send()
-            buffer.close()
-
+        except SMTPException as e:
+            request.notifications.create(
+                "There was a problem submitting your order :( . "
+                "Please email {0} to let us know what is says here: "
+                "{1}".format(ORDER_FORM_REPLY_TO_EMAIL, str(e)), 'error')
+        else:
             # Don't need the cart anymore; empty it.
             cart.empty()
             cart.delete()
@@ -318,11 +324,8 @@ def submit(request):
             success = True
             request.notifications.create(
                 "Your order has been submitted! Ta very much!", 'success')
-        except Exception, e:
-            request.notifications.create(
-                "There was a problem submitting your order :( . "
-                "Please email {0} to let us know what is says here: "
-                "{1}".format(ORDER_FORM_REPLY_TO_EMAIL, str(e)), 'error')
+        finally:
+            buffer.close()
 
         return render_to_response('review.html', {'cart': cart,
                                                   'submit_success': success},
