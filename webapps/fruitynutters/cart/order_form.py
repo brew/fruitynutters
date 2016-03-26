@@ -27,7 +27,10 @@ def createOrderForm(cart, member_details):
     ss = makeReportStylesheet()
     doc = Document(ss, default_language=Languages.EnglishUK)
     paper = Paper('A4', 9, 'A4 297 x 210 mm', 16838, 11907)
-    section = Section(margins=MarginsPropertySet(top=100, left=400, bottom=100, right=400),
+    section = Section(margins=MarginsPropertySet(top=100,
+                                                 left=400,
+                                                 bottom=100,
+                                                 right=400),
                       paper=paper, landscape=True, headery=0, footery=300)
     doc.Sections.append(section)
 
@@ -37,7 +40,10 @@ def createOrderForm(cart, member_details):
     section.Footer.append(footer_p)
 
     thin_edge = BorderPropertySet(width=10, style=BorderPropertySet.SINGLE)
-    thin_frame = FramePropertySet(thin_edge,  thin_edge,  thin_edge,  thin_edge)
+    thin_frame = FramePropertySet(thin_edge,
+                                  thin_edge,
+                                  thin_edge,
+                                  thin_edge)
 
     # based on twirps or 567/cm.
     table = Table(567, 3118, 709)
@@ -59,7 +65,9 @@ def createOrderForm(cart, member_details):
     table.AddRow(c2, c3, c4)
 
     # list
-    for cart_item in cart.cartitem_set.all().order_by('product__picking_order', 'product__aisle', 'product__sort_name'):
+    for cart_item in cart.cartitem_set.all().order_by('product__picking_order',
+                                                      'product__aisle',
+                                                      'product__sort_name'):
         centre_props = ParagraphPropertySet(alignment=3)
 
         c2_para = Paragraph(centre_props)
@@ -87,7 +95,8 @@ def createOrderForm(cart, member_details):
         table.AddRow(c2, c3, c4)
 
     # table footer
-    c1_para = Paragraph(ss.ParagraphStyles.Heading2Short, ParagraphPropertySet(alignment=2))
+    c1_para = Paragraph(ss.ParagraphStyles.Heading2Short,
+                        ParagraphPropertySet(alignment=2))
     c1_para.append(u'Total cost')
     c1 = Cell(c1_para, thin_frame, span=2)
 
@@ -105,7 +114,8 @@ def createOrderForm(cart, member_details):
         c2 = Cell(c2_para, thin_frame)
 
         c3_para = Paragraph(ss.ParagraphStyles.Normal)
-        c3_para.append(unicode(writein_item.name) + u" -- " + unicode(writein_item.code))
+        c3_para.append(u"{0} -- {1}".format(unicode(writein_item.name),
+                                            unicode(writein_item.code)))
         c3 = Cell(c3_para, thin_frame)
 
         cost_props = ParagraphPropertySet(alignment=2)

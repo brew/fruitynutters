@@ -34,11 +34,12 @@ def virtual_shop(request):
 
     cart = get_session_cart(request.session)
 
-    response = render_to_response('virtual_shop.html', {'cart': cart,
-                                                        'title': title,
-                                                        'body': body,
-                                                        'pdf_path': pdf_path,
-                                                        'last_aisle': last_aisle},
+    response = render_to_response('virtual_shop.html',
+                                  {'cart': cart,
+                                   'title': title,
+                                   'body': body,
+                                   'pdf_path': pdf_path,
+                                   'last_aisle': last_aisle},
                                   context_instance=RequestContext(request))
     return response
 
@@ -52,8 +53,9 @@ def aisle_index(request):
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
 
-    response = render_to_response('aisle_index.html', {'aisle_list': aisle_list,
-                                                       'cart': cart},
+    response = render_to_response('aisle_index.html',
+                                  {'aisle_list': aisle_list,
+                                   'cart': cart},
                                   context_instance=RequestContext(request))
     response["Cache-Control"] = 'no-cache, no-store, must-revalidate'
     return response
@@ -63,7 +65,8 @@ def aisle(request, aisle_id):
     """Aisle detail view"""
 
     aisle = Aisle.objects.get(id__exact=aisle_id)
-    aisle_items = Item.objects.filter(aisle__exact=aisle_id).filter(active=True)
+    aisle_items = \
+        Item.objects.filter(aisle__exact=aisle_id).filter(active=True)
 
     # Get the cart from the session (if one exists)
     cart = get_session_cart(request.session)
@@ -90,4 +93,5 @@ def reset_items(request):
 
 
 def aisle_mock(request):
-    return render_to_response('aisle_mock.html', context_instance=RequestContext(request))
+    return render_to_response('aisle_mock.html',
+                              context_instance=RequestContext(request))

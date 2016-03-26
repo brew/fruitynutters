@@ -2,13 +2,16 @@ from django.db import models
 
 
 class Aisle(models.Model):
-    name = models.CharField(max_length=60, unique=True, help_text="Display name for the aisle.")
-    sort_name = models.CharField(max_length=60, verbose_name="Order",
-                                 help_text="Name the aisle is sorted on. Not displayed to the user.")
+    name = models.CharField(max_length=60, unique=True,
+                            help_text="Display name for the aisle.")
+    sort_name = models.CharField(
+        max_length=60, verbose_name="Order",
+        help_text="Name the aisle is sorted on. Not displayed to the user.")
 
     description = models.TextField(null=True, blank=True)
-    active = models.BooleanField(help_text="Determines whether the Aisle is active to the user. "
-                                 "This doesn\'t affect the active status of items.")
+    active = models.BooleanField(
+        help_text="Determines whether the Aisle is active to the user. "
+        "This doesn\'t affect the active status of items.")
 
     def get_next_by_sort_name(self):
         all_aisles = Aisle.objects.filter(active=True)
@@ -50,11 +53,14 @@ class Brand(models.Model):
 
 
 class Item(models.Model):
-    name = models.CharField(max_length=60, help_text='Display name for the item.')
-    sort_name = models.CharField(max_length=60, verbose_name="Sort No.",
-                                 help_text='Name the item is sorted on. Not displayed to the user.')
+    name = models.CharField(max_length=60,
+                            help_text='Display name for the item.')
+    sort_name = models.CharField(
+        max_length=60, verbose_name="Sort No.",
+        help_text='Name the item is sorted on. Not displayed to the user.')
 
-    order_name = models.CharField(max_length=60, help_text='Used in the order form.')
+    order_name = models.CharField(max_length=60,
+                                  help_text='Used in the order form.')
 
     aisle = models.ForeignKey(Aisle)
     brand = models.ForeignKey(Brand, null=True, blank=True)
@@ -67,17 +73,21 @@ class Item(models.Model):
 
     bundle = models.ForeignKey('Bundle', null=True, blank=True)
 
-    unit_number = models.PositiveIntegerField(help_text='How many units make up this item?', verbose_name='Unit')
+    unit_number = models.PositiveIntegerField(
+        help_text='How many units make up this item?', verbose_name='Unit')
     measure_per_unit = models.FloatField(null=True, blank=True)
     measure_type = models.CharField(max_length=10, null=True, blank=True)
-    price = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=4, decimal_places=2,
+                                null=True, blank=True)
 
     price_change_choices = (
         ('increase', 'Increase'),
         ('no_change', 'No change'),
         ('decrease', 'Decrease')
     )
-    price_change = models.CharField(max_length=30, null=True, default='no_change', choices=price_change_choices)
+    price_change = models.CharField(max_length=30, null=True,
+                                    default='no_change',
+                                    choices=price_change_choices)
 
     def _has_bundle(self):
         return self.bundle is not None
@@ -110,7 +120,9 @@ class Item(models.Model):
         (19, '19'),
         (20, '20'),
     )
-    picking_order = models.IntegerField(choices=picking_order_choices, default=9, verbose_name='Picking Order')
+    picking_order = models.IntegerField(choices=picking_order_choices,
+                                        default=9,
+                                        verbose_name='Picking Order')
 
     def __unicode__(self):
         return self.name
@@ -129,7 +141,8 @@ class Bundle(models.Model):
 
 class Page(models.Model):
     """Model for simple ancillary pages, like the home page."""
-    name = models.CharField(max_length=30, verbose_name='Internal name', unique=True)
+    name = models.CharField(max_length=30, verbose_name='Internal name',
+                            unique=True)
     title = models.CharField(max_length=60, verbose_name='Page title')
     body = models.TextField()
 

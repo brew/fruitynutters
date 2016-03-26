@@ -4,7 +4,6 @@ from django.conf.urls import patterns, url, include
 from django.contrib import admin
 admin.autodiscover()
 
-from fruitynutters import settings
 
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs'

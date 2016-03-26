@@ -18,17 +18,31 @@ class Cart(models.Model):
     date_updated = models.DateField(auto_now=True)
 
     cart_comment = models.TextField(null=True, blank=True, default='')
-    cart_username = models.CharField(max_length=60, null=True, blank=True, default='')
-    cart_useremail = models.CharField(max_length=60, null=True, blank=True, default='')
-    cart_userphone = models.CharField(max_length=60, null=True, blank=True, default='')
+    cart_username = models.CharField(max_length=60,
+                                     null=True,
+                                     blank=True,
+                                     default='')
+    cart_useremail = models.CharField(max_length=60,
+                                      null=True,
+                                      blank=True,
+                                      default='')
+    cart_userphone = models.CharField(max_length=60,
+                                      null=True,
+                                      blank=True,
+                                      default='')
 
-    CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items can't be updated in the Shopping List. "
-    "To update a Pick n Mix item, remove it and add it again."
-    CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items can't be updated in the Shopping List. "
+    CART_BUNDLE_ADDED_NOTICE = "Note the quantity of Pick n Mix items "
+    "can't be updated in the Shopping List. "
+    "To update a Pick n Mix item, "
+    "remove it and add it again."
+    CART_BUNDLE_UPDATE_WARNING = "The quantity of Pick n Mix items "
+    "can't be updated in the Shopping List. "
     "To update a Pick n Mix item, remove it and add it again."
     CART_BUNDLE_UPDATE_ERROR = "A problem. lol?"
-    CART_ITEM_UNAVAILABLE_ERROR = "Sorry, this item isn\'t currently available."
-    CART_INVALID_UPDATE_NUMBER_ERROR = "Please ensure you only update with whole numbers."
+    CART_ITEM_UNAVAILABLE_ERROR = \
+        "Sorry, this item isn\'t currently available."
+    CART_INVALID_UPDATE_NUMBER_ERROR = \
+        "Please ensure you only update with whole numbers."
 
     def _get_count(self):
         """ Quantity of items in the cart. """
@@ -64,14 +78,17 @@ class Cart(models.Model):
     def add_item(self, chosen_item, number_added, bundle_items=None):
         """
         Adds items to the cart.
+
         chosen_item     the product to add
         number_added    number to add
-        bundle          a list of tuples containing the id and quantity of subitems
+        bundle          a list of tuples containing the id and quantity of
+                        subitems
         """
 
-        item_to_modify, created = CartItem.objects.get_or_create(cart=self,
-                                                                 product=chosen_item,
-                                                                 defaults={'quantity': 0})
+        item_to_modify, created = \
+            CartItem.objects.get_or_create(cart=self,
+                                           product=chosen_item,
+                                           defaults={'quantity': 0})
 
         # If we need to deal with a bundle...
         if bundle_items:
@@ -86,7 +103,8 @@ class Cart(models.Model):
 
             # ... add bundle items to it...
             for bundle_item, bundle_item_quantity in bundle_items:
-                item_to_modify.cart_bundle.add_item(bundle_item, bundle_item_quantity)
+                item_to_modify.cart_bundle.add_item(bundle_item,
+                                                    bundle_item_quantity)
 
         item_to_modify.quantity += number_added
 
@@ -105,7 +123,8 @@ class Cart(models.Model):
         try:
             CartItem.objects.get(cart=self, product__id=chosen_item_id)
         except CartItem.MultipleObjectsReturned:
-            multiple_items_to_delete = self.cartitem_set.filter(product__id=chosen_item_id)[1:]
+            multiple_items_to_delete = self.cartitem_set.filter(
+                product__id=chosen_item_id)[1:]
             for item_to_delete in multiple_items_to_delete:
                 item_to_delete.delete()
 
@@ -137,21 +156,24 @@ class Cart(models.Model):
         return writein_to_add
 
     def remove_writein_item(self, writein_item_id):
-        writein_to_remove = self.cartwriteinitem_set.get(id__exact=writein_item_id)
+        writein_to_remove = self.cartwriteinitem_set.get(
+            id__exact=writein_item_id)
         writein_to_remove.delete()
 
         self.save()
 
     # Virtual shop items
     def add_virtualshop_item(self, name, quantity=1):
-        virtualshop_item_to_add = CartVirtualShopItem(cart=self, name=name, quantity=quantity)
+        virtualshop_item_to_add = CartVirtualShopItem(cart=self, name=name,
+                                                      quantity=quantity)
         self.cartvirtualshopitem_set.add(virtualshop_item_to_add)
         virtualshop_item_to_add.save()
 
         return virtualshop_item_to_add
 
     def remove_virtualshop_item(self, virtualshop_item_id):
-        virtualshop_item_to_remove = self.cartvirtualshopitem_set.get(id__exact=virtualshop_item_id)
+        virtualshop_item_to_remove = self.cartvirtualshopitem_set.get(
+            id__exact=virtualshop_item_id)
         virtualshop_item_to_remove.delete()
 
         self.save()
@@ -174,7 +196,8 @@ class Cart(models.Model):
         """Ensure we have a date_time_created before saving the first time."""
         if not self.pk:
             self.date_created = datetime.datetime.now()
-        super(Cart, self).save(force_insert=force_insert, force_update=force_update)
+        super(Cart, self).save(force_insert=force_insert,
+                               force_update=force_update)
 
     class Meta:
         verbose_name = "Shopping Cart"
@@ -184,9 +207,11 @@ class Cart(models.Model):
 class CartItem(models.Model):
     """An individual item in the cart."""
     cart = models.ForeignKey(Cart, verbose_name='Cart')
-    product = models.ForeignKey(fruitynutters.catalogue.models.Item, verbose_name='Catalogue Item')
+    product = models.ForeignKey(fruitynutters.catalogue.models.Item,
+                                verbose_name='Catalogue Item')
     quantity = models.IntegerField("Quantity", )
-    cart_bundle = models.ForeignKey('Cart', null=True, blank=True, related_name="bundle_owner")
+    cart_bundle = models.ForeignKey('Cart', null=True, blank=True,
+                                    related_name="bundle_owner")
 
     def _get_line_total(self):
         """Get the total price based on the product unit price and quantity"""
@@ -213,7 +238,8 @@ class CartItem(models.Model):
         super(CartItem, self).delete()
 
     def __unicode__(self):
-        return u"%s x %s, %s" % (self.quantity, self.product.name, self.line_total)
+        return u"%s x %s, %s" % (self.quantity, self.product.name,
+                                 self.line_total)
 
     class Meta:
         verbose_name = "Cart Item"

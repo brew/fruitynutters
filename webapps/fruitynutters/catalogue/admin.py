@@ -33,7 +33,8 @@ class ItemAdmin(admin.ModelAdmin):
                        'picking_order')
         }),
         ('Price options', {
-            'fields': (('unit_number', 'measure_per_unit', 'measure_type'), 'price', 'price_change')
+            'fields': (('unit_number', 'measure_per_unit', 'measure_type'),
+                       'price', 'price_change')
         }),
     )
     radio_fields = {"price_change": admin.HORIZONTAL}
