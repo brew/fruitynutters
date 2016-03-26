@@ -9,7 +9,8 @@ from django.core.mail import EmailMessage
 from django.template.defaultfilters import slugify
 from django.views.decorators.csrf import csrf_exempt
 
-from fruitynutters.settings import ORDER_FORM_EMAIL
+from fruitynutters.settings import (ORDER_FORM_SEND_EMAIL,
+                                    ORDER_FORM_REPLY_TO_EMAIL)
 from fruitynutters.catalogue.models import Item
 from fruitynutters.cart.models import Cart
 from fruitynutters.util import get_session_cart, isAddressValid
@@ -241,7 +242,7 @@ def submit(request):
         buffer = createOrderForm(cart, request.POST)
 
         email_to = []
-        email_to.extend(ORDER_FORM_EMAIL)
+        email_to.extend([ORDER_FORM_REPLY_TO_EMAIL])
         email_to.append(member_email)
 
         email_message = 'Order attached. \n\n'
@@ -256,8 +257,8 @@ def submit(request):
         success = False
         # Try making and sending the email.
         try:
-            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, 'mailbot@fruitynutters.org.uk',
-                                email_to, headers={'Reply-To': 'fruitynutters@googlemail.com'})
+            mail = EmailMessage('[FruityNuttersOrder] ' + member_name, email_message, ORDER_FORM_SEND_EMAIL,
+                                email_to, headers={'Reply-To': ORDER_FORM_REPLY_TO_EMAIL})
             mail.attach(slug_name + '_order_form.rtf', buffer.getvalue(), 'application/rtf')
             mail.send()
             buffer.close()
@@ -270,9 +271,10 @@ def submit(request):
             success = True
             request.notifications.create("Your order has been submitted! Ta very much!", 'success')
         except Exception, e:
-            request.notifications.create("There was a problem sending the email :( . "
-                                         "Please email fruitynutters@googlemail.com "
-                                         "to let us know what is says here: " + str(e), 'error')
+            request.notifications.create(
+                "There was a problem submitting your order :( . "
+                "Please email {0} to let us know what is says here: "
+                "{1}".format(ORDER_FORM_REPLY_TO_EMAIL, str(e)), 'error')
 
         return render_to_response('review.html', {'cart': cart,
                                                   'submit_success': success},

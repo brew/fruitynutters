@@ -100,6 +100,11 @@ INSTALLED_APPS = (
     'fruitynutters.cart',
 )
 
+# Fruitynutters settings
+
+# ORDER_FORM_SEND_EMAIL = 'fruitynutters@example.com'
+# ORDER_FORM_REPLY_TO_EMAIL = ORDER_FORM_SEND_EMAIL
+
 try:
     from local_settings import *
 except ImportError:
