@@ -13,7 +13,7 @@ class Aisle(models.Model):
         help_text="Determines whether the Aisle is active to the user. "
         "This doesn\'t affect the active status of items.")
 
-    def get_next_by_sort_name(self):
+    def get_next_aisle(self):
         all_aisles = Aisle.objects.filter(active=True)
         all_aisle_names = [aisle.name for aisle in all_aisles]
         this_aisle_index = all_aisle_names.index(self.name)
@@ -24,7 +24,7 @@ class Aisle(models.Model):
 
         return next_aisle
 
-    def get_previous_by_sort_name(self):
+    def get_previous_aisle(self):
         all_aisles = Aisle.objects.filter(active=True).reverse()
         all_aisle_names = [aisle.name for aisle in all_aisles]
         this_aisle_index = all_aisle_names.index(self.name)
