@@ -13,27 +13,25 @@ class Aisle(models.Model):
         help_text="Determines whether the Aisle is active to the user. "
         "This doesn\'t affect the active status of items.")
 
-    def get_next_aisle(self):
-        all_aisles = Aisle.objects.filter(active=True)
-        all_aisle_names = [aisle.name for aisle in all_aisles]
-        this_aisle_index = all_aisle_names.index(self.name)
+    def _get_next_aisle(self, aisle_list):
+        '''Helper method to get next aisle from aisle_list.'''
+        aisle_names = [aisle.name for aisle in aisle_list]
+        this_aisle_index = aisle_names.index(self.name)
         try:
-            next_aisle = all_aisles[this_aisle_index + 1]
+            next_aisle = aisle_list[this_aisle_index + 1]
         except IndexError:
             next_aisle = None
-
         return next_aisle
 
-    def get_previous_aisle(self):
-        all_aisles = Aisle.objects.filter(active=True).reverse()
-        all_aisle_names = [aisle.name for aisle in all_aisles]
-        this_aisle_index = all_aisle_names.index(self.name)
-        try:
-            prev_aisle = all_aisles[this_aisle_index + 1]
-        except IndexError:
-            prev_aisle = None
+    def get_next_aisle(self):
+        '''Get next active aisle'''
+        active_aisles = Aisle.objects.filter(active=True)
+        return self._get_next_aisle(active_aisles)
 
-        return prev_aisle
+    def get_previous_aisle(self):
+        '''Get previous active aisle'''
+        active_aisles_reversed = Aisle.objects.filter(active=True).reverse()
+        return self._get_next_aisle(active_aisles_reversed)
 
     def __unicode__(self):
         return self.name
