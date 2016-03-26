@@ -22,10 +22,7 @@ def info_page(request, page_name):
 def virtual_shop(request):
     """Handles virtual shop aisle."""
 
-    try:
-        page_object = VirtualShopPage.objects.get(name__exact='virtualshop')
-    except Exception, e:
-        raise e
+    page_object = VirtualShopPage.objects.get(name__exact='virtualshop')
 
     title = page_object.title
     body = page_object.body
