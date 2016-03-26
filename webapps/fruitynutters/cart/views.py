@@ -262,7 +262,7 @@ def submit(request):
 
     # Validate the form and cart.
     isValid = True
-    if cart.numItems == 0:
+    if cart.num_items == 0:
         isValid = False
         request.notifications.create("There are no items your shopping list!",
                                      'error')

@@ -57,7 +57,7 @@ class Cart(models.Model):
             itemCount += 1
 
         return (itemCount)
-    numItems = property(_get_count)
+    num_items = property(_get_count)
 
     def _get_total(self):
         total = Decimal("0")
@@ -192,12 +192,11 @@ class Cart(models.Model):
 
         self.save()
 
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         """Ensure we have a date_time_created before saving the first time."""
         if not self.pk:
             self.date_created = datetime.datetime.now()
-        super(Cart, self).save(force_insert=force_insert,
-                               force_update=force_update)
+        super(Cart, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Shopping Cart"

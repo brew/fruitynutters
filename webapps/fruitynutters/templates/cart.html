@@ -11,7 +11,7 @@
 {% endif %}
 <form action="/cart/update/" method="post" accept-charset="utf-8" id="cart_form">
   <p id="shopping_list_total" class="top">Total: <strong>£{{ cart.total }}</strong></p>
-  {% if cart.numItems %}
+  {% if cart.num_items %}
     <ul class="shopping_list">
       {% for item in cart.cartitem_set.all reversed  %}
         <li>
