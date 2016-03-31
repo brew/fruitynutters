@@ -1,111 +1,33 @@
-{% extends "admin/base_site.html" %}
-{% load admin_static admin_urls admin_list i18n %}
+{% extends "admin/change_list.html" %}
 
-{% block extrastyle %}
-  {{ block.super }}
-  <link rel="stylesheet" type="text/css" href="{% static 'admin/css/changelists.css' %}" />
-  {% if cl.formset %}
-    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/forms.css' %}" />
-    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
-  {% endif %}
-  {{ media }}
-  {% if not actions_on_top and not actions_on_bottom %}
-    <style>
-      #changelist table thead th:first-child {width: inherit}
-    </style>
-  {% endif %}
+{% load i18n admin_urls admin_static %}
 
-	  <script type="text/javascript" src="{% static 'javascript/prototype.js' %}"></script>
-		<script type="text/javascript" src="{% static 'javascript/fn_admin_reset_items.js' %}" charset="utf-8"></script>
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript" src="{% static "javascript/prototype.js" %}"></script>
+<script type="text/javascript" src="{% static "javascript/fn_admin_reset_items.js" %}" charset="utf-8"></script>
 
-	  <script type="text/javascript">
+<script type="text/javascript">
+// Sets up filter list to show/hide
+Event.observe(window, 'load', function(event){
+  $$('#changelist-filter h2').each(function(h2, index) {
+    h2.observe('click', function(ev) {
+      $$('#changelist-filter *').each(function(el, index) {
+        if(el.tagName != 'H2') el.toggle  ();
+      });
+    });
+  });
+});
+</script>
 
-		// Sets up filter list to show/hide
-		Event.observe(window, 'load', function(event){
-			$$('#changelist-filter h2').each(function(h2, index) {
-				h2.observe('click', function(ev) {
-					$$('#changelist-filter *').each(function(el, index) {
-						if(el.tagName != 'H2') el.toggle	();
-					});
-				});
-			});
-		});
-
-	  </script>
-
-	<style type="text/css" media="screen">
-		#changelist-filter h2 {
-			cursor:pointer;
-		}
-	</style>
-
+<style type="text/css" media="screen">
+  #changelist-filter h2 {
+    cursor:pointer;
+  }
+</style>
 {% endblock %}
 
-{% block bodyclass %}change-list{% endblock %}
-
-{% if not is_popup %}
-  {% block breadcrumbs %}
-    <div class="breadcrumbs">
-      <a href="../../">
-        {% trans "Home" %}
-      </a>
-       &rsaquo;
-       <a href="../">
-         {{ app_label|capfirst }}
-      </a>
-      &rsaquo;
-      {{ cl.opts.verbose_name_plural|capfirst }}
-    </div>
-  {% endblock %}
-{% endif %}
-
-{% block coltype %}flex{% endblock %}
-
-{% block content %}
-  <div id="content-main">
-    {% block object-tools %}
-      {% if has_add_permission %}
-        <ul class="object-tools">
-				<script>document.write('<li><a href="/catalogue/reset/" id="reset_items_button">Reset items</a></li>');</script>
-          <li>
-            <a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">
-              {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
-            </a>
-          </li>
-        </ul>
-      {% endif %}
-    {% endblock %}
-    {% if cl.formset.errors %}
-        <p class="errornote">
-        {% blocktrans count cl.formset.errors|length as counter %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktrans %}
-        </p>
-        <ul class="errorlist">{% for error in cl.formset.non_field_errors %}<li>{{ error }}</li>{% endfor %}</ul>
-    {% endif %}
-    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
-      {% block search %}{% search_form cl %}{% endblock %}
-      {% block date_hierarchy %}{% date_hierarchy cl %}{% endblock %}
-
-      {% block filters %}
-        {% if cl.has_filters %}
-          <div id="changelist-filter">
-            <h2>{% trans 'Filter' %}</h2>
-            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
-          </div>
-        {% endif %}
-      {% endblock %}
-
-      <form action="" method="post"{% if cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %}>
-      {% if cl.formset %}
-        {{ cl.formset.management_form }}
-      {% endif %}
-
-      {% block result_list %}
-          {% if action_form and actions_on_top and cl.full_result_count %}{% admin_actions %}{% endif %}
-          {% result_list cl %}
-          {% if action_form and actions_on_bottom and cl.full_result_count %}{% admin_actions %}{% endif %}
-      {% endblock %}
-      {% block pagination %}{% pagination cl %}{% endblock %}
-      </form>
-    </div>
-  </div>
+{% block object-tools-items %}
+  <script>document.write('<li><a href="/catalogue/reset/" id="reset_items_button">Reset items</a></li>');</script>
+  {{ block.super }}
 {% endblock %}
