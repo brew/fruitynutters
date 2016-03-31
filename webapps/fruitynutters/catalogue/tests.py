@@ -1,7 +1,8 @@
+from decimal import Decimal
+
 from django.test import TestCase
 
-# from fruitynutters.cart.models import Cart, CartItem
-from fruitynutters.catalogue.models import Aisle
+from fruitynutters.catalogue.models import Aisle, Item
 
 
 class AisleTestCase(TestCase):
@@ -27,3 +28,47 @@ class AisleTestCase(TestCase):
 
         self.assertEqual(aisle_b.get_next_aisle(), aisle_c)
         self.assertEqual(aisle_b.get_previous_aisle(), aisle_a)
+
+
+class ItemSizeTestCase(TestCase):
+
+    def setUp(self):
+        self.aisle = Aisle.objects.create(active=True)
+
+    def test_size_none(self):
+        '''Item with no measure_per_unit, returns None size.'''
+        product = Item.objects.create(name="My Product",
+                                      active=True,
+                                      organic=True,
+                                      new_changed=False,
+                                      unit_number=1,
+                                      aisle=self.aisle,
+                                      price=Decimal('2.50'))
+        self.assertEqual(product.size, None)
+
+    def test_size_with_type(self):
+        '''Item with a measure_per_unit and a measure_type returns a correct
+        size.'''
+        product = Item.objects.create(name="My Product",
+                                      active=True,
+                                      organic=True,
+                                      new_changed=False,
+                                      unit_number=1,
+                                      aisle=self.aisle,
+                                      price=Decimal('2.50'),
+                                      measure_per_unit=25,
+                                      measure_type='g')
+        self.assertEqual(product.size, '25g')
+
+    def test_size_with_no_type(self):
+        '''Item with a measure_per_unit but no measure_type returns a correct
+        size.'''
+        product = Item.objects.create(name="My Product",
+                                      active=True,
+                                      organic=True,
+                                      new_changed=False,
+                                      unit_number=1,
+                                      aisle=self.aisle,
+                                      price=Decimal('2.50'),
+                                      measure_per_unit=25)
+        self.assertEqual(product.size, '25')

@@ -92,8 +92,11 @@ class Item(models.Model):
     has_bundle = property(_has_bundle)
 
     def _size(self):
-        measure_unit = "%g" % self.measure_per_unit
-        return str(measure_unit) + self.measure_type
+        if self.measure_per_unit:
+            return "{0:g}{1}".format(self.measure_per_unit,
+                                     self.measure_type or '')
+        else:
+            return None
     size = property(_size)
 
     picking_order_choices = (
