@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.conf.urls.static import static
 from django.conf.urls import patterns, url, include
 
 # Uncomment the next two lines to enable the admin:
@@ -48,3 +50,5 @@ urlpatterns += patterns('fruitynutters.cart.views',
 urlpatterns += patterns('fruitynutters.catalogue.views',
     (r'^aislemock.html', 'aisle_mock'),
 )
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
