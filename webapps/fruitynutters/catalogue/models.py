@@ -89,6 +89,7 @@ class Item(models.Model):
 
     def _has_bundle(self):
         return self.bundle is not None
+    _has_bundle.boolean = True
     has_bundle = property(_has_bundle)
 
     def _size(self):

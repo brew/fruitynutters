@@ -50,7 +50,7 @@ class ItemAdmin(admin.ModelAdmin):
                     'aisle',
                     'picking_order',
                     'active',
-                    'has_bundle')
+                    '_has_bundle')
     search_fields = ['name', 'id']
     list_filter = ['aisle']
     prepopulated_fields = {'sort_name': ('name',)}
