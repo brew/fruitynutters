@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load staticfiles ganalytics %}
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
@@ -20,6 +20,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
+	{% ganalytics %}
 </head>
 
 <body>
@@ -47,14 +48,5 @@
 	{% block side %}{% endblock %}
 
 </div>
-
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-6151165-1");
-pageTracker._trackPageview();
-</script>
 </body>
 </html>

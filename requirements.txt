@@ -5,3 +5,4 @@ django-debug-toolbar==1.4
 readline==6.2.2
 wsgiref==0.1.2
 -e git://github.com/brew/pyrtf-ng.git#egg=pyrtf-ng
+django-ganalytics==0.4

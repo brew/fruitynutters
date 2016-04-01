@@ -91,10 +91,13 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'debug_toolbar',
+    'ganalytics',
 
     'fruitynutters.catalogue',
     'fruitynutters.cart',
 )
+
+# GANALYTICS_TRACKING_CODE = 'UA-XXXXXXX-X'
 
 # Fruitynutters settings
 
