@@ -10,10 +10,16 @@
 <script type="text/javascript">
 // Sets up filter list to show/hide
 Event.observe(window, 'load', function(event){
+  // Hide the filter elements on load.
+  $$('#changelist-filter *').each(function(el, index) {
+    if(el.tagName != 'H2') el.toggle();
+  });
+
+  // On click of h2, toggle hide the other elements of the filter box
   $$('#changelist-filter h2').each(function(h2, index) {
     h2.observe('click', function(ev) {
       $$('#changelist-filter *').each(function(el, index) {
-        if(el.tagName != 'H2') el.toggle  ();
+        if(el.tagName != 'H2') el.toggle();
       });
     });
   });
@@ -24,9 +30,9 @@ Event.observe(window, 'load', function(event){
   #changelist-filter h2 {
     cursor:pointer;
   }
-/*  .change-list .filtered .results, .change-list .filtered .paginator, .filtered #toolbar, .filtered div.xfull {
+  .change-list .filtered .results, .change-list .filtered .paginator, .filtered #toolbar, .filtered div.xfull {
     margin-right: auto;
-  }*/
+  }
 </style>
 {% endblock %}
 
