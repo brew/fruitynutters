@@ -61,7 +61,7 @@ class ItemAdmin(admin.ModelAdmin):
     )
     search_fields = ['name', 'id']
     list_filter = ['aisle']
-    prepopulated_fields = {'sort_name': ('name',)}
+    prepopulated_fields = {'order_name': ('name',)}
     save_as = True
 
 admin.site.register(Item, ItemAdmin)
