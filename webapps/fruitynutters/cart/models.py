@@ -150,7 +150,7 @@ class Cart(models.Model):
     # Write in items
     def add_writein_item(self, name, code):
         writein_to_add = CartWriteinItem(cart=self, name=name, code=code)
-        self.cartwriteinitem_set.add(writein_to_add)
+        self.cartwriteinitem_set.add(writein_to_add, bulk=False)
         writein_to_add.save()
 
         return writein_to_add
@@ -166,7 +166,7 @@ class Cart(models.Model):
     def add_virtualshop_item(self, name, quantity=1):
         virtualshop_item_to_add = CartVirtualShopItem(cart=self, name=name,
                                                       quantity=quantity)
-        self.cartvirtualshopitem_set.add(virtualshop_item_to_add)
+        self.cartvirtualshopitem_set.add(virtualshop_item_to_add, bulk=False)
         virtualshop_item_to_add.save()
 
         return virtualshop_item_to_add
