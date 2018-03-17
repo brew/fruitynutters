@@ -23,7 +23,7 @@
 	{% if aisle.get_next_aisle %}
 		<a href="/catalogue/aisle/{{ aisle.get_next_aisle.id }}/" title="{{aisle.get_next_aisle.name}}">Next</a>
 	{% else %}
-		<a href="/catalogue/virtualshop/" title="Virtual shop">Next</a>
+		<span>Next</span>
 	{% endif %}
 </div>
 
@@ -82,7 +82,7 @@
 			{% if aisle.get_next_aisle %}
 				<a href="/catalogue/aisle/{{ aisle.get_next_aisle.id }}/" title="{{aisle.get_next_aisle.name}}">Next</a>
 			{% else %}
-				<a href="/catalogue/virtualshop/" title="Virtual shop">Next</a>
+				<span>Next</span>
 			{% endif %}
 		</div>
 

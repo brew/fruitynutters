@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import Aisle, Item, Brand, Bundle, Page, VirtualShopPage
+from models import Aisle, Item, Brand, Bundle, Page
 from forms import PageAdminModelForm
 
 
@@ -12,12 +12,14 @@ class AisleAdmin(admin.ModelAdmin):
     list_display = ('name', 'sort_name', 'active')
     prepopulated_fields = {'sort_name': ('name',)}
 
+
 admin.site.register(Aisle, AisleAdmin)
 
 
 class BrandAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ['name', ]
+
 
 admin.site.register(Brand, BrandAdmin)
 
@@ -64,11 +66,13 @@ class ItemAdmin(admin.ModelAdmin):
     prepopulated_fields = {'order_name': ('name',)}
     save_as = True
 
+
 admin.site.register(Item, ItemAdmin)
 
 
 class BundleAdmin(admin.ModelAdmin):
     filter_horizontal = ('items',)
+
 
 admin.site.register(Bundle, BundleAdmin)
 
@@ -77,11 +81,5 @@ class PageAdmin(admin.ModelAdmin):
     list_display = ('name', 'title')
     form = PageAdminModelForm
 
+
 admin.site.register(Page, PageAdmin)
-
-
-class VirtualShopPageAdmin(admin.ModelAdmin):
-    list_display = ('name', 'title', 'shopPdf')
-    form = PageAdminModelForm
-
-admin.site.register(VirtualShopPage, VirtualShopPageAdmin)

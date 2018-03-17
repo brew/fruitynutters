@@ -3,7 +3,7 @@ from django.template import RequestContext
 from django.contrib.admin.views.decorators import staff_member_required
 from django.http import HttpResponseRedirect
 
-from fruitynutters.catalogue.models import Aisle, Item, Page, VirtualShopPage
+from fruitynutters.catalogue.models import Aisle, Item, Page
 from fruitynutters.util import get_session_cart
 
 
@@ -15,28 +15,6 @@ def info_page(request, page_name):
 
     response = render_to_response('info_page.html', {'title': title,
                                                      'body': body},
-                                  context_instance=RequestContext(request))
-    return response
-
-
-def virtual_shop(request):
-    """Handles virtual shop aisle."""
-
-    page_object = VirtualShopPage.objects.get(name__exact='virtualshop')
-
-    title = page_object.title
-    body = page_object.body
-    pdf_path = page_object.shopPdf.url
-    last_aisle = list(Aisle.objects.filter(active=True).reverse()[:1]).pop()
-
-    cart = get_session_cart(request.session)
-
-    response = render_to_response('virtual_shop.html',
-                                  {'cart': cart,
-                                   'title': title,
-                                   'body': body,
-                                   'pdf_path': pdf_path,
-                                   'last_aisle': last_aisle},
                                   context_instance=RequestContext(request))
     return response
 

@@ -1,0 +1,10 @@
+Django==1.9.13
+# MySQL-python==1.2.3
+docutils==0.12
+django-debug-toolbar==1.4
+readline==6.2.2
+wsgiref==0.1.2
+-e git://github.com/brew/pyrtf-ng.git#egg=pyrtf-ng
+django-ganalytics==0.4
+psycopg2==2.7.4
+sqlparse==0.1.19
