@@ -1,0 +1,7 @@
+.git
+*.pyc
+webapps/fruitynutters/local_settings_prod.py
+etc/
+volumes/
+static/
+nginx/

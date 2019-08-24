@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    restart: always
+    expose:
+      - "8000"
+    depends_on:
+      - db
+    volumes:
+      - static_volume:/opt/services/djangoapp/static
+      - media_volume:/opt/services/djangoapp/media
+    #     - "./webapps/:/app/"
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - static_volume:/opt/services/djangoapp/static
+      - media_volume:/opt/services/djangoapp/media
+    depends_on:
+      - app
+
+  db:
+    image: postgres:9.6
+    restart: always
+    volumes:
+      - "./volumes/db:/var/lib/postgresql/data"
+      - "./volumes/data:/tmp"
+    ports:
+      - "5432:5432"
+
+volumes:
+  static_volume:
+  media_volume:
