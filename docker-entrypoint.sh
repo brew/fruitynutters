@@ -11,7 +11,7 @@ tail -n 0 -f /app/logs/*.log &
 echo Starting Gunicorn.
 exec gunicorn fruitynutters.wsgi:application \
     --chdir fruitynutters \
-    --name hello_django \
+    --name fruitynutters \
     --bind 0.0.0.0:8000 \
     --workers 3 \
     --log-level=info \
