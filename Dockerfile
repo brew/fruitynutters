@@ -5,7 +5,8 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 
 RUN apk add --update --no-cache \
-    postgresql-dev
+    postgresql-dev \
+    bash
 
 COPY requirements.txt .
 
@@ -19,9 +20,9 @@ RUN apk add --update --no-cache --virtual=build-dependencies \
 COPY webapps /app
 COPY www /www
 
-RUN ./manage.py collectstatic --no-input \
-    && rm -rf /www
+RUN mkdir logs
+COPY docker-entrypoint.sh /app
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--chdir", "fruitynutters", "--bind", ":8000", "fruitynutters.wsgi:application"]
+ENTRYPOINT ["./docker-entrypoint.sh"]
