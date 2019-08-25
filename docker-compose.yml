@@ -3,6 +3,17 @@ version: '3'
 services:
   app:
     build: .
+    env_file: .env
+    environment:
+      DEBUG:
+      INTERNAL_IPS:
+      DATABASE_URL:
+      SECRET_KEY:
+      EMAIL_URL:
+      DJANGO_ADMINS:
+      ORDER_FORM_SEND_EMAIL:
+      ORDER_FORM_REPLY_TO_EMAIL:
+      GANALYTICS_TRACKING_CODE:
     restart: always
     expose:
       - "8000"

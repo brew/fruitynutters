@@ -8,3 +8,4 @@ django-ganalytics==0.4
 psycopg2==2.7.4
 sqlparse==0.1.19
 gunicorn
+django-environ

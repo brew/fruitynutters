@@ -1,16 +1,45 @@
 import os
+
+import environ
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    INTERNAL_IPS=(tuple, ('127.0.0.1', ))
+)
+
 # Django settings for fruitynutters project.
+
+SECRET_KEY = env('SECRET_KEY')
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-DEBUG = False
+DEBUG = env('DEBUG')
 TEMPLATE_DEBUG = DEBUG
 
-INTERNAL_IPS = (
-    '127.0.0.1',
-)
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False
+}
 
+ALLOWED_HOSTS = [
+    '.fruitynutters.org.uk',  # Allow domain and subdomains
+    'fruitynutter.webfactional.com',
+    'localhost',
+    'fruitynutters.dev'
+]
+
+INTERNAL_IPS = env('INTERNAL_IPS')
+
+DATABASES = {
+    'default': env.db(),
+}
+
+EMAIL_CONFIG = env.email_url('EMAIL_URL')
+vars().update(EMAIL_CONFIG)
+
+ADMINS = [x.split(':') for x in env.list('DJANGO_ADMINS')]
+MANAGERS = ADMINS
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -37,8 +66,10 @@ MEDIA_ROOT = '/fruitynutters_media/'
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
-
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/opt/services/djangoapp/static/'
+MEDIA_ROOT = '/opt/services/djangoapp/media/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "www"),
@@ -62,6 +93,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -98,14 +130,14 @@ INSTALLED_APPS = (
     'fruitynutters.cart',
 )
 
-# GANALYTICS_TRACKING_CODE = 'UA-XXXXXXX-X'
+GANALYTICS_TRACKING_CODE = env('GANALYTICS_TRACKING_CODE')
 
 # Fruitynutters settings
 
-# ORDER_FORM_SEND_EMAIL = 'fruitynutters@example.com'
-# ORDER_FORM_REPLY_TO_EMAIL = ORDER_FORM_SEND_EMAIL
+ORDER_FORM_SEND_EMAIL = env('ORDER_FORM_SEND_EMAIL')
+ORDER_FORM_REPLY_TO_EMAIL = env('ORDER_FORM_REPLY_TO_EMAIL')
 
-try:
-    from local_settings import *
-except ImportError:
-    pass
+# try:
+#     from local_settings import *
+# except ImportError:
+#     pass

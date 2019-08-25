@@ -5,3 +5,4 @@ etc/
 static/
 volumes/
 *.pyc
+.env

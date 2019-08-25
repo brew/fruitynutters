@@ -1,7 +1,12 @@
+.dockerignore
+docker-compose.yml
 .git
 *.pyc
-webapps/fruitynutters/local_settings_prod.py
+monitor.py
+local_settings_prod.py
+local_settings.py
 etc/
 volumes/
 static/
 nginx/
+.env
