@@ -30,14 +30,7 @@ class FNCart {
     if(!this._isStringANumber(quantity)) return false;
 
     var url = ev.target.action;
-
-    // If the item is a bundle, submit its sub items and their quantities.
     var serializedData = ev.target.serialize();
-    if($(ev.target).up('.has_bundle')) {
-      var serializedBundleData = $(ev.target).up('.has_bundle').down('.bundle_product_add').serialize();
-      serializedData = serializedBundleData + "&" + serializedData;
-    }
-
     this.updateCart(url, serializedData);
   }
 

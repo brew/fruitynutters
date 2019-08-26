@@ -4,11 +4,6 @@
 
 {% block title %}: {{ aisle.name }}{% endblock %}
 
-{% block scripts %}
-    <script src="{% static 'javascript/scriptaculous/scriptaculous.js' %}" type="text/javascript" charset="utf-8"></script>
-    <script src="{% static 'javascript/fn_bundle.js' %}" type="text/javascript" charset="utf-8"></script>
-{% endblock %}
-
 {% block crumb %}<a href='/catalogue/aisle/'>Aisles</a>: <span class="active">{{ aisle.name }}</span>{% endblock %}
 
 {% block content %}
@@ -34,25 +29,9 @@
 {% if aisle_items %}
     <ul id="product_list">
         {% for item in aisle_items %}
-
-            {% if item.bundle %}
-                <li class="has_bundle">
-            {% else %}
-                <li>
-            {% endif %}
-
+            <li>
                 <div class="product">{{ item.name }} {% if item.brand %}&#8212; {{ item.brand }}{% endif %}
-                    <span class="product_details"><span class="single_unit">{{ item.unit_number }}</span> &times; {{ item.measure_per_unit|floatformat:"-2" }}{{ item.measure_type }}{% if item.bundle %}. Pick any <strong class="total_units">{{ item.unit_number }}</strong> from the list:</span>
-
-                    <form method="post" accept-charset="utf-8" action="/cart/{{ item.id }}/add/" class="bundle_product_add">
-                        <ul class="bundle">
-                            {% for bundle_item in item.bundle.items.all|dictsort:"name" %}
-                                <li><input type="text" value="0" class="quantity" id="item_{{ bundle_item.id }}" name="bi:{{ bundle_item.id }}" /> {{ bundle_item.name }}</li>
-                            {% endfor %}
-                        </ul>
-                    </form>
-
-                    {% endif %}
+                    <span class="product_details"><span class="single_unit">{{ item.unit_number }}</span> &times; {{ item.measure_per_unit|floatformat:"-2" }}{{ item.measure_type }}
                     {% if not item.organic %}
                         <img src="{% static 'furniture/non_organicx2.png' %}" width="49" height="12" alt="Not Organic" />
                     {% endif %}
@@ -65,7 +44,7 @@
                     {% if item.new_changed  %}
                         <img src="{% static 'furniture/new_product_star.png' %}" width="9" height="12" alt="New product" />
                     {% endif %}</span></div>
-                <form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="hidden" name="next" value="{% url 'aisle' aisle.id %}"  />{% if item.bundle %}<input type="hidden" name="has_bundle" value="1" />{% endif %}<input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" {% if item.bundle %}disabled="disabled"{% endif %} /></form>
+                <form action="/cart/{{ item.id }}/add/" method="post" accept-charset="utf-8" class="product_add"><input type="hidden" name="next" value="{% url 'aisle' aisle.id %}"  /><input type="text" name="quantity" value="1" id="quantity_{{item.id}}" class="quantity" /> <span class="total_product_price">£{{ item.price }}</span> <input type="submit" value="Add to list" class="add_button" /></form>
             </li>
         {% endfor %}
     </ul>
