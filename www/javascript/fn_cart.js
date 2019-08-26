@@ -1,7 +1,6 @@
-var FNCart = Class.create({
-  initialize: function() {
+class FNCart {
+  constructor() {
     // Intercept the product add form submit event.
-
     this.boundAddSubmit = this.onAddFormSubmit.bind(this);
     $$('.product_add').each(function(form, index) {
       form.observe('submit', this.boundAddSubmit);
@@ -17,20 +16,20 @@ var FNCart = Class.create({
     }
 
     this._prepareCart();
-  },
+  }
 
   /**
    *  Handler for the Submit event on the product add forms.
    */
-  onAddFormSubmit: function(ev){
+  onAddFormSubmit(ev){
     ev.stop();
 
     // Get the quantity to add.
-    quantity = $(ev.target).down('.quantity').value;
+    var quantity = $(ev.target).down('.quantity').value;
     // Bail out if the quantity isn't a number.
     if(!this._isStringANumber(quantity)) return false;
 
-    url = ev.target.action;
+    var url = ev.target.action;
 
     // If the item is a bundle, submit its sub items and their quantities.
     var serializedData = ev.target.serialize();
@@ -40,20 +39,20 @@ var FNCart = Class.create({
     }
 
     this.updateCart(url, serializedData);
-  },
+  }
 
   /**
    *  Handler for submission of the add write-in form.
    */
-  onAddWriteinFormSubmit: function(ev) {
+  onAddWriteinFormSubmit(ev) {
     ev.stop();
     this.updateCart(ev.target.action, ev.target.serialize());
-  },
+  }
 
   /**
    *  Handler for submission of the add virtual shop item form.
    */
-  onVirtualShopAddFormSubmit: function(ev) {
+  onVirtualShopAddFormSubmit(ev) {
     ev.stop();
     var completeAction = function(transport) {
       this._prepareCart();
@@ -61,28 +60,28 @@ var FNCart = Class.create({
         ev.target.reset();
     }.bind(this);
     this.updateCart(ev.target.action, ev.target.serialize(), completeAction);
-  },
+  }
 
   /**
    *  Handler for the remove item button.
    */
-  onRemoveItem: function(ev) {
+  onRemoveItem(ev) {
     ev.stop();
     this.updateCart($(ev.target).up('a.remove_item').href);
-  },
+  }
 
   /**
    *  Handler for the click event on the empty list link.
    */
-  onEmptyList: function(ev) {
+  onEmptyList(ev) {
     ev.stop();
     this.updateCart("/cart/empty/");
-  },
+  }
 
   /**
    *  Handler for the submission of the cart form (Update cart).
    */
-  onCartUpdateSubmit: function(ev) {
+  onCartUpdateSubmit(ev) {
     ev.stop();
     if(ev.target.serialize() != this.serializedCart) {
       // console.info(ev.target.serialize());
@@ -90,22 +89,22 @@ var FNCart = Class.create({
     } else {
       // console.info('Cart has not changed.');
     }
-  },
+  }
 
   /**
    *  Handler for when a key is pressed in the cart inputs.
    */
-  onCartKeyUp: function(ev) {
+  onCartKeyUp(ev) {
     if(ev.target.serialize() != this.serializedCart)
       $('update_list_button').enable();
     else
       $('update_list_button').disable();
-  },
+  }
 
   /**
    *  Updates the cart with a given url and parameters, updating the cart container with the successful return value.
    */
-  updateCart: function(url, parameters, completeAction) {
+  updateCart(url, parameters, completeAction) {
 
     completeAction = completeAction || function() {this._prepareCart();}.bind(this);
 
@@ -118,12 +117,12 @@ var FNCart = Class.create({
       parameters:parameters,
       onComplete: completeAction
     });
-  },
+  }
 
   /**
    *  Handler for click of the save details button.
    */
-  onSaveDetailsButtonClick: function(ev) {
+  onSaveDetailsButtonClick(ev) {
     new Ajax.Request('/cart/savedetails/', {
       method: 'post',
       parameters:$('order_details').serialize(),
@@ -134,12 +133,12 @@ var FNCart = Class.create({
 
       }
     });
-  },
+  }
 
   /**
    *  Prepares the cart at initialize and each time it's been updated.
    */
-  _prepareCart: function() {
+  _prepareCart() {
     this.serializedCart = $('cart_form').serialize();
 
     this.boundEmptyList = this.onEmptyList.bind(this);
@@ -166,13 +165,12 @@ var FNCart = Class.create({
 
     this.boundAddWriteinSubmit = this.onAddWriteinFormSubmit.bind(this);
     $('writein_form').observe('submit', this.boundAddWriteinSubmit);
-
-  },
+  }
 
   /**
    *  Prepares cart for update by removing listeners.
    */
-  _prepareCartForUpdate: function() {
+  _prepareCartForUpdate() {
     $('empty_list').stopObserving('click', this.boundEmptyList);
 
     $('cart_form').stopObserving('submit', this.boundCartSubmit);
@@ -186,15 +184,12 @@ var FNCart = Class.create({
     }.bind(this));
 
     $('writein_form').stopObserving('submit', this.boundAddWriteinSubmit);
-
-  },
+  }
 
   /**
    *  Returns boolean determining if the passed string contains only digits.
    */
-  _isStringANumber: function(str) {
+  _isStringANumber(str) {
     return (/^\d+$/.test(str));
   }
-
-
-});
+};
