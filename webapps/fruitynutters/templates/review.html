@@ -5,55 +5,55 @@
 {% block title %}: Review your order{% endblock %}
 
 {% block scripts %}
-	<script src="{% static 'javascript/scriptaculous/scriptaculous.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'javascript/scriptaculous/scriptaculous.js' %}" type="text/javascript" charset="utf-8"></script>
 {% endblock %}
 
 {% block crumb %}Fill in your details and submit your order{% endblock %}
 
 {% block content %}
-	{% if submit_success %}
+    {% if submit_success %}
 
-		<p class="notice">Thank you for your order which has been dispatched by email to Fruity Nutters. You will receive a copy of this email for your own records. Within 24 hours you should receive another email confirming that the order has been processed together with a note of the amount you should transfer to Fruity Nutters.</p>
+        <p class="notice">Thank you for your order which has been dispatched by email to Fruity Nutters. You will receive a copy of this email for your own records. Within 24 hours you should receive another email confirming that the order has been processed together with a note of the amount you should transfer to Fruity Nutters.</p>
 
-	{% else %}
+    {% else %}
 
-		<p class="notice">Fill in your details below and submit your order to the Fruity Nutters team.</p>
+        <p class="notice">Fill in your details below and submit your order to the Fruity Nutters team.</p>
 
-		<form action="/cart/submit/" method="post" accept-charset="utf-8" id="order_details">
+        <form action="/cart/submit/" method="post" accept-charset="utf-8" id="order_details">
 
-			<p>
-				<label for="member_name">Your name (required)</label>
-				<input type="text" name="member_name" value="{{ member_name }}" id="member_name" />
-			</p>
+            <p>
+                <label for="member_name">Your name (required)</label>
+                <input type="text" name="member_name" value="{{ member_name }}" id="member_name" />
+            </p>
 
-			<p>
-				<label for="member_phone">Phone number (required)</label>
-				<input type="text" name="member_phone" value="{{ member_phone }}" id="member_phone" />
-			</p>
+            <p>
+                <label for="member_phone">Phone number (required)</label>
+                <input type="text" name="member_phone" value="{{ member_phone }}" id="member_phone" />
+            </p>
 
-			<p>
-				<label for="member_email">Email (required)</label>
-				<input type="text" name="member_email" value="{{ member_email }}" id="member_email" />
-			</p>
+            <p>
+                <label for="member_email">Email (required)</label>
+                <input type="text" name="member_email" value="{{ member_email }}" id="member_email" />
+            </p>
 
-			<p>
-				<label for="order_comments">Comments box (this is your message to Fruity Nutters)</label>
-				<textarea name="order_comments" rows="8" cols="40" id="order_comments">{{ order_comments }}</textarea>
-			</p>
+            <p>
+                <label for="order_comments">Comments box (this is your message to Fruity Nutters)</label>
+                <textarea name="order_comments" rows="8" cols="40" id="order_comments">{{ order_comments }}</textarea>
+            </p>
 
-			<p id="submit_button_block"><button type="button" id="save_details_button">Save details and continue shopping</button> <input type="submit" value="Submit your order" id="submit_order" /></p>
+            <p id="submit_button_block"><button type="button" id="save_details_button">Save details and continue shopping</button> <input type="submit" value="Submit your order" id="submit_order" /></p>
 
-		</form>
+        </form>
 
-	{% endif %}
+    {% endif %}
 
 {% endblock %}
 
 {% block side %}
-	<div id="cart_content">
-		{% include "cart.html" %}
-		<script type="text/javascript" charset="utf-8">
-			Event.observe(window, 'load', function(event){var cart = new FNCart();});
-		</script>
-	</div>
+    <div id="cart_content">
+        {% include "cart.html" %}
+        <script type="text/javascript" charset="utf-8">
+            Event.observe(window, 'load', function(event){var cart = new FNCart();});
+        </script>
+    </div>
 {% endblock %}

@@ -2,55 +2,55 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=8">
-	<title>Fruity Nutters{% block title %}{% endblock %}</title>
+    <title>Fruity Nutters{% block title %}{% endblock %}</title>
 
-	<link rel="icon" type="image/png" href="{% static 'furniture/favicon-32x32@2x.png' %}" sizes="32x32">
-	<link rel="icon" type="image/png" href="{% static 'furniture/favicon-48x48@2x.png' %}" sizes="48x48">
-	<link rel="icon" type="image/png" href="{% static 'furniture/favicon-64x64@2x.png' %}" sizes="64x64">
-	<link rel="icon" type="image/png" href="{% static 'furniture/favicon-96x96@2x.png' %}" sizes="96x96">
-	<link rel="icon" type="image/png" href="{% static 'furniture/favicon-128x128@2x.png' %}" sizes="128x128">
-	<link rel="icon" type="image/png" href="{% static 'furniture/favicon-196x196@2x.png' %}" sizes="196x196">
+    <link rel="icon" type="image/png" href="{% static 'furniture/favicon-32x32@2x.png' %}" sizes="32x32">
+    <link rel="icon" type="image/png" href="{% static 'furniture/favicon-48x48@2x.png' %}" sizes="48x48">
+    <link rel="icon" type="image/png" href="{% static 'furniture/favicon-64x64@2x.png' %}" sizes="64x64">
+    <link rel="icon" type="image/png" href="{% static 'furniture/favicon-96x96@2x.png' %}" sizes="96x96">
+    <link rel="icon" type="image/png" href="{% static 'furniture/favicon-128x128@2x.png' %}" sizes="128x128">
+    <link rel="icon" type="image/png" href="{% static 'furniture/favicon-196x196@2x.png' %}" sizes="196x196">
 
-	<link rel="stylesheet" href="{% static 'stylesheets/main.css' %}" type="text/css" media="screen" title="Main styles" charset="utf-8" />
+    <link rel="stylesheet" href="{% static 'stylesheets/main.css' %}" type="text/css" media="screen" title="Main styles" charset="utf-8" />
 
-	<script src="{% static 'javascript/prototype.js' %}" type="text/javascript" charset="utf-8"></script>
-	<script src="{% static 'javascript/fn_cart.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'javascript/prototype.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'javascript/fn_cart.js' %}" type="text/javascript" charset="utf-8"></script>
 
-	{% block scripts %}{% endblock %}
+    {% block scripts %}{% endblock %}
 
-	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
-	{% ganalytics %}
+    {% ganalytics %}
 </head>
 
 <body>
 
 <div id="wrapper">
 
-	<div id="main_content">
-		<h1><a href="/">Fruity Nutters</a></h1>
+    <div id="main_content">
+        <h1><a href="/">Fruity Nutters</a></h1>
 
-		<div id="crumb">
-			{% block crumb %}{% endblock %}
-		</div>
-		{% load basic_logic %}
-		{% if notifications %}
-			<ul class="notifications">
-			    {% for notification in notifications %}{% if "cart_"|IN:notification.type %}{% else %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
-			    {% endfor %}
-			</ul>
-		{% endif %}
+        <div id="crumb">
+            {% block crumb %}{% endblock %}
+        </div>
+        {% load basic_logic %}
+        {% if notifications %}
+            <ul class="notifications">
+                {% for notification in notifications %}{% if "cart_"|IN:notification.type %}{% else %}<li class="{{ notification.type }}">{{ notification.content }}</li>{% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
 
-		{% block content %}{% endblock %}
+        {% block content %}{% endblock %}
 
-	</div>
+    </div>
 
-	{% block side %}{% endblock %}
+    {% block side %}{% endblock %}
 
 </div>
 </body>
