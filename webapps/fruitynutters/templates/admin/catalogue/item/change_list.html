@@ -4,22 +4,25 @@
 
 {% block extrahead %}
 {{ block.super }}
-<script type="text/javascript" src="{% static "javascript/prototype.js" %}"></script>
-<script type="text/javascript" src="{% static "javascript/fn_admin_reset_items.js" %}" charset="utf-8"></script>
+<script type="text/javascript" src="{% static 'javascript/jquery-3.4.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascript/fn_admin_reset_items.js' %}" charset="utf-8"></script>
 
 <script type="text/javascript">
 // Sets up filter list to show/hide
-Event.observe(window, 'load', function(event){
+$(document).ready(function() {
   // Hide the filter elements on load.
-  $$('#changelist-filter *').each(function(el, index) {
-    if(el.tagName != 'H2') el.toggle();
+  $('#changelist-filter *').each(function(index, el) {
+    el = $(el);
+    if(el.prop('tagName') != 'H2') el.toggle();
   });
 
   // On click of h2, toggle hide the other elements of the filter box
-  $$('#changelist-filter h2').each(function(h2, index) {
-    h2.observe('click', function(ev) {
-      $$('#changelist-filter *').each(function(el, index) {
-        if(el.tagName != 'H2') el.toggle();
+  $('#changelist-filter h2').each(function(index, h2) {
+    h2 = $(h2);
+    h2.on('click', function(ev) {
+      $('#changelist-filter *').each(function(index, el) {
+        el = $(el);
+        if(el.prop('tagName') != 'H2') el.toggle();
       });
     });
   });

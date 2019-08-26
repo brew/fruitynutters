@@ -1,16 +1,11 @@
 function initResetButton() {
-  var resetButton = $('reset_items_button');
-  resetButton.observe('click', resetItems.bind(this));
+  $('#reset_items_button').on('click', resetItems.bind(this));
 }
 
 function resetItems(ev) {
   if (!window.confirm('Are you sure you want to reset all items in the catalogue?')) {
-    ev.stop();
+    ev.preventDefault();
   }
 }
 
-
-// Set up reset button!
-Event.observe(window, 'load', function(event){
-  initResetButton();
-});
+$(document).ready(initResetButton);

@@ -2,17 +2,16 @@ class FNCart {
   constructor() {
     // Intercept the product add form submit event.
     this.boundAddSubmit = this.onAddFormSubmit.bind(this);
-    $$('.product_add').each(function(form, index) {
-      form.observe('submit', this.boundAddSubmit);
-    }, this);
 
-    if($('virtualshop_form')) {
+    $('.product_add').submit(this.boundAddSubmit);
+
+    if($('#virtualshop_form')) {
       this.boundAddVirtualSubmit = this.onVirtualShopAddFormSubmit.bind(this);
-      $('virtualshop_form').observe('submit', this.boundAddVirtualSubmit);
+      $('#virtualshop_form').submit(this.boundAddVirtualSubmit);
     }
 
-    if($('save_details_button')) {
-      $('save_details_button').observe('click', this.onSaveDetailsButtonClick.bind(this));
+    if($('#save_details_button')) {
+      $('#save_details_button').click(this.onSaveDetailsButtonClick.bind(this));
     }
 
     this._prepareCart();
@@ -22,15 +21,15 @@ class FNCart {
    *  Handler for the Submit event on the product add forms.
    */
   onAddFormSubmit(ev){
-    ev.stop();
+    ev.preventDefault();
 
     // Get the quantity to add.
-    var quantity = $(ev.target).down('.quantity').value;
+    var quantity = $(ev.target).find('.quantity').val();
     // Bail out if the quantity isn't a number.
     if(!this._isStringANumber(quantity)) return false;
 
     var url = ev.target.action;
-    var serializedData = ev.target.serialize();
+    var serializedData = $(ev.target).serialize();
     this.updateCart(url, serializedData);
   }
 
@@ -38,36 +37,36 @@ class FNCart {
    *  Handler for submission of the add write-in form.
    */
   onAddWriteinFormSubmit(ev) {
-    ev.stop();
-    this.updateCart(ev.target.action, ev.target.serialize());
+    ev.preventDefault();
+    this.updateCart(ev.target.action, $(ev.target).serialize());
   }
 
   /**
    *  Handler for submission of the add virtual shop item form.
    */
   onVirtualShopAddFormSubmit(ev) {
-    ev.stop();
+    ev.preventDefault();
     var completeAction = function(transport) {
       this._prepareCart();
-      if($$('.cart_error').length == 0)
+      if($('.cart_error').length == 0)
         ev.target.reset();
     }.bind(this);
-    this.updateCart(ev.target.action, ev.target.serialize(), completeAction);
+    this.updateCart(ev.target.action, $(ev.target).serialize(), completeAction);
   }
 
   /**
    *  Handler for the remove item button.
    */
   onRemoveItem(ev) {
-    ev.stop();
-    this.updateCart($(ev.target).up('a.remove_item').href);
+    ev.preventDefault();
+    this.updateCart($(ev.target).parent('a.remove_item').attr('href'));
   }
 
   /**
    *  Handler for the click event on the empty list link.
    */
   onEmptyList(ev) {
-    ev.stop();
+    ev.preventDefault();
     this.updateCart("/cart/empty/");
   }
 
@@ -75,10 +74,10 @@ class FNCart {
    *  Handler for the submission of the cart form (Update cart).
    */
   onCartUpdateSubmit(ev) {
-    ev.stop();
-    if(ev.target.serialize() != this.serializedCart) {
-      // console.info(ev.target.serialize());
-      this.updateCart(ev.target.action, ev.target.serialize());
+    ev.preventDefault();
+    if($(ev.target).serialize() != this.serializedCart) {
+      // console.info($(ev.target).serialize());
+      this.updateCart(ev.target.action, $(ev.target).serialize());
     } else {
       // console.info('Cart has not changed.');
     }
@@ -88,43 +87,45 @@ class FNCart {
    *  Handler for when a key is pressed in the cart inputs.
    */
   onCartKeyUp(ev) {
-    if(ev.target.serialize() != this.serializedCart)
-      $('update_list_button').enable();
+    if($(ev.target).serialize() != this.serializedCart)
+      $('#update_list_button').prop('disabled', false);
     else
-      $('update_list_button').disable();
+      $('#update_list_button').prop('disabled', true);
   }
 
   /**
    *  Updates the cart with a given url and parameters, updating the cart container with the successful return value.
    */
   updateCart(url, parameters, completeAction) {
-
     completeAction = completeAction || function() {this._prepareCart();}.bind(this);
 
     this._prepareCartForUpdate();
 
-    $('cart_load_indicator').show();
+    $('#cart_load_indicator').show();
 
-    new Ajax.Updater({success:'cart_content', failure:'cart_notice'}, url, {
+    $.ajax(url, {
       method:'post',
-      parameters:parameters,
-      onComplete: completeAction
-    });
+      data:parameters
+    })
+    .done(function(data) {
+      $('#cart_content').html(data);
+    })
+    .fail(function(data) {
+      $('#cart_notice').html(data);
+    })
+    .always(completeAction);
   }
 
   /**
    *  Handler for click of the save details button.
    */
   onSaveDetailsButtonClick(ev) {
-    new Ajax.Request('/cart/savedetails/', {
+    $.ajax('/cart/savedetails/', {
       method: 'post',
-      parameters:$('order_details').serialize(),
-      onSuccess: function(transport) {
-        window.location.replace("/catalogue/aisle/");
-      },
-      onFailure: function(transport) {
-
-      }
+      data:$('#order_details').serialize(),
+    })
+    .done(function() {
+      window.location.replace("/catalogue/aisle/");
     });
   }
 
@@ -132,51 +133,44 @@ class FNCart {
    *  Prepares the cart at initialize and each time it's been updated.
    */
   _prepareCart() {
-    this.serializedCart = $('cart_form').serialize();
+    this.serializedCart = $('#cart_form').serialize();
 
     this.boundEmptyList = this.onEmptyList.bind(this);
-    $('empty_list').observe('click', this.boundEmptyList);
-
-    this.boundRemoveItem = this.onRemoveItem.bind(this);
-    $$('#cart_form .remove_item').each(function(alink, index){
-      alink.observe('click', this.boundRemoveItem);
-    }.bind(this));
+    $('#empty_list').on('click', this.boundEmptyList);
 
     this.boundCartSubmit = this.onCartUpdateSubmit.bind(this);
-    $('cart_form').observe('submit', this.boundCartSubmit);
+    $('#cart_form').on('submit', this.boundCartSubmit);
+
+    this.boundRemoveItem = this.onRemoveItem.bind(this);
+    $('#cart_form .remove_item').on('click', this.boundRemoveItem);
+
 
     this.boundCartKeydown = this.onCartKeyUp.bind(this);
-    $('cart_form').getInputs().each(function(input, index){
-      input.observe('keyup', this.boundCartKeydown);
-    }.bind(this));
+    $('#cart_form').on('keyup', this.boundCartKeydown);
 
     // Prepare writein elements.
-    $('writein_opener').observe('click', function(ev) {
-      ev.stop();
-      Effect.toggle('writein_elements','blind');
+    $('#writein_opener').click(function(ev) {
+      ev.preventDefault();
+      $('#writein_elements').slideToggle();
     });
 
     this.boundAddWriteinSubmit = this.onAddWriteinFormSubmit.bind(this);
-    $('writein_form').observe('submit', this.boundAddWriteinSubmit);
+    $('#writein_form').on('submit', this.boundAddWriteinSubmit);
   }
 
   /**
    *  Prepares cart for update by removing listeners.
    */
   _prepareCartForUpdate() {
-    $('empty_list').stopObserving('click', this.boundEmptyList);
+    $('#empty_list').off('click');
 
-    $('cart_form').stopObserving('submit', this.boundCartSubmit);
+    $('#cart_form').off('submit');
 
-    $$('#cart_form a.remove_item').each(function(alink, index){
-      alink.stopObserving('click', this.boundRemoveItem);
-    }.bind(this));
+    $('#cart_form .remove_item').off('click');
 
-    $('cart_form').getInputs().each(function(input, index){
-      input.stopObserving('keyup', this.boundCartKeydown);
-    }.bind(this));
+    $('#cart_form').off('keyup');
 
-    $('writein_form').stopObserving('submit', this.boundAddWriteinSubmit);
+    $('#writein_form').off('submit');
   }
 
   /**
