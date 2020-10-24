@@ -32,3 +32,13 @@ POSTGRES_PASSWORD=secret
 POSTGRES_USER=dbuser
 POSTGRES_DB=postgres
 ```
+
+### Production
+
+Ensure there's `.env.prod` file set out as above.
+
+Run:
+
+```sh
+docker-compose -f docker-compose.prod.yml up --build
+```
