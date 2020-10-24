@@ -9,4 +9,5 @@ etc/
 volumes/
 static/
 nginx/
-.env
+mysql/
+.env*
