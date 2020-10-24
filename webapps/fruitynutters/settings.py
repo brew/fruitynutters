@@ -5,7 +5,8 @@ import environ
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
-    INTERNAL_IPS=(tuple, ('127.0.0.1', ))
+    INTERNAL_IPS=(tuple, ('127.0.0.1', )),
+    ALLOWED_HOSTS=(tuple, ('localhost', ))
 )
 
 # Django settings for fruitynutters project.
@@ -21,12 +22,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False
 }
 
-ALLOWED_HOSTS = [
-    '.fruitynutters.org.uk',  # Allow domain and subdomains
-    'fruitynutter.webfactional.com',
-    'localhost',
-    'fruitynutters.dev'
-]
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 INTERNAL_IPS = env('INTERNAL_IPS')
 
