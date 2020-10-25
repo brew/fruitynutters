@@ -33,6 +33,10 @@ POSTGRES_USER=dbuser
 POSTGRES_DB=postgres
 ```
 
+#### Basic Authentication
+
+The whole website uses basic authentication. Add a .htpasswd file to `/nginx`.
+
 ### The database
 
 The docker-compose file defines a Postgres database service. Its data directory is mapped to the host filesystem, relative to the docker-compose file at `./volumes/db`.
