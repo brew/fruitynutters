@@ -19,7 +19,7 @@ Provide the following config settings, either in an `.env` file, or as environme
 DEBUG=False
 INTERNAL_IPS=(127.0.0.1)
 ALLOWED_HOSTS=(.mygreatfoodcoopwebsite.org.uk,localhost)
-DATABASE_URL=postgres://db:secret@db:5432/postgres
+DATABASE_URL=postgres://dbuser:secret@db:5432/postgres
 SECRET_KEY='so-secret'
 EMAIL_URL=smtp://myemailuser:myemailpassword@smtp.example.com:587
 DJANGO_ADMINS=Fred Smith:fredsmith@example.com
@@ -33,6 +33,14 @@ POSTGRES_USER=dbuser
 POSTGRES_DB=postgres
 ```
 
+### The database
+
+The docker-compose file defines a Postgres database service. Its data directory is mapped to the host filesystem, relative to the docker-compose file at `./volumes/db`.
+
+### Static assets and media
+
+The Django app's static assets and media files are also mapped to directories in the host filesystem: `./volumes/static` and `./volumes/media`. These are mounted into the Django app and Nginx services. Static assets are generated during startup by the Django app service using `collectstatic`. Nginx will service these static assets directly.
+
 ### Production
 
 Ensure there's `.env.prod` file set out as above.
@@ -40,5 +48,5 @@ Ensure there's `.env.prod` file set out as above.
 Run:
 
 ```sh
-docker-compose -f docker-compose.prod.yml --env-file ./.env.prod up --build
+docker-compose -f docker-compose.prod.yml --env-file ./.env.prod up --build -d
 ```
