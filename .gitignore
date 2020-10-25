@@ -4,6 +4,7 @@ local_settings_prod.py
 etc/
 static/
 volumes/
+nginx/.htpasswd
 tmp/
 *.pyc
 .env*

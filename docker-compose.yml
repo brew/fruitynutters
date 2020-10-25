@@ -22,7 +22,6 @@ services:
     volumes:
       - ./volumes/static:/opt/services/djangoapp/static
       - ./volumes/media:/opt/services/djangoapp/media
-    #     - "./webapps/:/app/"
 
   nginx:
     image: nginx:latest
