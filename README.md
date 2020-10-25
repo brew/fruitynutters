@@ -40,5 +40,5 @@ Ensure there's `.env.prod` file set out as above.
 Run:
 
 ```sh
-docker-compose -f docker-compose.prod.yml up --build
+docker-compose -f docker-compose.prod.yml --env-file ./.env.prod up --build
 ```

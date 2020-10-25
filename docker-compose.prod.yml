@@ -3,7 +3,6 @@ version: '3'
 services:
   app:
     build: .
-    env_file: .env.prod
     environment:
       DEBUG:
       INTERNAL_IPS:
@@ -36,7 +35,6 @@ services:
 
   db:
     image: postgres:9.6
-    env_file: .env.prod
     restart: always
     environment:
       POSTGRES_PASSWORD:
