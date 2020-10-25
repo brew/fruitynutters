@@ -6,6 +6,7 @@ services:
     environment:
       DEBUG:
       INTERNAL_IPS:
+      ALLOWED_HOSTS:
       DATABASE_URL:
       SECRET_KEY:
       EMAIL_URL:
