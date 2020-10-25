@@ -1,12 +1,14 @@
 import os
-
 import environ
+
+import logging.config
 
 env = environ.Env(
     # set casting, default value
     DEBUG=(bool, False),
     INTERNAL_IPS=(tuple, ('127.0.0.1', )),
-    ALLOWED_HOSTS=(tuple, ('localhost', ))
+    ALLOWED_HOSTS=(tuple, ('localhost', )),
+    DJANGO_LOGLEVEL=(str, 'INFO')
 )
 
 # Django settings for fruitynutters project.
@@ -127,7 +129,32 @@ GANALYTICS_TRACKING_CODE = env('GANALYTICS_TRACKING_CODE')
 ORDER_FORM_SEND_EMAIL = env('ORDER_FORM_SEND_EMAIL')
 ORDER_FORM_REPLY_TO_EMAIL = env('ORDER_FORM_REPLY_TO_EMAIL')
 
-# try:
-#     from local_settings import *
-# except ImportError:
-#     pass
+# Logging Configuration
+
+# Clear prev config
+LOGGING_CONFIG = None
+
+# Get loglevel from env
+LOGLEVEL = env('DJANGO_LOGLEVEL')
+
+logging.config.dictConfig({
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'console': {
+            'format': '%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'console',
+        },
+    },
+    'loggers': {
+        '': {
+            'level': LOGLEVEL,
+            'handlers': ['console',],
+        },
+    },
+})
