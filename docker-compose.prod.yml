@@ -53,14 +53,17 @@ services:
     image: certbot/dns-digitalocean
     volumes:
       - ./volumes/certbot:/etc/letsencrypt
-    command: >-
-      certonly
-      -n
-      --dns-digitalocean
-      --dns-digitalocean-credentials /etc/letsencrypt/digitalocean.ini
-      --dns-digitalocean-propagation-seconds 120
-      --email ${CERTBOT_EMAIL}
-      --agree-tos
-      --no-eff-email
-      -d *.${CERTBOT_BASE_URL}
-      -d ${CERTBOT_BASE_URL}
+    # check cert for renewal every 12 hrs
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    # command below sets up certbot with first certificate
+    # command: >-
+    #   certonly
+    #   -n
+    #   --dns-digitalocean
+    #   --dns-digitalocean-credentials /etc/letsencrypt/digitalocean.ini
+    #   --dns-digitalocean-propagation-seconds 120
+    #   --email ${CERTBOT_EMAIL}
+    #   --agree-tos
+    #   --no-eff-email
+    #   -d *.${CERTBOT_BASE_URL}
+    #   -d ${CERTBOT_BASE_URL}
