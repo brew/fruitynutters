@@ -53,7 +53,8 @@ services:
     image: certbot/dns-digitalocean
     volumes:
       - ./volumes/certbot:/etc/letsencrypt
-    command: "certonly
+    command: >-
+      certonly
       -n
       --dns-digitalocean
       --dns-digitalocean-credentials /etc/letsencrypt/digitalocean.ini
@@ -61,4 +62,5 @@ services:
       --email ${CERTBOT_EMAIL}
       --agree-tos
       --no-eff-email
-      -d \"*.${CERTBOT_BASE_URL}\" -d ${CERTBOT_BASE_URL}"
+      -d *.${CERTBOT_BASE_URL}
+      -d ${CERTBOT_BASE_URL}
