@@ -31,6 +31,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
       - ./volumes/static:/opt/services/djangoapp/static
       - ./volumes/media:/opt/services/djangoapp/media
+      - ./volumes/certbot:/etc/letsencrypt
     depends_on:
       - app
 
@@ -45,3 +46,20 @@ services:
       - "./volumes/pgdata:/tmp"
     ports:
       - "5432:5432"
+
+  certbot:
+    depends_on:
+      - nginx
+    image: certbot/dns-digitalocean
+    volumes:
+      - ./volumes/certbot:/etc/letsencrypt
+    command: "certonly
+      -n
+      --dns-digitalocean
+      --dns-digitalocean-credentials /etc/letsencrypt/digitalocean.ini
+      --dns-digitalocean-propagation-seconds 60
+      --email ${CERTBOT_EMAIL}
+      --agree-tos
+      --no-eff-email
+      --staging
+      -d \"*.${CERTBOT_BASE_URL}\" -d ${CERTBOT_BASE_URL}"
