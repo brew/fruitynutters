@@ -35,6 +35,8 @@ services:
       - ./volumes/certbot:/etc/letsencrypt
     depends_on:
       - app
+    # reload configs every 6hrs (in case a new certificate is available)
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   db:
     image: postgres:9.6
