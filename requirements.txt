@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements.txt requirements.in
 #
--e git+git://github.com/brew/pyrtf-ng.git#egg=pyrtf-ng
+-e git+https://github.com/brew/pyrtf-ng.git#egg=pyrtf-ng
 django-debug-toolbar==1.4
 django-environ==0.4.5
 django-ganalytics==0.4
