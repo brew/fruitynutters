@@ -261,6 +261,9 @@ def submit(request):
     member_email = request.POST.get('member_email', '')
     order_comments = request.POST.get('order_comments', '')
 
+    # member_email shouldn't have trailing whitespace
+    member_email = member_email.strip()
+
     # Validate the form and cart.
     isValid = True
     if cart.num_items == 0:
