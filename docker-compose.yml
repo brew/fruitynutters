@@ -28,7 +28,8 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
+      # - ./nginx:/etc/nginx/conf.d # prod nginx config with ssl
+      - ./nginx.dev:/etc/nginx/conf.d # dev nginx config with no ssl
       - ./volumes/static:/opt/services/djangoapp/static
       - ./volumes/media:/opt/services/djangoapp/media
     depends_on:

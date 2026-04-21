@@ -54,3 +54,29 @@ Run:
 ```sh
 docker-compose -f docker-compose.prod.yml --env-file ./.env.prod up --build -d
 ```
+
+### Development
+
+#### Use Django development server
+
+Use the database in docker-compose.yml:
+
+```sh
+docker-compose -f docker-compose.yml up db
+```
+
+Start the django development server with the `.env.dev` file:
+
+```sh
+ENV_PATH=./.env.dev ./webapps/manage.py runserver
+```
+
+#### Use Nginx with development configuration
+
+Ensure nginx config in `docker-compose.yml` points to `nginx.dev` directory.
+
+Start services:
+
+```sh
+docker-compose -f docker-compose.yml up db app nginx
+```

@@ -5,11 +5,14 @@ import logging.config
 
 env = environ.Env(
     # set casting, default value
-    DEBUG=(bool, False),
+    DEBUG=(bool, True),
     INTERNAL_IPS=(tuple, ('127.0.0.1', )),
     ALLOWED_HOSTS=(tuple, ('localhost', )),
     DJANGO_LOGLEVEL=(str, 'INFO')
 )
+
+# Read in path to .env file if ENV_PATH exists.
+# env.read_env(env.str('ENV_PATH'))
 
 # Django settings for fruitynutters project.
 
