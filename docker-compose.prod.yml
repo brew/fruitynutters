@@ -25,6 +25,7 @@ services:
 
   nginx:
     image: nginx:1.30.7
+    restart: always
     ports:
       - "80:80"
       - "443:443"
@@ -54,6 +55,7 @@ services:
     depends_on:
       - nginx
     image: certbot/dns-digitalocean
+    restart: always
     volumes:
       - ./volumes/certbot:/etc/letsencrypt
     # check cert for renewal every 12 hrs
