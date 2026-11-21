@@ -8,3 +8,4 @@ nginx/.htpasswd
 tmp/
 *.pyc
 .env*
+backups/
