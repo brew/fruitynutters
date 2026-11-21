@@ -24,7 +24,7 @@ services:
       - ./volumes/media:/opt/services/djangoapp/media
 
   nginx:
-    image: nginx:latest
+    image: nginx:1.30.7
     ports:
       - "8000:80"
     volumes:
@@ -45,4 +45,4 @@ services:
       - "./volumes/db:/var/lib/postgresql/data"
       - "./volumes/pgdata:/tmp"
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
